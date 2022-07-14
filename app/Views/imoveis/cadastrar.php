@@ -30,14 +30,7 @@
                         <?php } ?>
                     </select>
                     <div class="invalid-feedback"><?= $dados['tipoImovel_erro'] ?></div>
-                </div>
-
-                <div class="mb-3 mt-3">
-                    <label for="txtTituloImovel" class="form-label">Titulo Imóvel:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="txtTituloImovel" id="txtTituloImovel" value="<?= $dados['txtTituloImovel'] ?>">
-                    <!-- Div para exibir o erro abaixo do campo -->
-                    <div class="invalid-feedback"><?= $dados['titulo_imovel_erro'] ?></div>
-                </div>
+                </div>                
 
                 <div class="mb-3 mt-3">
                     <label for="txtEnderecoImovel" class="form-label">Endereço Imóvel:</label>
@@ -186,26 +179,47 @@
                     Escolas ou colégios
                 </label>
                 <div class="form-floating">
-                    <textarea class="form-control txtarea" id="txtEscolaColegio" name="txtEscolaColegio"><?= $dados['txtEscolaColegio'] ?></textarea>
+                    <textarea class="form-control" id="txtEscolaColegio" name="txtEscolaColegio" maxlength="500"><?= $dados['txtEscolaColegio'] ?></textarea>
                 </div>
 
                 <label class="form-check-label mt-3 mb-2" for="txtFaculdades">
                     Faculdades
                 </label>
                 <div class="form-floating">
-                    <textarea class="form-control txtarea" id="txtFaculdades" name="txtFaculdades"><?= $dados['txtFaculdades'] ?></textarea>
+                    <textarea class="form-control txtarea" id="txtFaculdades" name="txtFaculdades" maxlength="500"><?= $dados['txtFaculdades'] ?></textarea>
                 </div>
 
                 <label class="form-check-label mt-3 mb-2" for="txtTransportePublico">
                     Transporte Público
                 </label>
                 <div class="form-floating">
-                    <textarea class="form-control txtarea" id="txtTransportePublico" name="txtTransportePublico"><?= $dados['txtTransportePublico'] ?></textarea>
+                    <textarea class="form-control txtarea" id="txtTransportePublico" name="txtTransportePublico" maxlength="500"><?= $dados['txtTransportePublico'] ?></textarea>
+                </div>
+
+                <label class="form-check-label mt-3 mb-2" for="txtEntretenimento">
+                    Museus, teatros ou arenas de shows
+                </label>
+                <div class="form-floating">
+                    <textarea class="form-control txtarea" id="txtEntretenimento" name="txtEntretenimento" maxlength="500"><?= $dados['txtEntretenimento'] ?></textarea>
+                </div>
+
+                <label class="form-check-label mt-3 mb-2" for="txtHospitais">
+                    Hospitais
+                </label>
+                <div class="form-floating">
+                    <textarea class="form-control txtarea" id="txtHospitais" name="txtHospitais" maxlength="500"><?= $dados['txtHospitais'] ?></textarea>
+                </div>
+
+                <label class="form-check-label mt-3 mb-2" for="txtParqueAreasVerdes">
+                    Parques ou áreas verdes
+                </label>
+                <div class="form-floating">
+                    <textarea class="form-control txtarea" id="txtParqueAreasVerdes" name="txtParqueAreasVerdes" maxlength="500"><?= $dados['txtParqueAreasVerdes'] ?></textarea>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="cboTipoNegociacao" class="form-label">Tipo negociacao: *</label>
-                    <select class="form-select <?= $dados['tipoNegociacao_erro'] ? 'is-invalid' : '' ?>" name="cboTipoNegociacao" id="cboTipoNegociacao">                        
+                    <select class="form-select <?= $dados['tipoNegociacao_erro'] ? 'is-invalid' : '' ?>" name="cboTipoNegociacao" id="cboTipoNegociacao">
                         <?php foreach ($dados['tipoNegociacao'] as $tipoNegociacao) {
                             //Resgata valor do select 
                             $tipoNegociacaoSelected = '';
@@ -280,6 +294,30 @@
                         </div>
                     <?php } ?>
                 </div>
+
+                <h3>Informações do proprietário</h3>
+                        
+                <div class="mb-3 mt-3">
+                    <label for="txtNomeProprietario" class="form-label">Nome proprietário:</label>
+                    <input type="text" class="form-control <?= $dados['nome_proprietario_erro'] ? 'is-invalid' : '' ?>" name="txtNomeProprietario" id="txtNomeProprietario" value="<?= $dados['txtNomeProprietario'] ?>">
+                    <!-- Div para exibir o erro abaixo do campo -->
+                    <div class="invalid-feedback"><?= $dados['nome_proprietario_erro'] ?></div>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="txtTelProprietario" class="form-label">Telefone proprietário:</label>
+                    <input type="text" class="form-control <?= $dados['tel_proprietario_erro'] ? 'is-invalid' : '' ?>" name="txtTelProprietario" id="txtTelProprietario" value="<?= $dados['txtTelProprietario'] ?>">
+                    <!-- Div para exibir o erro abaixo do campo -->
+                    <div class="invalid-feedback"><?= $dados['tel_proprietario_erro'] ?></div>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="txtEmailProprietario" class="form-label">E-mail proprietário:</label>
+                    <input type="text" class="form-control <?= $dados['email_proprietario_erro'] ? 'is-invalid' : '' ?>" name="txtEmailProprietario" id="txtEmailProprietario" value="<?= $dados['txtEmailProprietario'] ?>">
+                    <!-- Div para exibir o erro abaixo do campo -->
+                    <div class="invalid-feedback"><?= $dados['email_proprietario_erro'] ?></div>
+                </div>
+
 
                 <div class="row mt-3">
                     <div class="col-md-6">

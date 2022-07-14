@@ -18,8 +18,11 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Título</th>
+                            <th scope="col">Id imóvel</th>
+                            <th scope="col">Tipo negociação</th>
+                            <th scope="col">Tipo Imóvel</th>
+                            <th scope="col">Tamanho m²</th>
+                            <th scope="col">Valor Aluguel</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -36,8 +39,11 @@
                         foreach ($dados['imoveis'] as $imoveis) { ?>
 
                             <tr>
-                                <td><?= ucfirst($imoveis->id_imovel) ?></td>
-                                <td><?= ucfirst($imoveis->ds_titulo_imovel) ?></td>
+                                <td><?= "#00" . $imoveis->id_imovel ?></td>
+                                <td><?=ucfirst($imoveis->ds_tipo_negociacao)?></td>
+                                <td><?= ucfirst($imoveis->ds_tipo_imovel) ?></td>
+                                <td><?= $imoveis->qtd_area . "m²" ?></td>
+                                <td><?= "R$ " . (($imoveis->mo_aluguel) / 100) ?></td>
                                 <td><a href="<?= URL . '/ImoveisController/editar/' . $imoveis->id_imovel ?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
                                 <td>
                                     <form action="<?= URL . '/ImoveisController/deletar/' . $imoveis->id_imovel ?>" method="POST">
