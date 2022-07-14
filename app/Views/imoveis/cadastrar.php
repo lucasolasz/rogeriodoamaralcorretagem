@@ -205,8 +205,7 @@
 
                 <div class="mb-3 mt-3">
                     <label for="cboTipoNegociacao" class="form-label">Tipo negociacao: *</label>
-                    <select class="form-select <?= $dados['tipoNegociacao_erro'] ? 'is-invalid' : '' ?>" name="cboTipoNegociacao" id="cboTipoNegociacao">
-                        <option value="NULL"></option>
+                    <select class="form-select <?= $dados['tipoNegociacao_erro'] ? 'is-invalid' : '' ?>" name="cboTipoNegociacao" id="cboTipoNegociacao">                        
                         <?php foreach ($dados['tipoNegociacao'] as $tipoNegociacao) {
                             //Resgata valor do select 
                             $tipoNegociacaoSelected = '';
@@ -303,7 +302,7 @@
             // affixesStay: true
         });
 
-        id_tipo_imovel = $("#cboTipoImovel").val();
+        id_tipo_imovel = $("#cboTipoNegociacao").val();
         disableVenda(id_tipo_imovel);
         disableAluguel(id_tipo_imovel);
     });
@@ -326,8 +325,8 @@
         }
     }
 
-    $("#cboTipoImovel").change(function() {
-        id_tipo_imovel = $("#cboTipoImovel").val();
+    $("#cboTipoNegociacao").change(function() {
+        id_tipo_imovel = $("#cboTipoNegociacao").val();
 
         disableVenda(id_tipo_imovel);
 

@@ -50,12 +50,10 @@ class ImoveisController extends Controller
                 'txtTransportePublico' => $formulario['txtTransportePublico'],
                 'cboTipoImovel' => $formulario['cboTipoImovel'],
                 'cboTipoNegociacao' => $formulario['cboTipoNegociacao'],
-                // 'moValorAluguel' => $formulario['moValorAluguel'],
-                // 'moValorVenda' => $formulario['moValorVenda'],
-                'moValorCondominio' => $formulario['moValorCondominio'],
-                'moValorIptu' => $formulario['moValorIptu'],
-                'moValorSeguroIncendio' => $formulario['moValorSeguroIncendio'],
-                'moTaxaServico' => $formulario['moTaxaServico'],
+                'moValorCondominio' => LimpaStringFloat::limparString($formulario['moValorCondominio']),
+                'moValorIptu' => LimpaStringFloat::limparString($formulario['moValorIptu']),
+                'moValorSeguroIncendio' => LimpaStringFloat::limparString($formulario['moValorSeguroIncendio']),
+                'moTaxaServico' => LimpaStringFloat::limparString($formulario['moTaxaServico']),
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
@@ -68,7 +66,7 @@ class ImoveisController extends Controller
             //Váriaveis com sintaxe ternária
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
 
-            $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? $formulario['moValorVenda'] : NULL;
+            $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
 
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
 
@@ -77,23 +75,16 @@ class ImoveisController extends Controller
             // var_dump($dados);
             // exit();
 
-            if (($formulario['cboTipoImovel']) == "NULL") {
-                $dados['tipoImovel_erro'] = "Escolha um tipo de imóvel";
+            if ($this->imovelModel->armazenarImovel($dados)) {
+
+                //Para exibir mensagem success , não precisa informar o tipo de classe
+                Alertas::mensagem('imoveis', 'Imóvel cadastrado com sucesso');
+                Redirecionamento::redirecionar('ImoveisController');
             } else {
-
-                echo 'salvei';
-
-
-                if ($this->imovelModel->armazenarImovel($dados)) {
-
-                    //Para exibir mensagem success , não precisa informar o tipo de classe
-                    Alertas::mensagem('imoveis', 'Imóvel cadastrado com sucesso');
-                    Redirecionamento::redirecionar('ImoveisController');
-                } else {
-                    Alertas::mensagem('imoveis', 'Não foi possível cadastrar o imóvel', 'alert alert-danger');
-                    Redirecionamento::redirecionar('ImoveisController');
-                }
+                Alertas::mensagem('imoveis', 'Não foi possível cadastrar o imóvel', 'alert alert-danger');
+                Redirecionamento::redirecionar('ImoveisController');
             }
+
         } else {
             $dados = [
                 'txtTituloImovel' => '',
@@ -136,9 +127,6 @@ class ImoveisController extends Controller
 
             ];
         }
-
-
-
         //Retorna para a view
         $this->view('imoveis/cadastrar', $dados);
     }
