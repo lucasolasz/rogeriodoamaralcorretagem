@@ -40,6 +40,6 @@ CREATE TABLE IF NOT EXISTS `tb_usuario` (
   CONSTRAINT `fk_tipo_usuario_tb_usuario` FOREIGN KEY (`fk_tipo_usuario`) REFERENCES `tb_tipo_usuario` (`id_tipo_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
-INSERT INTO projeto_base.tb_usuario (id_usuario, ds_nome_usuario, ds_email_usuario, ds_senha, fk_cargo, fk_tipo_usuario) VALUES(1, 'Administrador', 'admin@app.com', '$2y$10$zKh0sq3Fk002BnWooZvHlOi50MOSp8lxlX6aItZ0gecUYQtS5BqXG', 1, 1);
+INSERT INTO tb_usuario (id_usuario, ds_nome_usuario, ds_email_usuario, ds_senha, fk_cargo, fk_tipo_usuario) VALUES(1, 'Administrador', 'admin@app.com', '$2y$10$zKh0sq3Fk002BnWooZvHlOi50MOSp8lxlX6aItZ0gecUYQtS5BqXG', 1, 1);
 
-UPDATE projeto_base.tb_usuario SET id_usuario=0 WHERE id_usuario=1;
+UPDATE tb_usuario SET id_usuario=0 WHERE id_usuario=1;
