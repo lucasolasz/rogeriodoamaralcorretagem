@@ -34,6 +34,9 @@ class ImoveisController extends Controller
 
         if (isset($formulario)) {
 
+            // var_dump($formulario);
+            // exit();
+
             $dados = [
                 // 'txtTituloImovel' => $formulario['txtTituloImovel'],
                 'txtEnderecoImovel' => $formulario['txtEnderecoImovel'],
@@ -70,6 +73,8 @@ class ImoveisController extends Controller
             // exit();
 
             //Váriaveis com sintaxe ternária
+            $dados['fileFotos'] = isset($_FILES['fileFotos']) ? $_FILES['fileFotos'] : "";
+
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
 
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;

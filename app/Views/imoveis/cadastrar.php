@@ -14,7 +14,7 @@
             <h2 class="card-title">Cadastrar Novo Imóvel</h2>
             <small>Preencha o formulário abaixo para cadastrar um novo imóvel</small>
 
-            <form name="cadastrar" method="POST" action="<?= URL ?>/ImoveisController/cadastrar">
+            <form name="cadastrar" method="POST" action="<?= URL ?>/ImoveisController/cadastrar" enctype="multipart/form-data">
 
                 <div class="mb-3 mt-3">
                     <label for="cboTipoImovel" class="form-label">Tipo Imóvel: *</label>
@@ -30,7 +30,7 @@
                         <?php } ?>
                     </select>
                     <div class="invalid-feedback"><?= $dados['tipoImovel_erro'] ?></div>
-                </div>                
+                </div>
 
                 <div class="mb-3 mt-3">
                     <label for="txtEnderecoImovel" class="form-label">Endereço Imóvel:</label>
@@ -296,7 +296,7 @@
                 </div>
 
                 <h3>Informações do proprietário</h3>
-                        
+
                 <div class="mb-3 mt-3">
                     <label for="txtNomeProprietario" class="form-label">Nome proprietário:</label>
                     <input type="text" class="form-control <?= $dados['nome_proprietario_erro'] ? 'is-invalid' : '' ?>" name="txtNomeProprietario" id="txtNomeProprietario" value="<?= $dados['txtNomeProprietario'] ?>">
@@ -316,6 +316,18 @@
                     <input type="text" class="form-control <?= $dados['email_proprietario_erro'] ? 'is-invalid' : '' ?>" name="txtEmailProprietario" id="txtEmailProprietario" value="<?= $dados['txtEmailProprietario'] ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['email_proprietario_erro'] ?></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fileFotos" class="form-label">Fotos:</label>
+                    <input class="form-control" type="file" id="fileFotos" name="fileFotos[]" multiple>
+
+                </div>
+                <!-- <img id='img' /> -->
+                <div class="mb-3">
+                    <div class="container" id="dynamicDiv">
+
+                    </div>
                 </div>
 
 
@@ -370,4 +382,22 @@
 
         disableAluguel(id_tipo_imovel);
     });
+
+    $(function() {
+
+        $('#fileFotos').change(function() {
+
+            $( "p" ).remove( ".nomeImagem" );
+
+            var scntDiv = $('#dynamicDiv');
+            var files = $(this)[0].files;
+
+            for (var i = 0; i < files.length; i++) {
+               $('<p class="nomeImagem">'+files[i].name+'</p>').appendTo(scntDiv)
+            }
+
+            
+        })
+    })
+
 </script>

@@ -70,8 +70,16 @@ class Database {
 
     }
 
+    public function inicioTransacao(){
+        return $this->stmt->beginTransaction();
+    }
+
     public function executa(){
         return $this->stmt->execute();  
+    }
+
+    public function commit(){
+        return $this->stmt->commit();
     }
 
     //Retorna apenas 1 resultado

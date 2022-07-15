@@ -146,3 +146,15 @@ CREATE TABLE tb_relac_imovel_carac_condo (
   CONSTRAINT fk_caracteristica_condominio_tb_relac_imovel_carac_condo FOREIGN KEY (fk_caracteristica_condominio) REFERENCES tb_caracteristicas_condominio (id_caracteristica_condominio),
   CONSTRAINT fk_imovel_tb_relac_imovel_carac_condo FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS tb_anexo(
+    id_anexo int unsigned NOT NULL AUTO_INCREMENT,
+    fk_imovel int unsigned DEFAULT NULL,
+    nm_path_arquivo varchar(300) DEFAULT NULL,
+    nm_arquivo varchar(300) DEFAULT NULL,
+    criado_em timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (id_anexo),
+    KEY fk_imovel_tb_imovel (fk_imovel),
+    CONSTRAINT fk_imovel_tb_anexo FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;

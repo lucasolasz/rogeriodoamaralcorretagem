@@ -21,7 +21,7 @@
 
 
 
-    <header class="bg-light">
+    <header class="bg-light border-bottom">
 
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">

@@ -82,9 +82,7 @@ class Imoveis
         $this->db->bind("ds_nome_proprietario", $dados['txtNomeProprietario']);
         $this->db->bind("num_telefone_proprietario", $dados['txtTelProprietario']);
         $this->db->bind("ds_email_proprietario", $dados['txtEmailProprietario']);
-        if (!$this->db->executa()) {
-            $armazenarErro = true;
-        }
+        $this->db->executa();
 
 
         $proximoIdImovel = $this->db->ultimoIdInserido();
@@ -96,9 +94,7 @@ class Imoveis
                 $this->db->query("INSERT INTO tb_relac_imovel_carac_imovel (fk_caracteristica_imovel, fk_imovel) VALUES (:fk_caracteristica_imovel, :fk_imovel)");
                 $this->db->bind("fk_caracteristica_imovel", $chkCaracteristicaImovel);
                 $this->db->bind("fk_imovel", $proximoIdImovel);
-                if (!$this->db->executa()) {
-                    $armazenarErro = true;
-                }
+                $this->db->executa();
             }
         }
 
@@ -114,11 +110,56 @@ class Imoveis
                 }
             }
         }
-        
+
+
+        //Realiza as operações de anexo, se houver anexo
+        if (!$dados['fileFotos'] == "") {
+
+            $pastaArquivo = "imovel_id_" . $proximoIdImovel;
+            $upload = new Upload();
+            $tamanhoArray = count($dados['fileFotos']['name']);
+
+            // $this->db->inicioTransacao();
+
+            // $erro = false;
+
+            for ($i = 0; $i < $tamanhoArray; $i++) {
+
+                $arrayImagem = [
+                    'name' => $dados['fileFotos']['name'][$i],
+                    'type' => $dados['fileFotos']['type'][$i],
+                    'tmp_name' => $dados['fileFotos']['tmp_name'][$i],
+                    'error' => $dados['fileFotos']['error'][$i],
+                    'size' => $dados['fileFotos']['size'][$i],
+                ];
+
+                $upload->imagem($arrayImagem, NULL, $pastaArquivo);
+                if ($upload->getResultado()) {
+                    $nomeArquivo = $upload->getResultado();
+                    $pathArquivo = $upload->getPath();
+                } else {
+                    echo $upload->getErro();
+                }
+
+                $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                $this->db->bind("nm_path_arquivo", $pathArquivo);
+                $this->db->bind("nm_arquivo", $nomeArquivo);
+                $this->db->executa();
+            }
+
+            // if ($this->db->commit()) {
+            //     return "tudo certo";
+            // } else {
+            //     return "deu ruim";
+            // }
+        }
+
+
         if ($armazenarErro) {
             return false;
         } else {
             return true;
-        }     
+        }
     }
 }
