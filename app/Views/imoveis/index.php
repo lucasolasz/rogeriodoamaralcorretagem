@@ -38,14 +38,25 @@
 
                         <?php  }
                         foreach ($dados['imoveis'] as $imoveis) { ?>
-
                             <tr>
                                 <td><?= "#00" . $imoveis->id_imovel ?></td>
                                 <td><?= ucfirst($imoveis->ds_tipo_negociacao) ?></td>
                                 <td><?= ucfirst($imoveis->ds_tipo_imovel) ?></td>
-                                <td><?= $imoveis->qtd_area . "m²" ?></td>
-                                <td><?= "R$ " . (($imoveis->mo_aluguel) / 100) ?></td>
-                                <td><?= "R$ " . (($imoveis->mo_venda) / 100) ?></td>
+                                <?php if (!$imoveis->qtd_area == NULL) { ?>
+                                    <td><?= $imoveis->qtd_area . "m²" ?></td>
+                                <?php } else { ?>
+                                    <td></td>
+                                <?php } ?>                                
+                                <?php if (!$imoveis->mo_aluguel == NULL) { ?>
+                                    <td><?= "R$ " . (($imoveis->mo_aluguel) / 100) ?></td>
+                                <?php } else { ?>
+                                    <td></td>
+                                <?php } ?>
+                                <?php if (!$imoveis->mo_venda == NULL) { ?>
+                                    <td><?= "R$ " . (($imoveis->mo_venda) / 100) ?></td>
+                                <?php } else { ?>
+                                    <td></td>
+                                <?php } ?>
                                 <td><a href="<?= URL . '/ImoveisController/editar/' . $imoveis->id_imovel ?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
                                 <td>
                                     <form action="<?= URL . '/ImoveisController/deletar/' . $imoveis->id_imovel ?>" method="POST">

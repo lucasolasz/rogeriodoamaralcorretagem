@@ -159,7 +159,7 @@ class ImoveisController extends Controller
         $relacionaCaracImovel = $this->imovelModel->caracImovelPorId($id);
         $relacionaCaracCondo = $this->imovelModel->caracCondoPorId($id);
 
-        // var_dump($fotosImovel);
+        // var_dump($imovel);
         // exit();
 
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
