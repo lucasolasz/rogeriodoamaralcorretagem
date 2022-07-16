@@ -1,11 +1,13 @@
 <?php
 
 //Realiza a limpeza dos campos monetários para pegar o valor inteiro
- 
+
 class LimpaStringFloat
 {
     public static function limparString(string $valor)
     {
+
+
         //Limpa incio e final da string
         $valor = trim($valor);
 
@@ -15,7 +17,12 @@ class LimpaStringFloat
         //Substitui virula por nada
         $valor = str_replace(',', '', $valor);
 
-        //Transforma em inteiro
-        return intval($valor);
+
+        if ($valor == "") {
+            return NULL;
+        } else {
+            //Transforma em inteiro
+            return intval($valor);
+        }
     }
 }

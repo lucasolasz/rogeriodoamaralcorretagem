@@ -12,6 +12,7 @@ class Upload
     private $nome;
     private $pasta;
     private $path;
+    private $pathDefault;
 
     public function getResultado(): string
     {
@@ -28,6 +29,12 @@ class Upload
         return $this->path;
     }
 
+    //Esse get foi para pegar a primeira pasta criada por padrao. Neste caso é uploads
+    public function getPathDefault(): string
+    {
+        return $this->pathDefault;
+    }
+
 
     //É possivel definir um nome de diretorio de upload personalizado. 
     //Basta informar o nome pelo parâmetro ao instanciar o objeto
@@ -36,6 +43,10 @@ class Upload
         $this->diretorio = $diretorio ? $diretorio : 'uploads';
         if (!file_exists($this->diretorio) && !is_dir($this->diretorio)) {
             mkdir($this->diretorio, 0777);
+            $diretorioDefault = $this->diretorio;
+            $this->pathDefault = $diretorioDefault;
+        }else{
+            $this->pathDefault = $this->diretorio;
         }
     }
 
@@ -49,7 +60,7 @@ class Upload
         $this->nome = $nome ? $nome : pathinfo($this->arquivo['name'], PATHINFO_FILENAME);
         $this->pasta = $pasta ? $pasta : 'imagens';
         //Escolher o tamanho padrão de upload é 1MB
-        $this->tamanho = $tamanho ? $tamanho : 1;
+        $this->tamanho = $tamanho ? $tamanho : 5;
         //Recebe diretório Padrão
         $this->path = $this->diretorio . DIRECTORY_SEPARATOR . $this->pasta;
 
@@ -114,10 +125,18 @@ class Upload
         }
     }
 
-    public function deletarArquivo($arquivo)
+    public function deletarArquivo($arquivo_nome = null, $arquivo_path = null)
     {
-        //String com o caminho + nome_arquivo
-        $diretorio = ($this->diretorio . DIRECTORY_SEPARATOR . $this->pasta . DIRECTORY_SEPARATOR . $arquivo);
+        
+        //Somente nome arquivo
+        if(!$arquivo_nome == NULL){
+            $diretorio = ($this->diretorio . DIRECTORY_SEPARATOR . $this->pasta . DIRECTORY_SEPARATOR . $arquivo_nome);
+        }
+
+         //String com o caminho + nome_arquivo
+        if(!$arquivo_path == NULL){
+            $diretorio = $arquivo_path;
+        }        
 
         if (file_exists($diretorio)) {
 

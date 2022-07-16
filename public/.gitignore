@@ -1,2 +1,3 @@
 #ignora as pastas do eclipse 
-.uploads/
+uploads/
+debug.php

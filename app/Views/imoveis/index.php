@@ -23,6 +23,7 @@
                             <th scope="col">Tipo Imóvel</th>
                             <th scope="col">Tamanho m²</th>
                             <th scope="col">Valor Aluguel</th>
+                            <th scope="col">Valor Venda</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -32,7 +33,7 @@
                         if (empty($dados['imoveis'])) { ?>
 
                             <tr>
-                                <td colspan="3" class="align-middle">Nenhuma Imóvel cadastrado</td>
+                                <td colspan="6" class="align-middle">Nenhuma Imóvel cadastrado</td>
                             </tr>
 
                         <?php  }
@@ -40,10 +41,11 @@
 
                             <tr>
                                 <td><?= "#00" . $imoveis->id_imovel ?></td>
-                                <td><?=ucfirst($imoveis->ds_tipo_negociacao)?></td>
+                                <td><?= ucfirst($imoveis->ds_tipo_negociacao) ?></td>
                                 <td><?= ucfirst($imoveis->ds_tipo_imovel) ?></td>
                                 <td><?= $imoveis->qtd_area . "m²" ?></td>
                                 <td><?= "R$ " . (($imoveis->mo_aluguel) / 100) ?></td>
+                                <td><?= "R$ " . (($imoveis->mo_venda) / 100) ?></td>
                                 <td><a href="<?= URL . '/ImoveisController/editar/' . $imoveis->id_imovel ?>" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
                                 <td>
                                     <form action="<?= URL . '/ImoveisController/deletar/' . $imoveis->id_imovel ?>" method="POST">

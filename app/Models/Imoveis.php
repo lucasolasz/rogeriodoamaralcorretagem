@@ -48,7 +48,7 @@ class Imoveis
     {
 
 
-        // var_dump($dados['chkCaracteristicaImovel']);
+        // var_dump($dados);
         // exit();
         $armazenarErro = false;
 
@@ -82,7 +82,9 @@ class Imoveis
         $this->db->bind("ds_nome_proprietario", $dados['txtNomeProprietario']);
         $this->db->bind("num_telefone_proprietario", $dados['txtTelProprietario']);
         $this->db->bind("ds_email_proprietario", $dados['txtEmailProprietario']);
-        $this->db->executa();
+        if (!$this->db->executa()) {
+            $armazenarErro = true;
+        }
 
 
         $proximoIdImovel = $this->db->ultimoIdInserido();
@@ -94,7 +96,9 @@ class Imoveis
                 $this->db->query("INSERT INTO tb_relac_imovel_carac_imovel (fk_caracteristica_imovel, fk_imovel) VALUES (:fk_caracteristica_imovel, :fk_imovel)");
                 $this->db->bind("fk_caracteristica_imovel", $chkCaracteristicaImovel);
                 $this->db->bind("fk_imovel", $proximoIdImovel);
-                $this->db->executa();
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
             }
         }
 
@@ -119,9 +123,6 @@ class Imoveis
             $upload = new Upload();
             $tamanhoArray = count($dados['fileFotos']['name']);
 
-            // $this->db->inicioTransacao();
-
-            // $erro = false;
 
             for ($i = 0; $i < $tamanhoArray; $i++) {
 
@@ -133,33 +134,391 @@ class Imoveis
                     'size' => $dados['fileFotos']['size'][$i],
                 ];
 
-                $upload->imagem($arrayImagem, NULL, $pastaArquivo);
+                $upload->imagem($arrayImagem, NULL, 'temp');
+
+
+                //Inicio do processamento de compressao
+                $nomeArquivo = $upload->getResultado();
+
+                //Path da imagem que foi feito upload  (pasta temp)           
+                $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
+
+                //Cria pasta dos arquivos individualmente de acordo com id
+                mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
+                $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
+
+                //Monta o diretorio destino da pagina comprimida
+                $destination_img = $novoDiretorio . DIRECTORY_SEPARATOR . $nomeArquivo;
+
+                //Executa a compressao
+                ComprimirFoto::comprimir($path_arquivo, $destination_img, 40);
+
+                //Invoca metodo para deletar o arquivo temporario
+                $upload->deletarArquivo(null, $path_arquivo);
+
+                // echo $upload->getResultado() . ' da pasta temporaria';
+
+                // echo $upload->getResultado();
+                // exit();
+
+
                 if ($upload->getResultado()) {
-                    $nomeArquivo = $upload->getResultado();
-                    $pathArquivo = $upload->getPath();
+
+                    // $nomeArquivo = $upload->getResultado();
+                    // $pathArquivo = $destination_img;
+
+                    $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                    $this->db->bind("fk_imovel", $proximoIdImovel);
+                    $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                    $this->db->bind("nm_arquivo", $nomeArquivo);
+                    if (!$this->db->executa()) {
+                        $armazenarErro = true;
+                    }
                 } else {
                     echo $upload->getErro();
                 }
-
-                $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
-                $this->db->bind("fk_imovel", $proximoIdImovel);
-                $this->db->bind("nm_path_arquivo", $pathArquivo);
-                $this->db->bind("nm_arquivo", $nomeArquivo);
-                $this->db->executa();
             }
-
-            // if ($this->db->commit()) {
-            //     return "tudo certo";
-            // } else {
-            //     return "deu ruim";
-            // }
         }
 
 
         if ($armazenarErro) {
             return false;
         } else {
+
             return true;
         }
+    }
+
+    public function editarImovel($dados)
+    {
+
+
+        // var_dump($dados);
+        // exit();
+
+        $atualizarErro = false;
+
+
+        $this->db->query("UPDATE tb_imovel SET 
+        ds_end_imovel = :ds_end_imovel,
+        qtd_area = :qtd_area,
+        qtd_quarto = :qtd_quarto,
+        qtd_banheiro = :qtd_banheiro,
+        qtd_vagas = :qtd_vagas,
+        num_andar = :num_andar,
+        chk_aceita_pet = :chk_aceita_pet,
+        chk_mobilia = :chk_mobilia,
+        chk_metro_prox = :chk_metro_prox,
+        fk_tipo_imovel = :fk_tipo_imovel,
+        fk_tipo_negociacao = :fk_tipo_negociacao,
+        txt_escolas_colegios = :txt_escolas_colegios,
+        txt_transporte_publico = :txt_transporte_publico,
+        txt_faculdades = :txt_faculdades,
+        txt_entretenimento = :txt_entretenimento,
+        txt_hospitais = :txt_hospitais,
+        txt_parque_area_verde = :txt_parque_area_verde,
+        mo_aluguel = :mo_aluguel,
+        mo_venda = :mo_venda,
+        mo_condominio = :mo_condominio,
+        mo_iptu = :mo_iptu,
+        mo_seguro_incendio = :mo_seguro_incendio,
+        mo_taxa_de_servico = :mo_taxa_de_servico,
+        ds_nome_proprietario = :ds_nome_proprietario,
+        num_telefone_proprietario = :num_telefone_proprietario,
+        ds_email_proprietario = :ds_email_proprietario
+        WHERE id_imovel = :id_imovel");
+
+        $this->db->bind("ds_end_imovel", $dados['txtEnderecoImovel']);
+        $this->db->bind("qtd_area", $dados['tamArea']);
+        $this->db->bind("qtd_quarto", $dados['qtdQuarto']);
+        $this->db->bind("qtd_banheiro", $dados['qtdBanheiro']);
+        $this->db->bind("qtd_vagas", $dados['qtdVagas']);
+        $this->db->bind("num_andar", $dados['txtNumAndar']);
+        $this->db->bind("chk_aceita_pet", $dados['chkAceitaPet']);
+        $this->db->bind("chk_mobilia", $dados['chkMobilia']);
+        $this->db->bind("chk_metro_prox", $dados['chkMetroProx']);
+        $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
+        $this->db->bind("fk_tipo_negociacao", $dados['cboTipoImovel']);
+        $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
+        $this->db->bind("txt_transporte_publico", $dados['txtTransportePublico']);
+        $this->db->bind("txt_faculdades", $dados['txtFaculdades']);
+        $this->db->bind("txt_entretenimento", $dados['txtEntretenimento']);
+        $this->db->bind("txt_hospitais", $dados['txtHospitais']);
+        $this->db->bind("txt_parque_area_verde", $dados['txtParqueAreasVerdes']);
+        $this->db->bind("mo_aluguel", $dados['moValorAluguel']);
+        $this->db->bind("mo_venda", $dados['moValorVenda']);
+        $this->db->bind("mo_condominio", $dados['moValorCondominio']);
+        $this->db->bind("mo_iptu", $dados['moValorIptu']);
+        $this->db->bind("mo_seguro_incendio", $dados['moValorSeguroIncendio']);
+        $this->db->bind("mo_taxa_de_servico", $dados['moTaxaServico']);
+        $this->db->bind("ds_nome_proprietario", $dados['txtNomeProprietario']);
+        $this->db->bind("num_telefone_proprietario", $dados['txtTelProprietario']);
+        $this->db->bind("ds_email_proprietario", $dados['txtEmailProprietario']);
+        $this->db->bind("id_imovel", $dados['imovel']->id_imovel);
+        if (!$this->db->executa()) {
+            $atualizarErro = true;
+        }
+
+        if (!$dados['chkCaracteristicaImovel'] == "") {
+
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_carac_imovel WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkCaracteristicaImovel'] as $chkCaracteristicaImovel) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_carac_imovel (fk_caracteristica_imovel, fk_imovel) VALUES (:fk_caracteristica_imovel, :fk_imovel)");
+                $this->db->bind("fk_caracteristica_imovel", $chkCaracteristicaImovel);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkCaracteristicaCondominio'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkCaracteristicaCondominio'] as $chkCaracteristicaCondominio) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_carac_condo (fk_caracteristica_condominio, fk_imovel) VALUES (:fk_caracteristica_condominio, :fk_imovel)");
+                $this->db->bind("fk_caracteristica_condominio", $chkCaracteristicaCondominio);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+
+        //Realiza as operações de anexo, se houver anexo
+        if (!$dados['fileFotos'] == "") {
+
+            $pastaArquivo = "imovel_id_" . $dados['imovel']->id_imovel;
+            $upload = new Upload();
+            $tamanhoArray = count($dados['fileFotos']['name']);
+
+
+            for ($i = 0; $i < $tamanhoArray; $i++) {
+
+                $arrayImagem = [
+                    'name' => $dados['fileFotos']['name'][$i],
+                    'type' => $dados['fileFotos']['type'][$i],
+                    'tmp_name' => $dados['fileFotos']['tmp_name'][$i],
+                    'error' => $dados['fileFotos']['error'][$i],
+                    'size' => $dados['fileFotos']['size'][$i],
+                ];
+
+                $upload->imagem($arrayImagem, NULL, 'temp');
+
+
+                //Inicio do processamento de compressao
+                $nomeArquivo = $upload->getResultado();
+
+                //Path da imagem que foi feito upload  (pasta temp)           
+                $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
+
+                //Cria pasta dos arquivos individualmente de acordo com id
+                mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
+                $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
+
+                //Monta o diretorio destino da pagina comprimida
+                $destination_img = $novoDiretorio . DIRECTORY_SEPARATOR . $nomeArquivo;
+
+                //Executa a compressao
+                ComprimirFoto::comprimir($path_arquivo, $destination_img, 40);
+
+                //Invoca metodo para deletar o arquivo temporario
+                $upload->deletarArquivo(null, $path_arquivo);
+
+                // echo $upload->getResultado() . ' da pasta temporaria';
+
+                // echo $upload->getResultado();
+                // exit();
+
+
+                if ($upload->getResultado()) {
+
+                    // $nomeArquivo = $upload->getResultado();
+                    // $pathArquivo = $destination_img;
+
+                    $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                    $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                    $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                    $this->db->bind("nm_arquivo", $nomeArquivo);
+                    if (!$this->db->executa()) {
+                        $atualizarErro = true;
+                    }
+                } else {
+                    echo $upload->getErro();
+                }
+            }
+        }
+
+
+        if ($atualizarErro) {
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+    public function caracImovelPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_carac_imovel WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function caracCondoPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function lerImovelPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_imovel WHERE id_imovel = :id_imovel");
+
+        $this->db->bind("id_imovel", $id);
+
+        return $this->db->resultado();
+    }
+
+    public function lerFotosPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_anexo WHERE fk_imovel = :id_imovel");
+
+        $this->db->bind("id_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function deletarFoto($dados)
+    {
+
+
+        //Monta string do diretório da imagem
+        $path_arquivo = $dados['infoImovel']->nm_path_arquivo . DIRECTORY_SEPARATOR . $dados['infoImovel']->nm_arquivo;
+
+        $upload = new Upload();
+        $upload->deletarArquivo(null, $path_arquivo);
+
+        //Deleta da tabela
+        $this->db->query("DELETE FROM tb_anexo WHERE id_anexo = :id_anexo");
+        $this->db->bind("id_anexo", $dados['infoImovel']->id_anexo);
+
+
+        if ($this->db->executa()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function deletarImovel($dados)
+    {
+        $id_imovel = $dados['id_imovel'];
+
+        if (!$dados['infoImovel'] == "") {
+
+            // $id_imovel = $dados['infoImovel'][0]->fk_imovel;
+            $pastaPrincipal = $dados['infoImovel'][0]->nm_path_arquivo;
+
+            // var_dump($pastaPrincipal);
+            // exit();
+
+            $deletarErro = false;
+
+            foreach ($dados['infoImovel'] as $infoImovel) {
+
+                //Monta string do diretório da imagem
+                $path_arquivo = $infoImovel->nm_path_arquivo . DIRECTORY_SEPARATOR . $infoImovel->nm_arquivo;
+
+                $upload = new Upload();
+                $upload->deletarArquivo(null, $path_arquivo);
+
+                //Deleta da tabela
+                $this->db->query("DELETE FROM tb_anexo WHERE id_anexo = :id_anexo");
+                $this->db->bind("id_anexo", $infoImovel->id_anexo);
+            }
+
+
+            //Apaga a pasta apos estar vazia
+            rmdir($pastaPrincipal);
+        }
+
+
+        $this->db->query("DELETE FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_relac_imovel_carac_imovel WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_anexo WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_imovel WHERE id_imovel = :id_imovel");
+        $this->db->bind("id_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+
+        if (!$deletarErro) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function lerInfoAnexo($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_anexo WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function lerInfoImagem($id)
+    {
+        $this->db->query("SELECT * FROM tb_anexo WHERE id_anexo = :id_anexo");
+
+        $this->db->bind("id_anexo", $id);
+
+        return $this->db->resultado();
     }
 }
