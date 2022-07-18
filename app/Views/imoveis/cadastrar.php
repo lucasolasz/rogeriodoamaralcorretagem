@@ -33,11 +33,26 @@
                 </div>
 
                 <div class="mb-3 mt-3">
-                    <label for="txtEnderecoImovel" class="form-label">Endereço Imóvel:</label>
-                    <input type="text" class="form-control <?= $dados['endereco_imovel_erro'] ? 'is-invalid' : '' ?>" name="txtEnderecoImovel" id="txtEnderecoImovel" value="<?= $dados['txtEnderecoImovel'] ?>">
+                    <label for="txtRuaImovel" class="form-label">Rua Imóvel:</label>
+                    <input type="text" class="form-control <?= $dados['rua_imovel_erro'] ? 'is-invalid' : '' ?>" name="txtRuaImovel" id="txtRuaImovel" value="<?= $dados['txtRuaImovel'] ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
-                    <div class="invalid-feedback"><?= $dados['endereco_imovel_erro'] ?></div>
+                    <div class="invalid-feedback"><?= $dados['rua_imovel_erro'] ?></div>
                 </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="cboBairro" class="form-label">Bairro Imóvel: *</label>
+                    <select class="form-select" name="cboBairro" id="cboBairro">
+                        <?php foreach ($dados['bairros'] as $bairros) {
+                            //Resgata valor do select 
+                            $bairroSelected = '';
+                            if ($bairros->id_bairro == $dados['cboBairro']) {
+                                $bairroSelected = 'selected';
+                            }
+                        ?>
+                            <option <?= $bairroSelected ?> value="<?= $bairros->id_bairro ?>"><?= $bairros->ds_bairro ?></option>
+                        <?php } ?>
+                    </select>
+                </div>               
 
                 <div class="mb-3 mt-3">
                     <label for="tamArea" class="form-label">Área m²:</label>

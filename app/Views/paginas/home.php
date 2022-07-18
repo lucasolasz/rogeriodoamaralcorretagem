@@ -1,7 +1,7 @@
 <div class="container p-5">
     <div class="row">
 
-        <!-- <pre><?php var_dump($dados['anexos']) ?></pre> -->
+        <!-- <pre><?php var_dump($dados['imovel']) ?></pre> -->
         <!-- <span><i class="fa-solid fa-sliders-simple"></span></i> -->
 
         <ul class="list-inline mt-3">
@@ -45,7 +45,8 @@
                         <a href="<?=$imovel->id_imovel?>" class="btn text-start">
                             <div class="card-body">
                                 <small><?= $imovel->ds_tipo_imovel ?></small>
-                                <h5 class="card-title mt-3"><?= $imovel->ds_end_imovel ?></h5>
+                                <h5 class="card-title mt-3 mb-0"><?= ucfirst($imovel->ds_rua_imovel) ?></h5>
+                                <small class="mt-0"><?= $imovel->ds_bairro ?>, Rio de Janeiro</small>
                                 <ul class="list-inline mt-3">
                                     <li class="list-inline-item transparente"><span><i class="fa-solid fa-ruler-horizontal"></i></span> <?= $imovel->qtd_area . ' m²' ?></li>
                                     <li class="list-inline-item transparente"><span><i class="fa-solid fa-bed"></i></span> <?= $imovel->qtd_quarto . " dorm" ?></li>

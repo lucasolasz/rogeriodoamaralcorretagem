@@ -12,13 +12,23 @@ class Imoveis
 
     public function listarImoveis()
     {
-        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao FROM tb_imovel im
+        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao, tba.ds_bairro FROM tb_imovel im
         LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
         LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
         ORDER BY im.publicado_em DESC");
 
         return $this->db->resultados();
     }
+
+
+
+    public function listarBairros()
+    {
+        $this->db->query("SELECT * FROM tb_bairros ORDER BY ds_bairro");
+        return $this->db->resultados();
+    }
+    
 
     public function listarTipoImovel()
     {
@@ -53,10 +63,9 @@ class Imoveis
         $armazenarErro = false;
 
 
-        $this->db->query("INSERT INTO tb_imovel (ds_end_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_tipo_imovel, fk_tipo_negociacao, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_end_imovel, :qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
+        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
 
-        // $this->db->bind("ds_titulo_imovel", $dados['txtTituloImovel']);
-        $this->db->bind("ds_end_imovel", $dados['txtEnderecoImovel']);
+        $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
         $this->db->bind("qtd_area", $dados['tamArea']);
         $this->db->bind("qtd_quarto", $dados['qtdQuarto']);
         $this->db->bind("qtd_banheiro", $dados['qtdBanheiro']);
@@ -65,6 +74,7 @@ class Imoveis
         $this->db->bind("chk_aceita_pet", $dados['chkAceitaPet']);
         $this->db->bind("chk_mobilia", $dados['chkMobilia']);
         $this->db->bind("chk_metro_prox", $dados['chkMetroProx']);
+        $this->db->bind("fk_bairro", $dados['cboBairro']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
         $this->db->bind("fk_tipo_negociacao", $dados['cboTipoImovel']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
@@ -208,7 +218,7 @@ class Imoveis
 
 
         $this->db->query("UPDATE tb_imovel SET 
-        ds_end_imovel = :ds_end_imovel,
+        ds_rua_imovel = :ds_rua_imovel,
         qtd_area = :qtd_area,
         qtd_quarto = :qtd_quarto,
         qtd_banheiro = :qtd_banheiro,
@@ -217,6 +227,7 @@ class Imoveis
         chk_aceita_pet = :chk_aceita_pet,
         chk_mobilia = :chk_mobilia,
         chk_metro_prox = :chk_metro_prox,
+        fk_bairro = :fk_bairro,
         fk_tipo_imovel = :fk_tipo_imovel,
         fk_tipo_negociacao = :fk_tipo_negociacao,
         txt_escolas_colegios = :txt_escolas_colegios,
@@ -236,7 +247,7 @@ class Imoveis
         ds_email_proprietario = :ds_email_proprietario
         WHERE id_imovel = :id_imovel");
 
-        $this->db->bind("ds_end_imovel", $dados['txtEnderecoImovel']);
+        $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
         $this->db->bind("qtd_area", $dados['tamArea']);
         $this->db->bind("qtd_quarto", $dados['qtdQuarto']);
         $this->db->bind("qtd_banheiro", $dados['qtdBanheiro']);
@@ -245,6 +256,7 @@ class Imoveis
         $this->db->bind("chk_aceita_pet", $dados['chkAceitaPet']);
         $this->db->bind("chk_mobilia", $dados['chkMobilia']);
         $this->db->bind("chk_metro_prox", $dados['chkMetroProx']);
+        $this->db->bind("fk_bairro", $dados['cboBairro']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
         $this->db->bind("fk_tipo_negociacao", $dados['cboTipoNegociacao']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);

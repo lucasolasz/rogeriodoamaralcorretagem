@@ -29,6 +29,7 @@ class ImoveisController extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+        $bairros = $this->imovelModel->listarBairros();
 
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -39,7 +40,8 @@ class ImoveisController extends Controller
 
             $dados = [
                 // 'txtTituloImovel' => $formulario['txtTituloImovel'],
-                'txtEnderecoImovel' => $formulario['txtEnderecoImovel'],
+                'txtRuaImovel' => $formulario['txtRuaImovel'],
+                'cboBairro' => $formulario['cboBairro'],
                 'tamArea' => LimpaStringFloat::limparString($formulario['tamArea']),
                 'qtdQuarto' => LimpaStringFloat::limparString($formulario['qtdQuarto']),
                 'qtdBanheiro' => LimpaStringFloat::limparString($formulario['qtdBanheiro']),
@@ -66,7 +68,8 @@ class ImoveisController extends Controller
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
-                'caracteristicasCondominio' => $caracteristicasCondominio
+                'caracteristicasCondominio' => $caracteristicasCondominio,
+                'bairros' => $bairros
             ];
 
             //  var_dump($dados);
@@ -98,7 +101,8 @@ class ImoveisController extends Controller
         } else {
             $dados = [
                 // 'txtTituloImovel' => '',
-                'txtEnderecoImovel' => '',
+                'txtRuaImovel' => '',
+                'txtBairroImovel' => '',
                 'tamArea' => '',
                 'qtdQuarto' => '',
                 'qtdBanheiro' => '',
@@ -139,7 +143,8 @@ class ImoveisController extends Controller
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
-                'caracteristicasCondominio' => $caracteristicasCondominio
+                'caracteristicasCondominio' => $caracteristicasCondominio,
+                'bairros' => $bairros
 
             ];
         }
@@ -158,6 +163,7 @@ class ImoveisController extends Controller
         $fotosImovel = $this->imovelModel->lerFotosPorId($id);
         $relacionaCaracImovel = $this->imovelModel->caracImovelPorId($id);
         $relacionaCaracCondo = $this->imovelModel->caracCondoPorId($id);
+        $bairros = $this->imovelModel->listarBairros();
 
         // var_dump($imovel);
         // exit();
@@ -172,7 +178,8 @@ class ImoveisController extends Controller
 
             $dados = [
                 'chkFotoDestaque' => $formulario['chkFotoDestaque'],
-                'txtEnderecoImovel' => $formulario['txtEnderecoImovel'],
+                'txtRuaImovel' => $formulario['txtRuaImovel'],
+                'cboBairro' => $formulario['cboBairro'],
                 'tamArea' => LimpaStringFloat::limparString($formulario['tamArea']),
                 'qtdQuarto' => LimpaStringFloat::limparString($formulario['qtdQuarto']),
                 'qtdBanheiro' => LimpaStringFloat::limparString($formulario['qtdBanheiro']),
@@ -202,7 +209,8 @@ class ImoveisController extends Controller
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
-                'relacionaCaracCondo' => $relacionaCaracCondo
+                'relacionaCaracCondo' => $relacionaCaracCondo,
+                'bairros' => $bairros
 
             ];
 
@@ -234,6 +242,7 @@ class ImoveisController extends Controller
 
             $dados = [
                 'imovel' => $imovel,
+                'bairros' => $bairros,
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
@@ -241,6 +250,8 @@ class ImoveisController extends Controller
                 'fotosImovel' => $fotosImovel,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
                 'relacionaCaracCondo' => $relacionaCaracCondo,
+                'rua_imovel_erro' => '',
+                'bairro_imovel_erro' => '',
                 'tipoImovel_erro' => '',
                 'endereco_imovel_erro' => '',
                 'area_imovel_erro' => '',
