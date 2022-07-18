@@ -69,7 +69,7 @@ class ImoveisController extends Controller
                 'caracteristicasCondominio' => $caracteristicasCondominio
             ];
 
-            //  var_dump($formulario);
+            //  var_dump($dados);
             // exit();
 
             //Váriaveis com sintaxe ternária
@@ -166,7 +166,12 @@ class ImoveisController extends Controller
 
         if (isset($formulario)) {
 
+
+            // var_dump($formulario);
+            // exit();
+
             $dados = [
+                'chkFotoDestaque' => $formulario['chkFotoDestaque'],
                 'txtEnderecoImovel' => $formulario['txtEnderecoImovel'],
                 'tamArea' => LimpaStringFloat::limparString($formulario['tamArea']),
                 'qtdQuarto' => LimpaStringFloat::limparString($formulario['qtdQuarto']),
@@ -235,7 +240,24 @@ class ImoveisController extends Controller
                 'caracteristicasCondominio' => $caracteristicasCondominio,
                 'fotosImovel' => $fotosImovel,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
-                'relacionaCaracCondo' => $relacionaCaracCondo
+                'relacionaCaracCondo' => $relacionaCaracCondo,
+                'tipoImovel_erro' => '',
+                'endereco_imovel_erro' => '',
+                'area_imovel_erro' => '',
+                'qtd_quarto_erro' => '',
+                'qtd_banheiro_erro' => '',
+                'qtd_vagas_erro' => '',
+                'num_andar_erro' => '',
+                'tipoNegociacao_erro' => '',
+                'valor_aluguel_erro' => '',
+                'valor_venda_erro' => '',
+                'valor_condominio_erro' => '',
+                'valor_iptu_erro' => '',
+                'valor_seguro_incendio_erro' => '',
+                'taxa_servico_erro' => '',
+                'nome_proprietario_erro' => '',
+                'tel_proprietario_erro' => '',
+                'email_proprietario_erro' => ''
             ];
         }
 

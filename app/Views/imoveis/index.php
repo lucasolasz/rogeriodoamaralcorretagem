@@ -33,7 +33,7 @@
                         if (empty($dados['imoveis'])) { ?>
 
                             <tr>
-                                <td colspan="6" class="align-middle">Nenhuma Imóvel cadastrado</td>
+                                <td colspan="7" class="align-middle">Nenhuma Imóvel cadastrado</td>
                             </tr>
 
                         <?php  }
@@ -48,12 +48,12 @@
                                     <td></td>
                                 <?php } ?>                                
                                 <?php if (!$imoveis->mo_aluguel == NULL) { ?>
-                                    <td><?= "R$ " . (($imoveis->mo_aluguel) / 100) ?></td>
+                                    <td><?= "R$ " . number_format((($imoveis->mo_aluguel) / 100), 2, ",", ".") ?></td>
                                 <?php } else { ?>
                                     <td></td>
                                 <?php } ?>
                                 <?php if (!$imoveis->mo_venda == NULL) { ?>
-                                    <td><?= "R$ " . (($imoveis->mo_venda) / 100) ?></td>
+                                    <td><?= "R$ " . number_format((($imoveis->mo_venda) / 100), 2, ",", ".") ?></td>
                                 <?php } else { ?>
                                     <td></td>
                                 <?php } ?>

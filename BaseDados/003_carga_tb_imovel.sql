@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS tb_anexo(
     fk_imovel int unsigned DEFAULT NULL,
     nm_path_arquivo varchar(300) DEFAULT NULL,
     nm_arquivo varchar(300) DEFAULT NULL,
+    chk_destaque char(1) DEFAULT NULL,
     criado_em timestamp NOT NULL DEFAULT current_timestamp(),
     PRIMARY KEY (id_anexo),
     KEY fk_imovel_tb_imovel (fk_imovel),

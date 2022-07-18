@@ -11,7 +11,6 @@
         <div class="card-body">
             <h2 class="card-title">Edtiar Imóvel</h2>
             <small>Preencha o formulário abaixo para editar o imóvel</small>
-
             <hr>
 
             <form name="editar" method="POST" action="<?= URL . '/ImoveisController/editar/' . $dados['imovel']->id_imovel ?> " enctype="multipart/form-data">
@@ -24,6 +23,15 @@
                     <div class="text-center m-3">
                         <img src="<?= URL . DIRECTORY_SEPARATOR . $fotosImovel->nm_path_arquivo . DIRECTORY_SEPARATOR . $fotosImovel->nm_arquivo ?>" class="rounded img-fluid" alt="">
                         <a href="<?= URL . '/ImoveisController/deletarImagem/' . $fotosImovel->id_anexo ?>" class="btn btn-danger mt-1"> Excluir imagem <i class="bi bi-trash-fill"></i></a>
+                        <?php if ($fotosImovel->chk_destaque == 'S') { ?>
+                            <label class="form-check-label" for="chkFotoDestaque"> &nbsp&nbsp Foto Destaque
+                                <input class="form-check-input" type="radio" name="chkFotoDestaque" id="chkFotoDestaque" checked value="<?= $fotosImovel->id_anexo ?>">
+                            </label>
+                        <?php } else { ?>
+                            <label class="form-check-label" for="chkFotoDestaque"> &nbsp&nbsp Foto Destaque
+                                <input class="form-check-input" type="radio" name="chkFotoDestaque" id="chkFotoDestaque" value="<?= $fotosImovel->id_anexo ?>">
+                            </label>
+                        <?php } ?>
                     </div>
                 <?php } ?>
 
@@ -35,11 +43,11 @@
                         <?php foreach ($dados['tipoImovel'] as $tipoImovel) {
                             //Resgata valor do select 
                             $tipoImovelSelected = '';
-                            if ($tipoImovel->id_tipo_negociacao == $dados['cboTipoImovel']) {
+                            if ($tipoImovel->id_tipo_imovel == $dados['imovel']->fk_tipo_imovel) {
                                 $tipoImovelSelected = 'selected';
                             }
                         ?>
-                            <option value="<?= $tipoImovel->id_tipo_imovel ?>"><?= $tipoImovel->ds_tipo_imovel ?></option>
+                            <option value="<?= $tipoImovel->id_tipo_imovel ?>" <?= $tipoImovelSelected ?>><?= $tipoImovel->ds_tipo_imovel ?></option>
                         <?php } ?>
                     </select>
                     <div class="invalid-feedback"><?= $dados['tipoImovel_erro'] ?></div>
@@ -68,21 +76,21 @@
 
                 <div class="mb-3 mt-3">
                     <label for="qtdBanheiro" class="form-label">Quantidade banheiros:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="qtdBanheiro" id="qtdBanheiro" value="<?= $dados['imovel']->qtd_banheiro ?>">
+                    <input type="text" class="form-control <?= $dados['qtd_banheiro_erro'] ? 'is-invalid' : '' ?>" name="qtdBanheiro" id="qtdBanheiro" value="<?= $dados['imovel']->qtd_banheiro ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['qtd_banheiro_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="qtdVagas" class="form-label">Quantidade vagas:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="qtdVagas" id="qtdVagas" value="<?= $dados['imovel']->qtd_vagas ?>">
+                    <input type="text" class="form-control <?= $dados['qtd_vagas_erro'] ? 'is-invalid' : '' ?>" name="qtdVagas" id="qtdVagas" value="<?= $dados['imovel']->qtd_vagas ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['qtd_vagas_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="txtNumAndar" class="form-label">Número andar:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="txtNumAndar" id="txtNumAndar" value="<?= $dados['imovel']->num_andar ?>">
+                    <input type="text" class="form-control <?= $dados['num_andar_erro'] ? 'is-invalid' : '' ?>" name="txtNumAndar" id="txtNumAndar" value="<?= $dados['imovel']->num_andar ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['num_andar_erro'] ?></div>
                 </div>
@@ -192,7 +200,7 @@
                     Escolas ou colégios
                 </label>
                 <div class="form-floating">
-                    <textarea class="form-control" id="txtEscolaColegio" name="txtEscolaColegio" maxlength="500"><?= $dados['imovel']->txt_escolas_colegios ?></textarea>
+                    <textarea class="form-control txtarea" id="txtEscolaColegio" name="txtEscolaColegio" maxlength="500"><?= $dados['imovel']->txt_escolas_colegios ?></textarea>
                 </div>
 
                 <label class="form-check-label mt-3 mb-2" for="txtFaculdades">
@@ -248,42 +256,54 @@
 
                 <div class="mb-3 mt-3">
                     <label for="moValorAluguel" class="form-label">Valor Aluguel:</label>
-                    <input type="text" class="money form-control <?= $dados['valor_aluguel_erro'] ? 'is-invalid' : '' ?>" name="moValorAluguel" id="moValorAluguel" value="<?php if(!$dados['imovel']->mo_aluguel == ""){ echo (($dados['imovel']->mo_aluguel) / 100);} ?>" disabled>
+                    <input type="text" class="money form-control <?= $dados['valor_aluguel_erro'] ? 'is-invalid' : '' ?>" name="moValorAluguel" id="moValorAluguel" value="<?php if (!$dados['imovel']->mo_aluguel == "") {
+                                                                                                                                                                                echo number_format((($dados['imovel']->mo_aluguel) / 100), 2, ",", ".");
+                                                                                                                                                                            } ?>" disabled>
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['valor_aluguel_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="moValorVenda" class="form-label">Valor Venda:</label>
-                    <input type="text" class="money form-control <?= $dados['valor_venda_erro'] ? 'is-invalid' : '' ?>" name="moValorVenda" id="moValorVenda" value="<?php if(!$dados['imovel']->mo_venda == ""){ echo (($dados['imovel']->mo_venda) / 100);} ?>" disabled>
+                    <input type="text" class="money form-control <?= $dados['valor_venda_erro'] ? 'is-invalid' : '' ?>" name="moValorVenda" id="moValorVenda" value="<?php if (!$dados['imovel']->mo_venda == "") {
+                                                                                                                                                                            echo number_format((($dados['imovel']->mo_venda) / 100), 2, ",", ".");
+                                                                                                                                                                        } ?>" disabled>
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['valor_venda_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="moValorCondominio" class="form-label">Valor Condomínio:</label>
-                    <input type="text" class="money form-control <?= $dados['valor_condominio_erro'] ? 'is-invalid' : '' ?>" name="moValorCondominio" id="moValorCondominio" value="<?php if(!$dados['imovel']->mo_condominio == "") { echo (($dados['imovel']->mo_condominio) / 100);} ?>">
+                    <input type="text" class="money form-control <?= $dados['valor_condominio_erro'] ? 'is-invalid' : '' ?>" name="moValorCondominio" id="moValorCondominio" value="<?php if (!$dados['imovel']->mo_condominio == "") {
+                                                                                                                                                                                        echo number_format((($dados['imovel']->mo_condominio) / 100), 2, ",", ".");
+                                                                                                                                                                                    } ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['valor_condominio_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="moValorIptu" class="form-label">Valor IPTU:</label>
-                    <input type="text" class="money form-control <?= $dados['valor_iptu_erro'] ? 'is-invalid' : '' ?>" name="moValorIptu" id="moValorIptu" value="<?php if(!$dados['imovel']->mo_iptu == "") { echo (($dados['imovel']->mo_iptu) / 100);} ?>">
+                    <input type="text" class="money form-control <?= $dados['valor_iptu_erro'] ? 'is-invalid' : '' ?>" name="moValorIptu" id="moValorIptu" value="<?php if (!$dados['imovel']->mo_iptu == "") {
+                                                                                                                                                                        echo number_format((($dados['imovel']->mo_iptu) / 100), 2, ",", ".");
+                                                                                                                                                                    } ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['valor_iptu_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="moValorSeguroIncendio" class="form-label">Valor Seguro Incendio:</label>
-                    <input type="text" class="money form-control <?= $dados['valor_seguro_incendio_erro'] ? 'is-invalid' : '' ?>" name="moValorSeguroIncendio" id="moValorSeguroIncendio" value="<?php if(!$dados['imovel']->mo_seguro_incendio == ""){ echo (($dados['imovel']->mo_seguro_incendio) / 100); }?>">
+                    <input type="text" class="money form-control <?= $dados['valor_seguro_incendio_erro'] ? 'is-invalid' : '' ?>" name="moValorSeguroIncendio" id="moValorSeguroIncendio" value="<?php if (!$dados['imovel']->mo_seguro_incendio == "") {
+                                                                                                                                                                                                        echo number_format((($dados['imovel']->mo_seguro_incendio) / 100), 2, ",", ".");
+                                                                                                                                                                                                    } ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['valor_seguro_incendio_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="moTaxaServico" class="form-label">Valor Taxa Serviço:</label>
-                    <input type="text" class="money form-control <?= $dados['taxa_servico_erro'] ? 'is-invalid' : '' ?>" name="moTaxaServico" id="moTaxaServico" value="<?php if(!$dados['imovel']->mo_taxa_de_servico == "") { echo (($dados['imovel']->mo_taxa_de_servico) / 100);} ?>">
+                    <input type="text" class="money form-control <?= $dados['taxa_servico_erro'] ? 'is-invalid' : '' ?>" name="moTaxaServico" id="moTaxaServico" value="<?php if (!$dados['imovel']->mo_taxa_de_servico == "") {
+                                                                                                                                                                            echo number_format((($dados['imovel']->mo_taxa_de_servico) / 100), 2, ",", ".");
+                                                                                                                                                                        } ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['taxa_servico_erro'] ?></div>
                 </div>
@@ -366,7 +386,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="submit" value="Cadastrar" class="btn btn-primary">
+                        <input type="submit" value="Salvar Edição" class="btn btn-primary">
                     </div>
                 </div>
             </form>

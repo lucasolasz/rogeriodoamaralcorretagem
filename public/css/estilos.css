@@ -1,3 +1,15 @@
 .btnHome {
     margin: 0;
 }
+
+.transparente{
+    color: gray;
+}
+
+.total{
+    color: green;
+}
+
+.txtarea {
+    height: 150px !important; 
+}

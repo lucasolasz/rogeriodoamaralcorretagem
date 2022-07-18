@@ -164,15 +164,23 @@ class Imoveis
 
                 if ($upload->getResultado()) {
 
-                    // $nomeArquivo = $upload->getResultado();
-                    // $pathArquivo = $destination_img;
-
-                    $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
-                    $this->db->bind("fk_imovel", $proximoIdImovel);
-                    $this->db->bind("nm_path_arquivo", $novoDiretorio);
-                    $this->db->bind("nm_arquivo", $nomeArquivo);
-                    if (!$this->db->executa()) {
-                        $armazenarErro = true;
+                    if ($i == 0) {
+                        $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
+                        $this->db->bind("fk_imovel", $proximoIdImovel);
+                        $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                        $this->db->bind("nm_arquivo", $nomeArquivo);
+                        $this->db->bind("chk_destaque", "S");
+                        if (!$this->db->executa()) {
+                            $armazenarErro = true;
+                        }
+                    } else {
+                        $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                        $this->db->bind("fk_imovel", $proximoIdImovel);
+                        $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                        $this->db->bind("nm_arquivo", $nomeArquivo);
+                        if (!$this->db->executa()) {
+                            $armazenarErro = true;
+                        }
                     }
                 } else {
                     echo $upload->getErro();
@@ -193,7 +201,7 @@ class Imoveis
     {
 
 
-        // var_dump($dados);
+        // var_dump($dados['chkFotoDestaque']);
         // exit();
 
         $atualizarErro = false;
@@ -238,7 +246,7 @@ class Imoveis
         $this->db->bind("chk_mobilia", $dados['chkMobilia']);
         $this->db->bind("chk_metro_prox", $dados['chkMetroProx']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
-        $this->db->bind("fk_tipo_negociacao", $dados['cboTipoImovel']);
+        $this->db->bind("fk_tipo_negociacao", $dados['cboTipoNegociacao']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
         $this->db->bind("txt_transporte_publico", $dados['txtTransportePublico']);
         $this->db->bind("txt_faculdades", $dados['txtFaculdades']);
@@ -300,6 +308,22 @@ class Imoveis
             }
         }
 
+        if (!$dados['chkFotoDestaque'] == "") {
+
+            $this->db->query("UPDATE tb_anexo SET chk_destaque = :chk_destaque WHERE fk_imovel = :fk_imovel ");
+            $this->db->bind("chk_destaque", NULL);
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            $this->db->query("UPDATE tb_anexo SET chk_destaque = :chk_destaque WHERE id_anexo = :id_anexo ");
+            $this->db->bind("chk_destaque", "S");
+            $this->db->bind("id_anexo", $dados['chkFotoDestaque']);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+        }
 
         //Realiza as operações de anexo, se houver anexo
         if (!$dados['fileFotos'] == "") {
@@ -351,6 +375,8 @@ class Imoveis
 
                     // $nomeArquivo = $upload->getResultado();
                     // $pathArquivo = $destination_img;
+
+
 
                     $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
                     $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
@@ -520,5 +546,12 @@ class Imoveis
         $this->db->bind("id_anexo", $id);
 
         return $this->db->resultado();
+    }
+
+    public function lerAnexos()
+    {
+        $this->db->query("SELECT * FROM tb_anexo");
+
+        return $this->db->resultados();
     }
 }
