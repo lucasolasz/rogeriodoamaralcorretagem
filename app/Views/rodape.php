@@ -8,3 +8,7 @@
         </small>
     </div>
 </footer>
+
+</body>
+
+</html>

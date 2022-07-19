@@ -18,6 +18,6 @@ class Controller
         } else {
             die('O arquivo de view não existe!');
         }
-        include APP . '/views/rodape.php';
+        include APP . '/Views/rodape.php';
     }
 }

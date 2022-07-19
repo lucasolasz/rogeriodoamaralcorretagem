@@ -154,7 +154,9 @@ class Imoveis
                 $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
 
                 //Cria pasta dos arquivos individualmente de acordo com id
-                mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
+                if(!file_exists($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo)) {
+                    mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
+                }                
                 $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
 
                 //Monta o diretorio destino da pagina comprimida
@@ -509,6 +511,8 @@ class Imoveis
     {
         $id_imovel = $dados['id_imovel'];
 
+        $deletarErro = false;
+
         if (!$dados['infoImovel'] == "") {
 
             // $id_imovel = $dados['infoImovel'][0]->fk_imovel;
@@ -516,8 +520,6 @@ class Imoveis
 
             // var_dump($pastaPrincipal);
             // exit();
-
-            $deletarErro = false;
 
             foreach ($dados['infoImovel'] as $infoImovel) {
 
