@@ -35,7 +35,7 @@ class ImoveisController extends Controller
 
         if (isset($formulario)) {
 
-            // var_dump($formulario);
+            // var_dump($formulario['cboTipoNegociacao']);
             // exit();
 
             $dados = [
@@ -117,6 +117,8 @@ class ImoveisController extends Controller
                 'txtEntretenimento' => '',
                 'txtHospitais' => '',
                 'txtParqueAreasVerdes' => '',
+                'cboTipoImovel' => '',
+                'cboTipoNegociacao' => '',
                 'moValorAluguel' => '',
                 'moValorVenda' => '',
                 'moValorCondominio' => '',
@@ -125,9 +127,9 @@ class ImoveisController extends Controller
                 'moTaxaServico' => '',
                 'txtNomeProprietario' => '',
                 'txtTelProprietario' => '',
-                'txtEmailProprietario' => '',
-                'titulo_imovel_erro' => '',
-                'endereco_imovel_erro' => '',
+                'txtEmailProprietario' => '', 
+                'tipoImovel_erro' => '',               
+                'rua_imovel_erro' => '',
                 'area_imovel_erro' => '',
                 'qtd_quarto_erro' => '',
                 'qtd_banheiro_erro' => '',

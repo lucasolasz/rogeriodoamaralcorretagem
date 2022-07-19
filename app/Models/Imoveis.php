@@ -28,7 +28,7 @@ class Imoveis
         $this->db->query("SELECT * FROM tb_bairros ORDER BY ds_bairro");
         return $this->db->resultados();
     }
-    
+
 
     public function listarTipoImovel()
     {
@@ -55,11 +55,11 @@ class Imoveis
     }
 
     public function armazenarImovel($dados)
-    {
-
-
-        // var_dump($dados);
+    {   
+        
+        // var_dump($dados['cboTipoNegociacao']);
         // exit();
+
         $armazenarErro = false;
 
 
@@ -76,7 +76,7 @@ class Imoveis
         $this->db->bind("chk_metro_prox", $dados['chkMetroProx']);
         $this->db->bind("fk_bairro", $dados['cboBairro']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
-        $this->db->bind("fk_tipo_negociacao", $dados['cboTipoImovel']);
+        $this->db->bind("fk_tipo_negociacao", $dados['cboTipoNegociacao']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
         $this->db->bind("txt_transporte_publico", $dados['txtTransportePublico']);
         $this->db->bind("txt_faculdades", $dados['txtFaculdades']);
@@ -127,7 +127,7 @@ class Imoveis
 
 
         //Realiza as operações de anexo, se houver anexo
-        if (!$dados['fileFotos'] == "") {
+        if (!$dados['fileFotos']['name'][0] == "") {
 
             $pastaArquivo = "imovel_id_" . $proximoIdImovel;
             $upload = new Upload();
@@ -196,7 +196,22 @@ class Imoveis
                     echo $upload->getErro();
                 }
             }
-        }
+        } 
+        // else {
+
+        //     //Salva com imagem branca padrão caso nao haja foto 
+        //     $pathImgPadrao = 'img' . DIRECTORY_SEPARATOR;
+        //     $nomeImgPadrao = 'imovelblank.png';
+
+        //     $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
+        //     $this->db->bind("fk_imovel", $proximoIdImovel);
+        //     $this->db->bind("nm_path_arquivo", $pathImgPadrao);
+        //     $this->db->bind("nm_arquivo", $nomeImgPadrao);
+        //     $this->db->bind("chk_destaque", "S");
+        //     if (!$this->db->executa()) {
+        //         $armazenarErro = true;
+        //     }
+        // }
 
 
         if ($armazenarErro) {
@@ -436,6 +451,21 @@ class Imoveis
     {
 
         $this->db->query("SELECT * FROM tb_imovel WHERE id_imovel = :id_imovel");
+
+        $this->db->bind("id_imovel", $id);
+
+        return $this->db->resultado();
+    }
+
+    public function lerImovelSelecionadoPorId($id)
+    {
+
+        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao, tba.ds_bairro FROM tb_imovel im
+        LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
+        LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
+        WHERE im.id_imovel = :id_imovel
+        ORDER BY im.publicado_em DESC");
 
         $this->db->bind("id_imovel", $id);
 

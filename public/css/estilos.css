@@ -2,14 +2,47 @@
     margin: 0;
 }
 
-.transparente{
+.transparente {
     color: gray;
 }
 
-.total{
+.total {
     color: green;
 }
 
-.txtarea {
-    height: 150px !important; 
+
+.valores {
+    /* position: fixed; */
+    box-shadow: 0px 0px 9px 2px #858585;
 }
+
+.list-inline .valor {
+    float: right;
+}
+
+.txtarea {
+    height: 150px !important;
+}
+
+.fm-slider-item {
+    justify-content: center !important;
+}
+
+.teste {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.coluna {
+    height: 300px;
+    display: inline-block;
+
+}
+
+/* 
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+} */

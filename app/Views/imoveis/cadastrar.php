@@ -22,7 +22,7 @@
                         <?php foreach ($dados['tipoImovel'] as $tipoImovel) {
                             //Resgata valor do select 
                             $tipoImovelSelected = '';
-                            if ($tipoImovel->id_tipo_negociacao == $dados['cboTipoImovel']) {
+                            if ($tipoImovel->id_tipo_imovel == $dados['cboTipoImovel']) {
                                 $tipoImovelSelected = 'selected';
                             }
                         ?>
@@ -70,21 +70,21 @@
 
                 <div class="mb-3 mt-3">
                     <label for="qtdBanheiro" class="form-label">Quantidade banheiros:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="qtdBanheiro" id="qtdBanheiro" value="<?= $dados['qtdBanheiro'] ?>">
+                    <input type="text" class="form-control <?= $dados['qtd_banheiro_erro'] ? 'is-invalid' : '' ?>" name="qtdBanheiro" id="qtdBanheiro" value="<?= $dados['qtdBanheiro'] ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['qtd_banheiro_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="qtdVagas" class="form-label">Quantidade vagas:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="qtdVagas" id="qtdVagas" value="<?= $dados['qtdVagas'] ?>">
+                    <input type="text" class="form-control <?= $dados['qtd_vagas_erro'] ? 'is-invalid' : '' ?>" name="qtdVagas" id="qtdVagas" value="<?= $dados['qtdVagas'] ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['qtd_vagas_erro'] ?></div>
                 </div>
 
                 <div class="mb-3 mt-3">
                     <label for="txtNumAndar" class="form-label">Número andar:</label>
-                    <input type="text" class="form-control <?= $dados['titulo_imovel_erro'] ? 'is-invalid' : '' ?>" name="txtNumAndar" id="txtNumAndar" value="<?= $dados['txtNumAndar'] ?>">
+                    <input type="text" class="form-control <?= $dados['num_andar_erro'] ? 'is-invalid' : '' ?>" name="txtNumAndar" id="txtNumAndar" value="<?= $dados['txtNumAndar'] ?>">
                     <!-- Div para exibir o erro abaixo do campo -->
                     <div class="invalid-feedback"><?= $dados['num_andar_erro'] ?></div>
                 </div>
@@ -194,7 +194,7 @@
                     Escolas ou colégios
                 </label>
                 <div class="form-floating">
-                    <textarea class="form-control" id="txtEscolaColegio" name="txtEscolaColegio" maxlength="500"><?= $dados['txtEscolaColegio'] ?></textarea>
+                    <textarea class="form-control txtarea" id="txtEscolaColegio" name="txtEscolaColegio" maxlength="500"><?= $dados['txtEscolaColegio'] ?></textarea>
                 </div>
 
                 <label class="form-check-label mt-3 mb-2" for="txtFaculdades">

@@ -13,15 +13,21 @@
 
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php foreach ($dados['imovel'] as $imovel) { ?>
+            <?php foreach ($dados['imovel'] as $imovel) {
+
+            ?>
                 <div class="col">
                     <div class="card h-100">
                         <div id="<?= 'carousel' . $imovel->id_imovel ?>" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
 
-                                <?php foreach ($dados['anexos'] as $anexos) {
+                                <?php
+                                $temAnexo = false;
+
+                                foreach ($dados['anexos'] as $anexos) {
 
                                     if ($anexos->fk_imovel == $imovel->id_imovel) {
+                                        $temAnexo = true;
                                         if ($anexos->chk_destaque == 'S') {
                                             echo "<div class='carousel-item active'><img src='" . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100' alt=''></div>";
                                         } else {
@@ -30,6 +36,12 @@
                                         }
                                     }
                                 }
+
+                                //Salva com imagem branca padrão caso nao haja foto 
+                                if (!$temAnexo) {
+                                    echo "<div class='carousel-item active'><img src='img\imovelBlank.png' class='d-block w-100' alt=''></div>";
+                                }
+
                                 ?>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="<?= '#carousel' . $imovel->id_imovel ?>" data-bs-slide="prev">
@@ -42,7 +54,7 @@
                             </button>
                         </div>
                         <!-- <img src="uploads\imovel_id_37\IMG_0010_62d2f2e474e8d.jpg" class="" alt=""> -->
-                        <a href="<?=$imovel->id_imovel?>" class="btn text-start">
+                        <a href="<?= URL . '/Paginas/imovelSelecionado/' . $imovel->id_imovel ?>" class="btn text-start">
                             <div class="card-body">
                                 <small><?= $imovel->ds_tipo_imovel ?></small>
                                 <h5 class="card-title mt-3 mb-0"><?= ucfirst($imovel->ds_rua_imovel) ?></h5>
@@ -55,35 +67,23 @@
                                 <?php
                                 if ($imovel->fk_tipo_negociacao == 1) {
 
-                                    $venda = (int)$imovel->mo_venda;
-                                    $condominio = (int)$imovel->mo_condominio;
-                                    $iptu = (int)$imovel->mo_iptu;
-                                    $incendio = (int)$imovel->mo_seguro_incendio;
-                                    $servico = (int)$imovel->mo_taxa_de_servico;
+                                    $venda = (int)$imovel->mo_venda / 100;
+                                    $condominio = (int)$imovel->mo_condominio / 100;
+                                    $iptu = (int)$imovel->mo_iptu / 100;
 
-                                    $totalVenda = (($venda + $condominio + $iptu + $incendio + $servico) / 100);
-
-
+                                    $totalVenda = ($venda + $condominio + $iptu);
                                     echo "<p class='card-text mb-1'>" . $imovel->ds_tipo_negociacao . " R$ " . number_format($venda, 2, ",", ".") . "</p>";
                                     echo "<small class='total'> Total R$ " . number_format($totalVenda, 2, ",", ".") . "</small>";
                                 } else {
 
-                                    $aluguel = ((int)$imovel->mo_aluguel) / 100;
-                                    $condominio = (int)$imovel->mo_condominio;
-                                    $iptu = (int)$imovel->mo_iptu;
-                                    $incendio = (int)$imovel->mo_seguro_incendio;
-                                    $servico = (int)$imovel->mo_taxa_de_servico;
+                                    $aluguel = (int)$imovel->mo_aluguel / 100;
+                                    $condominio = (int)$imovel->mo_condominio / 100;
+                                    $iptu = (int)$imovel->mo_iptu / 100;
+                                    $incendio = (int)$imovel->mo_seguro_incendio / 100;
+                                    $servico = (int)$imovel->mo_taxa_de_servico / 100;
 
-
-                                    // echo $incendio . "<br>";
-                                    // echo $servico . "<br>";
-                                    // echo $aluguel . "<br>";
-                                    // echo $incendio + $servico + $aluguel;
-                                    // exit();
                                     $totalAluguel = ($aluguel + $condominio + $iptu + $incendio + $servico);
-                                    // echo $totalAluguel;
-                                    // echo "<p class='card-text'>" . $imovel->ds_tipo_negociacao . " R$ " . $totalAluguel . "</p>";
-                                    echo "<p class='card-text mb-1'>" . $imovel->ds_tipo_negociacao . " R$ " . number_format(($aluguel), 2, ",", ".") . "</p>";
+                                    echo "<p class='card-text mb-1'>" . $imovel->ds_tipo_negociacao . " R$ " . number_format($aluguel, 2, ",", ".") . "</p>";
                                     echo "<small class='total'> Total R$ " . number_format($totalAluguel, 2, ",", ".") . "</small>";
                                 }
 
