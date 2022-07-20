@@ -14,4 +14,4 @@ define('URL', '/rogeriodoamaralcorretagem');
 
 define('APP_NOME', 'Rogério do Amaral - Corretagem');
 
-define('APP_VERSAO', '1.1.1');
+define('APP_VERSAO', '1.2.1');

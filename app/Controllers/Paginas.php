@@ -37,8 +37,8 @@ class Paginas extends Controller
         $caracCondo = $this->imovelModel->listarCaracteristicasCondominio();
         $caracImovel = $this->imovelModel->listarCaracteristicasImovel();
 
-         //Parâmetros enviados para o método do controller VIEW
-         $dados = [
+        //Parâmetros enviados para o método do controller VIEW
+        $dados = [
             'imovel' => $imovel,
             'anexos' => $anexos,
             'relacCaracImovel' => $relacCaracImovel,
@@ -49,9 +49,89 @@ class Paginas extends Controller
         ];
 
 
-         //Chamada do novo objeto PAGINAS 
-         $this->view('paginas/imovelSelecionado', $dados);
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/imovelSelecionado', $dados);
     }
+
+
+    public function agendamentoImovel($id)
+    {
+
+        $imovel = $this->imovelModel->lerImovelSelecionadoPorId($id);
+
+        //Parâmetros enviados para o método do controller VIEW
+        $dados = [
+            'imovel' => $imovel,
+
+        ];
+
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/agendamentoImovel', $dados);
+    }
+
+    public function confirmaAgendamento($id)
+    {
+
+        $imovel = $this->imovelModel->lerImovelSelecionadoPorId($id);
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) {
+
+            //Parâmetros enviados para o método do controller VIEW
+            $dados = [
+                'imovel' => $imovel,
+                'txtDataVisita' => $formulario['txtDataVisita'],
+                'txtHoraVisita' => $formulario['txtHoraVisita']
+            ];
+        } else {
+
+            $dados = [
+                'imovel' => $imovel
+            ];
+        }
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/confirmaAgendamento', $dados);
+    }
+
+    public function envioContato($id)
+    {
+
+        $imovel = $this->imovelModel->lerImovelSelecionadoPorId($id);
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) {
+
+            $dados = [
+                'imovel' => $imovel,
+                'txtDataHidden' => $formulario['txtDataHidden'],
+                'txtHoraHidden' => $formulario['txtHoraHidden'],
+                'txtNomeContato' => $formulario['txtNomeContato'],
+                'txtEmailContato' => $formulario['txtEmailContato'],
+                'txtTelefoneContato' => $formulario['txtTelefoneContato']
+            ];  
+
+
+        } else {
+            //Parâmetros enviados para o método do controller VIEW
+            $dados = [
+                'imovel' => $imovel,
+
+            ];
+        }
+
+
+
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/envioContato', $dados);
+    }
+
+
+
 
 
     public function sobre()

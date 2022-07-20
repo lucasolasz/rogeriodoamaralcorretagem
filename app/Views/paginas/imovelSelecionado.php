@@ -29,6 +29,12 @@
     </div>
     <div class="row g-5">
         <div class="col-md-8">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?= URL ?>/Paginas">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Imóvel <?= '#00' . $dados['imovel']->id_imovel ?> </li>
+                </ol>
+            </nav>
             <ul class="list-inline">
                 <li class="list-inline-item transparente">
                     <a href="#" class="btn btn-dark mt-1"><span> <i class="fa-solid fa-image"></i></span> Fotos</a>
@@ -347,7 +353,7 @@
                         </div>
                     </div>
                 <?php } ?>
-                
+
             </article>
         </div>
 
@@ -397,9 +403,12 @@
                             <h4><?= 'R$ ' . number_format($totalAluguel, 2, ",", ".") ?></h4>
                         </li>
                     </ol>
-                    <div class="d-grid gap-2 mt-5">
-                        <button class="btn btn-primary" type="button">Agendar visita</button>
-                    </div>
+
+                    <a href="<?= URL . '/Paginas/agendamentoImovel/' . $dados['imovel']->id_imovel ?>" class="text-start">
+                        <div class="d-grid gap-2 mt-5">
+                            <button class="btn btn-primary" type="button">Agendar visita</button>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
