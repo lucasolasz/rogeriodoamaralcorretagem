@@ -10,7 +10,7 @@
     <link href="<?= URL ?>/public/css/estilos.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?= URL . '/public/img/favico.png' ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -48,6 +48,20 @@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="<?= URL ?>">Home</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Buscar Imóveis</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelAluguel'?>">Imóveis para alugar</a></li>
+                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelVenda'?>">Imóveis para comprar</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= URL . '/Paginas/contato' ?>">Contato</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= URL . '/Paginas/sobre' ?>">Sobre nós</a>
+                            </li>
                             <?php if (isset($_SESSION['id_usuario'])) { ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Cadastro</a>
@@ -57,12 +71,6 @@
                                     </ul>
                                 </li>
                             <?php } ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= URL . '/Paginas/contato' ?>">Contato</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= URL . '/Paginas/sobre' ?>">Sobre nós</a>
-                            </li>                            
                         </ul>
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
                             <span class="">

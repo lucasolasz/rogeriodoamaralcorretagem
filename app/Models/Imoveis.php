@@ -199,24 +199,7 @@ class Imoveis
                     echo $upload->getErro();
                 }
             }
-        } 
-        // else {
-
-        //     //Salva com imagem branca padrão caso nao haja foto 
-        //     $pathImgPadrao = 'img' . DIRECTORY_SEPARATOR;
-        //     $nomeImgPadrao = 'imovelblank.png';
-
-        //     $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
-        //     $this->db->bind("fk_imovel", $proximoIdImovel);
-        //     $this->db->bind("nm_path_arquivo", $pathImgPadrao);
-        //     $this->db->bind("nm_arquivo", $nomeImgPadrao);
-        //     $this->db->bind("chk_destaque", "S");
-        //     if (!$this->db->executa()) {
-        //         $armazenarErro = true;
-        //     }
-        // }
-
-
+        }        
         if ($armazenarErro) {
             return false;
         } else {
@@ -601,4 +584,34 @@ class Imoveis
 
         return $this->db->resultados();
     }
+
+
+
+    public function listarImoveisAluguel()
+    {
+        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao, tba.ds_bairro FROM tb_imovel im
+        LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
+        LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
+        WHERE im.fk_tipo_negociacao = 2
+        ORDER BY im.publicado_em DESC");
+
+        return $this->db->resultados();
+    }
+
+    public function listarImoveisCompra()
+    {
+        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao, tba.ds_bairro FROM tb_imovel im
+        LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
+        LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
+        WHERE im.fk_tipo_negociacao = 1
+        ORDER BY im.publicado_em DESC");
+
+        return $this->db->resultados();
+    }
+
+
+
+
 }

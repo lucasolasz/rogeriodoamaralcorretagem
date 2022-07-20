@@ -55,9 +55,14 @@
 
 }
 
-/* 
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-} */
+
+.tamanho-padrao{
+    height: 480px;
+    width: 640px;
+}
+
+
+.tamanho-padrao-card{
+    height: 300px;
+    width: 400px;
+}

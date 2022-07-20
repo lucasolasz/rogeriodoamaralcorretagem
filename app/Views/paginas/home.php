@@ -1,7 +1,7 @@
 <div class="container p-5">
     <div class="row">
 
-        <!-- <pre><?php var_dump($dados['imovel']) ?></pre> -->
+        <!-- <pre><?php var_dump($dados['anexos']) ?></pre> -->
         <!-- <span><i class="fa-solid fa-sliders-simple"></span></i> -->
 
         <ul class="list-inline mt-3">
@@ -9,6 +9,9 @@
                 <a href="#" class="btn btn-dark mt-1"><span> <i class="fa-solid fa-sliders"></i></span> Filtros</a>
             </li>
         </ul>
+
+
+        
 
 
 
@@ -29,17 +32,16 @@
                                     if ($anexos->fk_imovel == $imovel->id_imovel) {
                                         $temAnexo = true;
                                         if ($anexos->chk_destaque == 'S') {
-                                            echo "<div class='carousel-item active'><img src='" . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100' alt=''></div>";
+                                            echo "<div class='carousel-item active'><img src='" . URL . DIRECTORY_SEPARATOR . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100 tamanho-padrao-card' alt=''></div>";
                                         } else {
 
-                                            echo "<div class='carousel-item'><img src='" . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100' alt=''></div>";
+                                            echo "<div class='carousel-item'><img src='" . URL . DIRECTORY_SEPARATOR . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100 tamanho-padrao-card' alt=''></div>";
                                         }
                                     }
                                 }
-
-                                //Salva com imagem branca padrão caso nao haja foto 
+                                //Salva com imagem branca padrão caso nao haja foto                                
                                 if (!$temAnexo) {
-                                    echo "<div class='carousel-item active'><img src='img\imovelBlank.png' class='d-block w-100' alt=''></div>";
+                                    echo "<div class='carousel-item active'><img src='" . URL . "\img\imovelBlank.png' class='d-block w-100' alt=''></div>";
                                 }
 
                                 ?>
@@ -53,7 +55,7 @@
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-                        <!-- <img src="uploads\imovel_id_37\IMG_0010_62d2f2e474e8d.jpg" class="" alt=""> -->
+
                         <a href="<?= URL . '/Paginas/imovelSelecionado/' . $imovel->id_imovel ?>" class="btn text-start">
                             <div class="card-body">
                                 <small><?= $imovel->ds_tipo_imovel ?></small>

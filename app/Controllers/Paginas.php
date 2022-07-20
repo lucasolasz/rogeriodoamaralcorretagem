@@ -26,6 +26,40 @@ class Paginas extends Controller
         $this->view('paginas/home', $dados);
     }
 
+    public function imovelAluguel()
+    {
+
+        $imovel = $this->imovelModel->listarImoveisAluguel();
+        $anexos = $this->imovelModel->lerAnexos();
+
+        //Parâmetros enviados para o método do controller VIEW
+        $dados = [
+            'imovel' => $imovel,
+            'anexos' => $anexos
+        ];
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/home', $dados);
+    }
+
+
+    public function imovelVenda()
+    {
+
+        $imovel = $this->imovelModel->listarImoveisCompra();
+        $anexos = $this->imovelModel->lerAnexos();
+
+        //Parâmetros enviados para o método do controller VIEW
+        $dados = [
+            'imovel' => $imovel,
+            'anexos' => $anexos
+        ];
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/home', $dados);
+    }
+
+
 
     public function imovelSelecionado($id)
     {
