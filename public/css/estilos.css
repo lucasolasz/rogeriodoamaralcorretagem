@@ -16,8 +16,19 @@
     box-shadow: 0px 0px 9px 2px #858585;
 }
 
-.quadrado{
+.quadrado-whats {
     border: 1px solid black;
+    background-color: rgb(18, 140, 126);
+}
+
+.whats {
+    height: 100px;
+    width: 100px;
+}
+
+.quadrado {
+    border: 1px solid black;
+
 }
 
 .list-inline .valor {

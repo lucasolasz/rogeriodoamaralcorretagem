@@ -58,8 +58,11 @@
                                 </li>
                             <?php } ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= URL . '/Paginas/sobre' ?>">Sobre nós</a>
+                                <a class="nav-link" href="<?= URL . '/Paginas/contato' ?>">Contato</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= URL . '/Paginas/sobre' ?>">Sobre nós</a>
+                            </li>                            
                         </ul>
                         <?php if (isset($_SESSION['id_usuario'])) { ?>
                             <span class="">

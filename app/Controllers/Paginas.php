@@ -112,9 +112,7 @@ class Paginas extends Controller
                 'txtNomeContato' => $formulario['txtNomeContato'],
                 'txtEmailContato' => $formulario['txtEmailContato'],
                 'txtTelefoneContato' => $formulario['txtTelefoneContato']
-            ];  
-
-
+            ];
         } else {
             //Parâmetros enviados para o método do controller VIEW
             $dados = [
@@ -123,15 +121,19 @@ class Paginas extends Controller
             ];
         }
 
-
-
-
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/envioContato', $dados);
     }
 
 
+    public function contato()
+    {
+        //Parâmetros enviados para o método do controller VIEW
+        $dados = [ ];
 
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/contato', $dados);
+    }
 
 
     public function sobre()
