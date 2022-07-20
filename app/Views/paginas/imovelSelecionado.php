@@ -354,6 +354,21 @@
                     </div>
                 <?php } ?>
 
+                <?php if (!$dados['imovel']->txt_shopping == "") { ?>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <h5><i class="fa-solid fa-bag-shopping fa-lg"></i><b>&nbsp&nbsp&nbsp&nbspShoppings</b></h5>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p style="margin-left: 7vh;" class="transparente"> <?= $dados['imovel']->txt_shopping ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
             </article>
         </div>
 
@@ -374,35 +389,63 @@
         <div class="col-md-4">
             <div class="position-sticky" style="top: 2rem;">
                 <div class="p-4 mb-3 bg-light rounded">
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente"><?= $dados['imovel']->ds_tipo_negociacao ?></li>
-                        <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_aluguel / 100 ?></li>
-                    </ol>
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente">Condomínio</li>
-                        <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_condominio / 100 ?></li>
-                    </ol>
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente">IPTU</li>
-                        <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_iptu / 100 ?></li>
-                    </ol>
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente">Seguro incêndio</li>
-                        <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_seguro_incendio / 100 ?></li>
-                    </ol>
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente">Taxa de serviço</li>
-                        <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_taxa_de_servico / 100 ?></li>
-                    </ol>
+                    <?php if ($dados['imovel']->fk_tipo_negociacao == "1") { ?>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente"><?= $dados['imovel']->ds_tipo_negociacao ?></li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_venda / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Condomínio</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_condominio / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">IPTU</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_iptu / 100 ?></li>
+                        </ol>
 
-                    <hr>
+                        <hr>
 
-                    <ol class="list-unstyled mb-3 list-inline">
-                        <li class="list-inline-item transparente">Total</li>
-                        <li class="list-inline-item valor">
-                            <h4><?= 'R$ ' . number_format($totalAluguel, 2, ",", ".") ?></h4>
-                        </li>
-                    </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Total</li>
+                            <li class="list-inline-item valor">
+                                <h4><?= 'R$ ' . number_format($totalVenda, 2, ",", ".") ?></h4>
+                            </li>
+                        </ol>
+                    <?php } else { ?>
+
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente"><?= $dados['imovel']->ds_tipo_negociacao ?></li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_aluguel / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Condomínio</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_condominio / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">IPTU</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_iptu / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Seguro incêndio</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_seguro_incendio / 100 ?></li>
+                        </ol>
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Taxa de serviço</li>
+                            <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_taxa_de_servico / 100 ?></li>
+                        </ol>
+
+                        <hr>
+
+                        <ol class="list-unstyled mb-3 list-inline">
+                            <li class="list-inline-item transparente">Total</li>
+                            <li class="list-inline-item valor">
+                                <h4><?= 'R$ ' . number_format($totalAluguel, 2, ",", ".") ?></h4>
+                            </li>
+                        </ol>
+
+
+
+                    <?php } ?>
 
                     <a href="<?= URL . '/Paginas/agendamentoImovel/' . $dados['imovel']->id_imovel ?>" class="text-start">
                         <div class="d-grid gap-2 mt-5">

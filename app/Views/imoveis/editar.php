@@ -74,7 +74,7 @@
                             <option <?= $bairroSelected ?> value="<?= $bairros->id_bairro ?>"><?= $bairros->ds_bairro ?></option>
                         <?php } ?>
                     </select>
-                </div>  
+                </div>
 
                 <div class="mb-3 mt-3">
                     <label for="tamArea" class="form-label">Área m²:</label>
@@ -252,6 +252,13 @@
                 </label>
                 <div class="form-floating">
                     <textarea class="form-control txtarea" id="txtParqueAreasVerdes" name="txtParqueAreasVerdes" maxlength="500"><?= $dados['imovel']->txt_parque_area_verde ?></textarea>
+                </div>
+
+                <label class="form-check-label mt-3 mb-2" for="txtShopping">
+                    Shoppings
+                </label>
+                <div class="form-floating">
+                    <textarea class="form-control txtarea" id="txtShopping" name="txtShopping" maxlength="500"><?= $dados['imovel']->txt_shopping ?></textarea>
                 </div>
 
                 <div class="mb-3 mt-3">

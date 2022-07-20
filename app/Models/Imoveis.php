@@ -63,7 +63,7 @@ class Imoveis
         $armazenarErro = false;
 
 
-        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
+        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, txt_shopping, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :txt_shopping, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
 
         $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
         $this->db->bind("qtd_area", $dados['tamArea']);
@@ -83,6 +83,7 @@ class Imoveis
         $this->db->bind("txt_entretenimento", $dados['txtEntretenimento']);
         $this->db->bind("txt_hospitais", $dados['txtHospitais']);
         $this->db->bind("txt_parque_area_verde", $dados['txtParqueAreasVerdes']);
+        $this->db->bind("txt_shopping", $dados['txtShopping']);
         $this->db->bind("mo_aluguel", $dados['moValorAluguel']);
         $this->db->bind("mo_venda", $dados['moValorVenda']);
         $this->db->bind("mo_condominio", $dados['moValorCondominio']);
@@ -253,6 +254,7 @@ class Imoveis
         txt_entretenimento = :txt_entretenimento,
         txt_hospitais = :txt_hospitais,
         txt_parque_area_verde = :txt_parque_area_verde,
+        txt_shopping = :txt_shopping,
         mo_aluguel = :mo_aluguel,
         mo_venda = :mo_venda,
         mo_condominio = :mo_condominio,
@@ -282,6 +284,7 @@ class Imoveis
         $this->db->bind("txt_entretenimento", $dados['txtEntretenimento']);
         $this->db->bind("txt_hospitais", $dados['txtHospitais']);
         $this->db->bind("txt_parque_area_verde", $dados['txtParqueAreasVerdes']);
+        $this->db->bind("txt_shopping", $dados['txtShopping']);
         $this->db->bind("mo_aluguel", $dados['moValorAluguel']);
         $this->db->bind("mo_venda", $dados['moValorVenda']);
         $this->db->bind("mo_condominio", $dados['moValorCondominio']);

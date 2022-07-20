@@ -203,7 +203,6 @@ INSERT INTO tb_tipo_imovel (id_tipo_imovel, ds_tipo_imovel) VALUES
 CREATE TABLE IF NOT EXISTS tb_imovel (
   id_imovel int unsigned NOT NULL AUTO_INCREMENT,
   ds_rua_imovel varchar(255) DEFAULT NULL,
-  ds_bairro_imovel varchar(60) DEFAULT NULL,
   qtd_area SMALLINT DEFAULT NULL,  
   qtd_quarto TINYINT DEFAULT NULL,
   qtd_banheiro TINYINT DEFAULT NULL,
@@ -221,6 +220,7 @@ CREATE TABLE IF NOT EXISTS tb_imovel (
   txt_entretenimento varchar(500) DEFAULT NULL,
   txt_hospitais varchar(500) DEFAULT NULL,
   txt_parque_area_verde varchar(500) DEFAULT NULL,
+  txt_shopping varchar(500) DEFAULT NULL,
   mo_aluguel INT DEFAULT NULL,
   mo_venda INT DEFAULT NULL,
   mo_condominio INT DEFAULT NULL,
