@@ -169,11 +169,6 @@ INSERT INTO tb_bairros (id_bairro, ds_bairro) VALUES
 (161,'Vista Alegre');
 
 
-
-
-
-
-
 CREATE TABLE IF NOT EXISTS tb_tipo_negociacao (
   id_tipo_negociacao TINYINT unsigned NOT NULL AUTO_INCREMENT,
   ds_tipo_negociacao varchar(50) DEFAULT NULL,

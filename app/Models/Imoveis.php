@@ -612,6 +612,62 @@ class Imoveis
     }
 
 
+    public function imovelFiltro($dados){
+
+
+        // var_dump($dados);
+        // exit();
+
+        $query = "SELECT * FROM tb_imovel im
+        LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
+        LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
+        WHERE 1 = 1 AND fk_tipo_negociacao = {$dados['txtTipoNegociacao']}";
+
+        if(!$dados['cboTipoImovel'] == ""){    
+            $query = $query . " AND fk_tipo_imovel = {$dados['cboTipoImovel']}";
+        }
+
+        if(!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == ""){
+            $query = $query . " AND mo_aluguel BETWEEN {$dados['txtValorMin']} AND {$dados['txtValorMax']}";
+        }
+
+        if(!$dados['chkNumQuartos'] == NULL){
+            $query = $query . " AND qtd_quarto >= {$dados['chkNumQuartos']}";
+        }
+
+        if(!$dados['chkNumBanheiros'] == NULL){
+            $query = $query . " AND qtd_banheiro >= {$dados['chkNumBanheiros']}";
+        }
+
+        if(!$dados['chkVagas'] == ""){
+            $query = $query . " AND qtd_vagas >= {$dados['chkVagas']}";
+        }
+
+        if(!$dados['chkMobiliado'] == ""){
+            $query = $query . " AND chk_mobilia = '{$dados['chkMobiliado']}'";
+        }
+
+        if(!$dados['chkAceitaPets'] == ""){
+            $query = $query . " AND chk_aceita_pet = '{$dados['chkAceitaPets']}'";
+        }
+        
+        if(!$dados['txtAreaMin'] == "" && !$dados['txtAreaMax'] == ""){
+            $query = $query . " AND qtd_area BETWEEN {$dados['txtAreaMin']} AND {$dados['txtAreaMax']}";
+        }
+        
+        if(!$dados['chkProxMetro'] == ""){
+            $query = $query . " AND chk_metro_prox = '{$dados['chkProxMetro']}'";
+        }
+
+        $query = $query . " ORDER BY im.publicado_em DESC";        
+        // var_dump($query);
+
+        $this->db->query($query);
+        return $this->db->resultados();
+    }
+
+
 
 
 }

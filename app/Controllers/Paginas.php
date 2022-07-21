@@ -16,15 +16,100 @@ class Paginas extends Controller
         $imovel = $this->imovelModel->listarImoveis();
         $anexos = $this->imovelModel->lerAnexos();
 
+        $tipoNegociacao = $this->imovelModel->listarTipoNegociacao();
+        $tipoImovel = $this->imovelModel->listarTipoImovel();
+        $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
+        $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+
         //Parâmetros enviados para o método do controller VIEW
         $dados = [
             'imovel' => $imovel,
-            'anexos' => $anexos
+            'anexos' => $anexos,
+            'tipoNegociacao' => $tipoNegociacao,
+            'tipoImovel' => $tipoImovel,
+            'caracteristicasImovel' => $caracteristicasImovel,
+            'caracteristicasCondominio' => $caracteristicasCondominio
         ];
 
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/home', $dados);
     }
+
+    public function filtro()
+    {
+        $imovel = $this->imovelModel->listarImoveis();
+        $anexos = $this->imovelModel->lerAnexos();
+
+        $tipoNegociacao = $this->imovelModel->listarTipoNegociacao();
+        $tipoImovel = $this->imovelModel->listarTipoImovel();
+        $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
+        $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) {
+
+            $dados = [
+                'tipoNegociacao' => $tipoNegociacao,
+                'tipoImovel' => $tipoImovel,
+                'caracteristicasImovel' => $caracteristicasImovel,
+                'caracteristicasCondominio' => $caracteristicasCondominio,
+                'cboTipoImovel' => $formulario['cboTipoImovel'],
+                'txtValorMin' => LimpaStringFloat::limparString($formulario['txtValorMin']),
+                'txtValorMax' => LimpaStringFloat::limparString($formulario['txtValorMax']),
+                'chkVagas' => $formulario['chkVagas'],
+                'chkMobiliado' => $formulario['chkMobiliado'],
+                'chkAceitaPets' => $formulario['chkAceitaPets'],
+                'txtAreaMin' => $formulario['txtAreaMin'],
+                'txtAreaMax' => $formulario['txtAreaMax'],
+                'chkProxMetro' => $formulario['chkProxMetro'],
+                'txtTipoNegociacao' => $formulario['txtTipoNegociacao']
+
+            ];
+
+
+            $dados['chkNumQuartos'] = isset($formulario['chkNumQuartos']) ? $formulario['chkNumQuartos'] : NULL;
+
+            $dados['chkNumBanheiros'] = isset($formulario['chkNumBanheiros']) ? $formulario['chkNumBanheiros'] : NULL;
+
+
+            if ($this->imovelModel->imovelFiltro($dados)) {
+
+                $dadosFiltrados = $this->imovelModel->imovelFiltro($dados);
+
+                // var_dump($dadosFiltrados);
+                // exit();
+
+                $dados = [                    
+                    'imovel' => $dadosFiltrados,
+                    'anexos' => $anexos,
+                    'tipoNegociacao' => $tipoNegociacao,
+                    'tipoImovel' => $tipoImovel,
+                    'caracteristicasImovel' => $caracteristicasImovel,
+                    'caracteristicasCondominio' => $caracteristicasCondominio
+                ];
+            }
+            else {
+                // echo 'nao tem filtro';
+                Alertas::mensagem('home', 'Infelizmente ainda não possuímos imóveis com os filtros especificados.');
+                Redirecionamento::redirecionar('Paginas');
+            }
+        } else {
+            $dados = [
+                'imovel' => $imovel,
+                'anexos' => $anexos,
+                'tipoNegociacao' => $tipoNegociacao,
+                'tipoImovel' => $tipoImovel,
+                'caracteristicasImovel' => $caracteristicasImovel,
+                'caracteristicasCondominio' => $caracteristicasCondominio
+            ];
+        }
+
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/home', $dados);
+    }
+
 
     public function imovelAluguel()
     {
@@ -163,7 +248,7 @@ class Paginas extends Controller
     public function contato()
     {
         //Parâmetros enviados para o método do controller VIEW
-        $dados = [ ];
+        $dados = [];
 
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/contato', $dados);
