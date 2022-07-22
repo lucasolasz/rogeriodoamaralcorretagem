@@ -21,7 +21,7 @@
 
         <ul class="list-inline mt-3">
             <li class="list-inline-item transparente">
-                <a href="#" class="btn btn-dark mt-1" data-bs-toggle="modal" data-bs-target="#filtroModal"><span> <i class="fa-solid fa-sliders"></i></span> Filtros</a>
+                <a href="#" class="btn btn-amaral mt-1" data-bs-toggle="modal" data-bs-target="#filtroModal"><span> <i class="fa-solid fa-sliders"></i></span> Filtros</a>
             </li>
         </ul>
 
@@ -341,7 +341,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <input class="btn btn-light" type="button" value="Limpar Filtros" id="btnReset">
-                        <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                        <button type="submit" class="btn btn-amaral">Aplicar Filtros</button>
                     </div>
                     </form>
                 </div>
@@ -409,8 +409,8 @@
                                 <h5 class="card-title mt-3 mb-0"><?= ucfirst($imovel->ds_rua_imovel) ?></h5>
                                 <small class="mt-0"><?= $imovel->ds_bairro ?>, Rio de Janeiro</small>
                                 <ul class="list-inline mt-3">
-                                    <li class="list-inline-item transparente"><span><i class="fa-solid fa-ruler-horizontal"></i></span> <?= $imovel->qtd_area . ' m²' ?></li>
-                                    <li class="list-inline-item transparente"><span><i class="fa-solid fa-bed"></i></span> <?= $imovel->qtd_quarto . " dorm" ?></li>
+                                    <li class="list-inline-item transparente-azul"><span><i class="fa-solid fa-ruler-horizontal"></i></span> <?= $imovel->qtd_area . ' m²' ?></li>
+                                    <li class="list-inline-item transparente-azul"><span><i class="fa-solid fa-bed"></i></span> <?= $imovel->qtd_quarto . " dorm" ?></li>
                                 </ul>
 
                                 <?php

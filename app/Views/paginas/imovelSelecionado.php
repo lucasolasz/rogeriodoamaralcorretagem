@@ -37,10 +37,10 @@
             </nav>
             <ul class="list-inline">
                 <li class="list-inline-item transparente">
-                    <a href="#" class="btn btn-dark mt-1"><span> <i class="fa-solid fa-image"></i></span> Fotos</a>
+                    <a href="#" class="btn btn-amaral mt-1"><span> <i class="fa-solid fa-image"></i></span> Fotos</a>
                 </li>
                 <li class="list-inline-item transparente">
-                    <a href="#" class="btn btn-dark mt-1"><span> <i class="fa-solid fa-video"></i></span> Video</a>
+                    <a href="#" class="btn btn-amaral mt-1"><span> <i class="fa-solid fa-video"></i></span> Video</a>
                 </li>
             </ul>
 
@@ -57,7 +57,7 @@
                     <div class="col">
                         <div class="card border-0">
                             <div class="card-body text-center">
-                                <div class="feature"><i class="fa-solid fa-ruler-horizontal total"></i></div>
+                                <div class="feature"><i class="fa-solid fa-ruler-horizontal transparente-azul"></i></div>
                                 <small><?= $dados['imovel']->qtd_area . ' m²' ?></small>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                     <div class="col">
                         <div class="card border-0">
                             <div class="card-body text-center">
-                                <div class="feature"><i class="fa-solid fa-bed total"></i></div>
+                                <div class="feature"><i class="fa-solid fa-bed transparente-azul"></i></div>
                                 <?php if ($dados['imovel']->qtd_quarto == "1") { ?>
 
                                     <small><?= $dados['imovel']->qtd_quarto . ' quarto' ?></small>
@@ -80,7 +80,7 @@
                     <div class="col">
                         <div class="card border-0">
                             <div class="card-body text-center">
-                                <div class="feature"><i class="fa-solid fa-shower total"></i></div>
+                                <div class="feature"><i class="fa-solid fa-shower transparente-azul"></i></div>
                                 <?php if ($dados['imovel']->qtd_banheiro == "1") { ?>
                                     <small><?= $dados['imovel']->qtd_banheiro . ' banheiro' ?></small>
                                 <?php } else { ?>
@@ -94,10 +94,10 @@
                         <div class="card border-0">
                             <div class="card-body text-center">
                                 <?php if ((int)$dados['imovel']->qtd_vagas == 1) { ?>
-                                    <div class="feature"><i class="fa-solid fa-car total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-car transparente-azul"></i></div>
                                     <small><?= $dados['imovel']->qtd_vagas . ' vaga' ?></small>
                                 <?php } else if ((int)$dados['imovel']->qtd_vagas > 1) { ?>
-                                    <div class="feature"><i class="fa-solid fa-car total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-car transparente-azul"></i></div>
                                     <small><?= $dados['imovel']->qtd_vagas . ' vagas' ?></small>
                                 <?php } else { ?>
                                     <div class="feature"><i class="fa-solid fa-car transparente"></i></div>
@@ -113,7 +113,7 @@
                                     <div class="feature"><i class="fa-solid fa-building transparente"></i></div>
                                     <small>-</small>
                                 <?php } else { ?>
-                                    <div class="feature"><i class="fa-solid fa-building total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-building transparente-azul"></i></div>
                                     <small><?= $dados['imovel']->num_andar . 'º andar' ?></small>
                                 <?php } ?>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="card border-0">
                             <div class="card-body text-center">
                                 <?php if ($dados['imovel']->chk_aceita_pet == "S") { ?>
-                                    <div class="feature"><i class="fa-solid fa-paw total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-paw transparente-azul"></i></div>
                                     <small>Aceita pet</small>
                                 <?php } else { ?>
                                     <div class="feature"><i class="fa-solid fa-paw transparente"></i></div>
@@ -136,7 +136,7 @@
                         <div class="card border-0">
                             <div class="card-body text-center">
                                 <?php if ($dados['imovel']->chk_mobilia == "S") { ?>
-                                    <div class="feature"><i class="fa-solid fa-couch total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-couch transparente-azul"></i></div>
                                     <small>Mobiliado</small>
                                 <?php } else { ?>
                                     <div class="feature"><i class="fa-solid fa-couch transparente"></i></div>
@@ -149,7 +149,7 @@
                         <div class="card border-0">
                             <div class="card-body text-center">
                                 <?php if ($dados['imovel']->chk_metro_prox == "S") { ?>
-                                    <div class="feature"><i class="fa-solid fa-train-subway total"></i></div>
+                                    <div class="feature"><i class="fa-solid fa-train-subway transparente-azul"></i></div>
                                     <small>Metrô próx.</small>
                                 <?php } else { ?>
                                     <div class="feature"><i class="fa-solid fa-train-subway transparente"></i></div>

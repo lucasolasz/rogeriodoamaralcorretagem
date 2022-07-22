@@ -6,8 +6,18 @@
     color: gray;
 }
 
+.transparente-azul {
+    color: #5BBFE6
+}
+
+.btn-amaral{
+    background-color: #2D86FA;
+    color: white;
+}
+
 .total {
     color: green;
+    /* color: #5BBFE6; */
 }
 
 
