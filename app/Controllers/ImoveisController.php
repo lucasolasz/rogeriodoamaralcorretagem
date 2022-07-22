@@ -29,6 +29,12 @@ class ImoveisController extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+        $comodidades = $this->imovelModel->listarComodidades();
+        $mobilias = $this->imovelModel->listarMobilias();
+        $bem_estar = $this->imovelModel->listarBemEstar();
+        $eletro = $this->imovelModel->listarEletros();
+        $comodos = $this->imovelModel->listarComodos();
+        $acessibilidade = $this->imovelModel->listarAcessibilidade();
         $bairros = $this->imovelModel->listarBairros();
 
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -70,6 +76,12 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
+                'comodidades' => $comodidades,
+                'mobilias' => $mobilias,
+                'bem_estar' => $bem_estar,
+                'eletro' => $eletro,
+                'comodos' => $comodos,
+                'acessibilidade' => $acessibilidade,
                 'bairros' => $bairros
             ];
 
@@ -86,6 +98,18 @@ class ImoveisController extends Controller
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
 
             $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
+
+            $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
+
+            $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
+
+            $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
+
+            $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
+
+            $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
+
+            $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
 
             // var_dump($dados);
             // exit();
@@ -129,8 +153,8 @@ class ImoveisController extends Controller
                 'moTaxaServico' => '',
                 'txtNomeProprietario' => '',
                 'txtTelProprietario' => '',
-                'txtEmailProprietario' => '', 
-                'tipoImovel_erro' => '',               
+                'txtEmailProprietario' => '',
+                'tipoImovel_erro' => '',
                 'rua_imovel_erro' => '',
                 'area_imovel_erro' => '',
                 'qtd_quarto_erro' => '',
@@ -148,6 +172,12 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
+                'comodidades' => $comodidades,
+                'mobilias' => $mobilias,
+                'bem_estar' => $bem_estar,
+                'eletro' => $eletro,
+                'comodos' => $comodos,
+                'acessibilidade' => $acessibilidade,
                 'bairros' => $bairros
 
             ];
@@ -164,9 +194,29 @@ class ImoveisController extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+        $comodidades = $this->imovelModel->listarComodidades();
+        $mobilias = $this->imovelModel->listarMobilias();
+        $bem_estar = $this->imovelModel->listarBemEstar();
+        $eletro = $this->imovelModel->listarEletros();
+        $comodos = $this->imovelModel->listarComodos();
+        $acessibilidade = $this->imovelModel->listarAcessibilidade();
+
+
         $fotosImovel = $this->imovelModel->lerFotosPorId($id);
         $relacionaCaracImovel = $this->imovelModel->caracImovelPorId($id);
         $relacionaCaracCondo = $this->imovelModel->caracCondoPorId($id);
+
+        $relacionaAcessibilidade = $this->imovelModel->filtroAcessibilidadePorId($id);
+        $relacionaBemEstar = $this->imovelModel->filtroBemEstarPorId($id);
+        $relacionaComodidades = $this->imovelModel->filtroComodidadesPorId($id);
+        $relacionaComodos = $this->imovelModel->filtroComodosPorId($id);
+        $relacionaEletros = $this->imovelModel->filtroEletroPorId($id);
+        $relacionaMobilias = $this->imovelModel->filtroMobiliaPorId($id);
+
+
+
+
+
         $bairros = $this->imovelModel->listarBairros();
 
         // var_dump($imovel);
@@ -213,8 +263,20 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
+                'comodidades' => $comodidades,
+                'mobilias' => $mobilias,
+                'bem_estar' => $bem_estar,
+                'eletro' => $eletro,
+                'comodos' => $comodos,
+                'acessibilidade' => $acessibilidade,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
                 'relacionaCaracCondo' => $relacionaCaracCondo,
+                'relacionaAcessibilidade' => $relacionaAcessibilidade,
+                'relacionaBemEstar' => $relacionaBemEstar,
+                'relacionaComodidades' => $relacionaComodidades,
+                'relacionaComodos' => $relacionaComodos,
+                'relacionaEletros' => $relacionaEletros,
+                'relacionaMobilias' => $relacionaMobilias,
                 'bairros' => $bairros
 
             ];
@@ -229,6 +291,18 @@ class ImoveisController extends Controller
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
 
             $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
+
+            $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
+
+            $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
+
+            $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
+
+            $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
+
+            $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
+
+            $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
 
 
             // var_dump($dados);
@@ -252,9 +326,21 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
+                'comodidades' => $comodidades,
+                'mobilias' => $mobilias,
+                'bem_estar' => $bem_estar,
+                'eletro' => $eletro,
+                'comodos' => $comodos,
+                'acessibilidade' => $acessibilidade,
                 'fotosImovel' => $fotosImovel,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
                 'relacionaCaracCondo' => $relacionaCaracCondo,
+                'relacionaAcessibilidade' => $relacionaAcessibilidade,
+                'relacionaBemEstar' => $relacionaBemEstar,
+                'relacionaComodidades' => $relacionaComodidades,
+                'relacionaComodos' => $relacionaComodos,
+                'relacionaEletros' => $relacionaEletros,
+                'relacionaMobilias' => $relacionaMobilias,
                 'rua_imovel_erro' => '',
                 'bairro_imovel_erro' => '',
                 'tipoImovel_erro' => '',
@@ -298,11 +384,11 @@ class ImoveisController extends Controller
             Alertas::mensagem('imagem', 'Não foi deletar a imagem do imóvel', 'alert alert-danger');
             Redirecionamento::redirecionar('ImoveisController/editar/' . $fk_imovel->fk_imovel);
         }
-
     }
 
 
-    public function deletar($id){
+    public function deletar($id)
+    {
 
         $id = filter_var($id, FILTER_VALIDATE_INT);
 

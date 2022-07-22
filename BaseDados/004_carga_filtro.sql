@@ -97,3 +97,77 @@ INSERT INTO tb_filtro_acessibilidade (id_filtro_acessibilidade, ds_filtro_acessi
 (4,'Quartos e corredores com portas amplas'),
 (5,'Rampas de acesso'),
 (6,'Vaga de garagem acessível');
+
+
+
+
+CREATE TABLE tb_relac_imovel_acessibilidade (
+  id_relac_imovel_acessibilidade INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_acessibilidade SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_acessibilidade),
+  KEY fk_filtro_acessibilidade_tb_filtro_acessibilidade (fk_filtro_acessibilidade),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_acessibilidade_tb_relac_imovel_acessibilidade FOREIGN KEY (fk_filtro_acessibilidade) REFERENCES tb_filtro_acessibilidade (id_filtro_acessibilidade),
+  CONSTRAINT fk_imovel_tb_relac_imovel_acessibilidade FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE tb_relac_imovel_bem_estar (
+  id_relac_imovel_bem_estar INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_bem_estar SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_bem_estar),
+  KEY fk_filtro_bem_estar_tb_filtro_bem_estar (fk_filtro_bem_estar),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_bem_estar_tb_relac_imovel_bem_estar FOREIGN KEY (fk_filtro_bem_estar) REFERENCES tb_filtro_bem_estar (id_filtro_bem_estar),
+  CONSTRAINT fk_imovel_tb_relac_imovel_bem_estar FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE tb_relac_imovel_comodidades (
+  id_relac_imovel_comodidades INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_comodidades SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_comodidades),
+  KEY fk_filtro_comodidades_tb_filtro_comodidades (fk_filtro_comodidades),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_comodidades_tb_relac_imovel_comodidades FOREIGN KEY (fk_filtro_comodidades) REFERENCES tb_filtro_comodidades (id_filtro_comodidades),
+  CONSTRAINT fk_imovel_tb_relac_imovel_comodidades FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE tb_relac_imovel_comodos (
+  id_relac_imovel_comodos INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_comodos SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_comodos),
+  KEY fk_filtro_comodos_tb_filtro_comodos (fk_filtro_comodos),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_comodos_tb_relac_imovel_comodos FOREIGN KEY (fk_filtro_comodos) REFERENCES tb_filtro_comodos (id_filtro_comodos),
+  CONSTRAINT fk_imovel_tb_relac_imovel_comodos FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE tb_relac_imovel_eletro (
+  id_relac_imovel_eletro INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_eletrodomestico SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_eletro),
+  KEY fk_filtro_eletrodomestico_tb_filtro_eletrodomestico (fk_filtro_eletrodomestico),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_eletrodomestico_tb_relac_imovel_eletro FOREIGN KEY (fk_filtro_eletrodomestico) REFERENCES tb_filtro_eletrodomestico (id_filtro_eletrodomestico),
+  CONSTRAINT fk_imovel_tb_relac_imovel_eletro FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE tb_relac_imovel_mobilia (
+  id_relac_imovel_mobilia INT NOT NULL AUTO_INCREMENT,
+  fk_filtro_mobilias SMALLINT unsigned NOT NULL,
+  fk_imovel int unsigned NOT NULL,
+  PRIMARY KEY (id_relac_imovel_mobilia),
+  KEY fk_filtro_mobilias_tb_filtro_mobilias (fk_filtro_mobilias),
+  KEY fk_imovel_tb_imovel (fk_imovel),
+  CONSTRAINT fk_filtro_mobilias_tb_relac_imovel_mobilia FOREIGN KEY (fk_filtro_mobilias) REFERENCES tb_filtro_mobilias (id_filtro_mobilias),
+  CONSTRAINT fk_imovel_tb_relac_imovel_mobilia FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;

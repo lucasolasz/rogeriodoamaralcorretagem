@@ -371,6 +371,126 @@
                     <?php } ?>
                 </div>
 
+                <h3>Comodidades</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['comodidades'] as $comodidades) {
+
+                        $comodidadeChk = '';
+
+                        foreach ($dados['relacionaComodidades'] as $relacionaComodidades) {
+
+                            if ($comodidades->id_filtro_comodidades == $relacionaComodidades->fk_filtro_comodidades) {
+                                $comodidadeChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_filtro_comodidades ?>" <?= $comodidadeChk ?>> <?= $comodidades->ds_filtro_comodidades ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Mobilias</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['mobilias'] as $mobilias) {
+
+                        $mobiliaChk = '';
+
+                        foreach ($dados['relacionaMobilias'] as $relacionaMobilias) {
+
+                            if ($mobilias->id_filtro_mobilias == $relacionaMobilias->fk_filtro_mobilias) {
+                                $mobiliaChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkMobilias[]" value="<?= $mobilias->id_filtro_mobilias ?>" <?= $mobiliaChk ?>> <?= $mobilias->ds_filtro_mobilias ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Bem-estar</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['bem_estar'] as $bem_estar) {
+
+                        $bemEstarChk = '';
+
+                        foreach ($dados['relacionaBemEstar'] as $relacionaBemEstar) {
+
+                            if ($bem_estar->id_filtro_bem_estar == $relacionaBemEstar->fk_filtro_bem_estar) {
+                                $bemEstarChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkBemEstar[]" value="<?= $bem_estar->id_filtro_bem_estar ?>" <?= $bemEstarChk ?>> <?= $bem_estar->ds_filtro_bem_estar ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Eletrodomésticos</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['eletro'] as $eletro) {
+
+                        $eletroChk = '';
+
+                        foreach ($dados['relacionaEletros'] as $relacionaEletros) {
+
+                            if ($eletro->id_filtro_eletrodomestico == $relacionaEletros->fk_filtro_eletrodomestico) {
+                                $eletroChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkEletro[]" value="<?= $eletro->id_filtro_eletrodomestico ?>" <?= $eletroChk ?>> <?= $eletro->ds_filtro_eletrodomestico ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Cômodos</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['comodos'] as $comodos) {
+
+                        $comodoChk = '';
+
+                        foreach ($dados['relacionaComodos'] as $relacionaComodos) {
+
+                            if ($comodos->id_filtro_comodos == $relacionaComodos->fk_filtro_comodos) {
+                                $comodoChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkComodo[]" value="<?= $comodos->id_filtro_comodos ?>" <?= $comodoChk ?>> <?= $comodos->ds_filtro_comodos ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Acessibilidade</h3>
+
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['acessibilidade'] as $acessibilidade) {
+
+                        $comodoChk = '';
+
+                        foreach ($dados['relacionaAcessibilidade'] as $relacionaAcessibilidade) {
+
+                            if ($acessibilidade->id_filtro_acessibilidade == $relacionaAcessibilidade->fk_filtro_acessibilidade) {
+                                $comodoChk = 'checked';
+                            }
+                        }
+                    ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkAcessibilidade[]" value="<?= $acessibilidade->id_filtro_acessibilidade ?>" <?= $comodoChk ?>> <?= $acessibilidade->ds_filtro_acessibilidade ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
                 <h3>Informações do proprietário</h3>
 
                 <div class="mb-3 mt-3">

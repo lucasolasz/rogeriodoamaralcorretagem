@@ -54,9 +54,45 @@ class Imoveis
         return $this->db->resultados();
     }
 
+    public function listarComodidades()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_comodidades ORDER BY ds_filtro_comodidades");
+        return $this->db->resultados();
+    }
+
+    public function listarMobilias()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_mobilias ORDER BY ds_filtro_mobilias");
+        return $this->db->resultados();
+    }
+
+    public function listarBemEstar()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_bem_estar ORDER BY ds_filtro_bem_estar");
+        return $this->db->resultados();
+    }
+
+    public function listarEletros()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_eletrodomestico ORDER BY ds_filtro_eletrodomestico");
+        return $this->db->resultados();
+    }
+
+    public function listarComodos()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_comodos ORDER BY ds_filtro_comodos");
+        return $this->db->resultados();
+    }
+
+    public function listarAcessibilidade()
+    {
+        $this->db->query("SELECT * FROM tb_filtro_acessibilidade ORDER BY ds_filtro_acessibilidade");
+        return $this->db->resultados();
+    }
+
     public function armazenarImovel($dados)
-    {   
-        
+    {
+
         // var_dump($dados['cboTipoNegociacao']);
         // exit();
 
@@ -126,6 +162,84 @@ class Imoveis
             }
         }
 
+        if (!$dados['chkComodidades'] == "") {
+
+            foreach ($dados['chkComodidades'] as $chkComodidades) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_comodidades (fk_filtro_comodidades, fk_imovel) VALUES (:fk_filtro_comodidades, :fk_imovel)");
+                $this->db->bind("fk_filtro_comodidades", $chkComodidades);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkMobilias'] == "") {
+
+            foreach ($dados['chkMobilias'] as $chkMobilias) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_mobilia (fk_filtro_mobilias, fk_imovel) VALUES (:fk_filtro_mobilias, :fk_imovel)");
+                $this->db->bind("fk_filtro_mobilias", $chkMobilias);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkBemEstar'] == "") {
+
+            foreach ($dados['chkBemEstar'] as $chkBemEstar) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_bem_estar (fk_filtro_bem_estar, fk_imovel) VALUES (:fk_filtro_bem_estar, :fk_imovel)");
+                $this->db->bind("fk_filtro_bem_estar", $chkBemEstar);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkEletro'] == "") {
+
+            foreach ($dados['chkEletro'] as $chkEletro) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_eletro (fk_filtro_eletrodomestico, fk_imovel) VALUES (:fk_filtro_eletrodomestico, :fk_imovel)");
+                $this->db->bind("fk_filtro_eletrodomestico", $chkEletro);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkComodo'] == "") {
+
+            foreach ($dados['chkComodo'] as $chkComodo) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_comodos (fk_filtro_comodos, fk_imovel) VALUES (:fk_filtro_comodos, :fk_imovel)");
+                $this->db->bind("fk_filtro_comodos", $chkComodo);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkAcessibilidade'] == "") {
+
+            foreach ($dados['chkAcessibilidade'] as $chkAcessibilidade) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_acessibilidade (fk_filtro_acessibilidade, fk_imovel) VALUES (:fk_filtro_acessibilidade, :fk_imovel)");
+                $this->db->bind("fk_filtro_acessibilidade", $chkAcessibilidade);
+                $this->db->bind("fk_imovel", $proximoIdImovel);
+                if (!$this->db->executa()) {
+                    $armazenarErro = true;
+                }
+            }
+        }
+
 
         //Realiza as operações de anexo, se houver anexo
         if (!$dados['fileFotos']['name'][0] == "") {
@@ -155,9 +269,9 @@ class Imoveis
                 $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
 
                 //Cria pasta dos arquivos individualmente de acordo com id
-                if(!file_exists($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo)) {
+                if (!file_exists($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo)) {
                     mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
-                }                
+                }
                 $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
 
                 //Monta o diretorio destino da pagina comprimida
@@ -199,7 +313,7 @@ class Imoveis
                     echo $upload->getErro();
                 }
             }
-        }        
+        }
         if ($armazenarErro) {
             return false;
         } else {
@@ -323,6 +437,128 @@ class Imoveis
             }
         }
 
+        if (!$dados['chkComodidades'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_comodidades WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkComodidades'] as $chkComodidades) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_comodidades (fk_filtro_comodidades, fk_imovel) VALUES (:fk_filtro_comodidades, :fk_imovel)");
+                $this->db->bind("fk_filtro_comodidades", $chkComodidades);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkMobilias'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_mobilia WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkMobilias'] as $chkMobilias) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_mobilia (fk_filtro_mobilias, fk_imovel) VALUES (:fk_filtro_mobilias, :fk_imovel)");
+                $this->db->bind("fk_filtro_mobilias", $chkMobilias);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+
+
+        if (!$dados['chkBemEstar'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkBemEstar'] as $chkBemEstar) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_bem_estar (fk_filtro_bem_estar, fk_imovel) VALUES (:fk_filtro_bem_estar, :fk_imovel)");
+                $this->db->bind("fk_filtro_bem_estar", $chkBemEstar);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkEletro'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_eletro WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkEletro'] as $chkEletro) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_eletro (fk_filtro_eletrodomestico, fk_imovel) VALUES (:fk_filtro_eletrodomestico, :fk_imovel)");
+                $this->db->bind("fk_filtro_eletrodomestico", $chkEletro);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkComodo'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_comodos WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkComodo'] as $chkComodo) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_comodos (fk_filtro_comodos, fk_imovel) VALUES (:fk_filtro_comodos, :fk_imovel)");
+                $this->db->bind("fk_filtro_comodos", $chkComodo);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
+        if (!$dados['chkAcessibilidade'] == "") {
+
+            //Apaga os anteriores e salva as novas opções escolhidas
+            $this->db->query("DELETE FROM tb_relac_imovel_acessibilidade WHERE fk_imovel = :fk_imovel");
+            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+            if (!$this->db->executa()) {
+                $atualizarErro = true;
+            }
+
+            foreach ($dados['chkAcessibilidade'] as $chkAcessibilidade) {
+
+                $this->db->query("INSERT INTO tb_relac_imovel_acessibilidade (fk_filtro_acessibilidade, fk_imovel) VALUES (:fk_filtro_acessibilidade, :fk_imovel)");
+                $this->db->bind("fk_filtro_acessibilidade", $chkAcessibilidade);
+                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                if (!$this->db->executa()) {
+                    $atualizarErro = true;
+                }
+            }
+        }
+
         if (!$dados['chkFotoDestaque'] == "") {
 
             $this->db->query("UPDATE tb_anexo SET chk_destaque = :chk_destaque WHERE fk_imovel = :fk_imovel ");
@@ -429,6 +665,66 @@ class Imoveis
     {
 
         $this->db->query("SELECT * FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroAcessibilidadePorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_acessibilidade WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroBemEstarPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroComodidadesPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_comodidades WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroComodosPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_comodos WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroEletroPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_eletro WHERE fk_imovel = :fk_imovel");
+
+        $this->db->bind("fk_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
+    public function filtroMobiliaPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_mobilia WHERE fk_imovel = :fk_imovel");
 
         $this->db->bind("fk_imovel", $id);
 
@@ -612,7 +908,8 @@ class Imoveis
     }
 
 
-    public function imovelFiltro($dados){
+    public function imovelFiltro($dados)
+    {
 
 
         // var_dump($dados);
@@ -624,51 +921,47 @@ class Imoveis
         LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
         WHERE 1 = 1 AND fk_tipo_negociacao = {$dados['txtTipoNegociacao']}";
 
-        if(!$dados['cboTipoImovel'] == ""){    
+        if (!$dados['cboTipoImovel'] == "") {
             $query = $query . " AND fk_tipo_imovel = {$dados['cboTipoImovel']}";
         }
 
-        if(!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == ""){
+        if (!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == "") {
             $query = $query . " AND mo_aluguel BETWEEN {$dados['txtValorMin']} AND {$dados['txtValorMax']}";
         }
 
-        if(!$dados['chkNumQuartos'] == NULL){
+        if (!$dados['chkNumQuartos'] == NULL) {
             $query = $query . " AND qtd_quarto >= {$dados['chkNumQuartos']}";
         }
 
-        if(!$dados['chkNumBanheiros'] == NULL){
+        if (!$dados['chkNumBanheiros'] == NULL) {
             $query = $query . " AND qtd_banheiro >= {$dados['chkNumBanheiros']}";
         }
 
-        if(!$dados['chkVagas'] == ""){
+        if (!$dados['chkVagas'] == "") {
             $query = $query . " AND qtd_vagas >= {$dados['chkVagas']}";
         }
 
-        if(!$dados['chkMobiliado'] == ""){
+        if (!$dados['chkMobiliado'] == "") {
             $query = $query . " AND chk_mobilia = '{$dados['chkMobiliado']}'";
         }
 
-        if(!$dados['chkAceitaPets'] == ""){
+        if (!$dados['chkAceitaPets'] == "") {
             $query = $query . " AND chk_aceita_pet = '{$dados['chkAceitaPets']}'";
         }
-        
-        if(!$dados['txtAreaMin'] == "" && !$dados['txtAreaMax'] == ""){
+
+        if (!$dados['txtAreaMin'] == "" && !$dados['txtAreaMax'] == "") {
             $query = $query . " AND qtd_area BETWEEN {$dados['txtAreaMin']} AND {$dados['txtAreaMax']}";
         }
-        
-        if(!$dados['chkProxMetro'] == ""){
+
+        if (!$dados['chkProxMetro'] == "") {
             $query = $query . " AND chk_metro_prox = '{$dados['chkProxMetro']}'";
         }
 
-        $query = $query . " ORDER BY im.publicado_em DESC";        
+        $query = $query . " ORDER BY im.publicado_em DESC";
         // var_dump($query);
         // exit();
 
         $this->db->query($query);
         return $this->db->resultados();
     }
-
-
-
-
 }

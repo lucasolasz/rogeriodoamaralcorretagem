@@ -52,7 +52,7 @@
                             <option <?= $bairroSelected ?> value="<?= $bairros->id_bairro ?>"><?= $bairros->ds_bairro ?></option>
                         <?php } ?>
                     </select>
-                </div>               
+                </div>
 
                 <div class="mb-3 mt-3">
                     <label for="tamArea" class="form-label">Área m²:</label>
@@ -317,6 +317,60 @@
                     <?php } ?>
                 </div>
 
+                <h3>Comodidades</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['comodidades'] as $comodidades) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_filtro_comodidades ?>"> <?= $comodidades->ds_filtro_comodidades ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Mobilias</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['mobilias'] as $mobilias) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkMobilias[]" value="<?= $mobilias->id_filtro_mobilias ?>"> <?= $mobilias->ds_filtro_mobilias ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Bem-estar</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['bem_estar'] as $bem_estar) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkBemEstar[]" value="<?= $bem_estar->id_filtro_bem_estar ?>"> <?= $bem_estar->ds_filtro_bem_estar ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Eletrodomésticos</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['eletro'] as $eletro) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkEletro[]" value="<?= $eletro->id_filtro_eletrodomestico ?>"> <?= $eletro->ds_filtro_eletrodomestico ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Cômodos</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['comodos'] as $comodos) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkComodo[]" value="<?= $comodos->id_filtro_comodos ?>"> <?= $comodos->ds_filtro_comodos ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <h3>Acessibilidade</h3>
+                <div class="mb-3 mt-3 row">
+                    <?php foreach ($dados['acessibilidade'] as $acessibilidade) { ?>
+                        <div class="col-5 m-2">
+                            <input type="checkbox" name="chkAcessibilidade[]" value="<?= $acessibilidade->id_filtro_acessibilidade ?>"> <?= $acessibilidade->ds_filtro_acessibilidade ?>
+                        </div>
+                    <?php } ?>
+                </div>
+
                 <h3>Informações do proprietário</h3>
 
                 <div class="mb-3 mt-3">
@@ -409,17 +463,16 @@
 
         $('#fileFotos').change(function() {
 
-            $( "p" ).remove( ".nomeImagem" );
+            $("p").remove(".nomeImagem");
 
             var scntDiv = $('#dynamicDiv');
             var files = $(this)[0].files;
 
             for (var i = 0; i < files.length; i++) {
-               $('<p class="nomeImagem">'+files[i].name+'</p>').appendTo(scntDiv)
+                $('<p class="nomeImagem">' + files[i].name + '</p>').appendTo(scntDiv)
             }
 
-            
+
         })
     })
-
 </script>
