@@ -35,6 +35,18 @@ class Paginas extends Controller
         $this->view('paginas/home', $dados);
     }
 
+
+    public function naoEncontrou()
+    {
+
+
+        // echo 'cheguei';
+
+        //Chamada do novo objeto PAGINAS 
+        $this->view('paginas/naoEncontrou');
+    }
+
+
     public function filtro()
     {
         $imovel = $this->imovelModel->listarImoveis();
@@ -80,31 +92,37 @@ class Paginas extends Controller
                 // var_dump($dadosFiltrados);
                 // exit();
 
-                $dados = [                    
+                $dados = [
                     'imovel' => $dadosFiltrados,
+                    'anexos' => $anexos,
+                    'tipoNegociacao' => $tipoNegociacao,
+                    'tipoImovel' => $tipoImovel,
+                    'caracteristicasImovel' => $caracteristicasImovel,
+                    'caracteristicasCondominio' => $caracteristicasCondominio,
+                    // 'filtros' => $formulario
+                ];
+
+                $dados['filtros'] = isset($formulario) ? $formulario : NULL;
+            } else {
+
+                // echo 'Sem filtros ';
+
+                $dados = [
+                    'imovel' => $imovel,
                     'anexos' => $anexos,
                     'tipoNegociacao' => $tipoNegociacao,
                     'tipoImovel' => $tipoImovel,
                     'caracteristicasImovel' => $caracteristicasImovel,
                     'caracteristicasCondominio' => $caracteristicasCondominio
                 ];
-            }
-            else {
-                // echo 'nao tem filtro';
-                Alertas::mensagem('home', 'Infelizmente ainda não possuímos imóveis com os filtros especificados.');
-                Redirecionamento::redirecionar('Paginas');
-            }
-        } else {
-            $dados = [
-                'imovel' => $imovel,
-                'anexos' => $anexos,
-                'tipoNegociacao' => $tipoNegociacao,
-                'tipoImovel' => $tipoImovel,
-                'caracteristicasImovel' => $caracteristicasImovel,
-                'caracteristicasCondominio' => $caracteristicasCondominio
-            ];
-        }
 
+                $dados['filtros'] = isset($formulario) ? $formulario : NULL;
+
+
+                Alertas::mensagem('teste', 'Infelizmente ainda não possuímos imóveis com os filtros especificados.');
+                Redirecionamento::redirecionar('Paginas/naoEncontrou');
+            }
+        }
 
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/home', $dados);

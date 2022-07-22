@@ -662,6 +662,7 @@ class Imoveis
 
         $query = $query . " ORDER BY im.publicado_em DESC";        
         // var_dump($query);
+        // exit();
 
         $this->db->query($query);
         return $this->db->resultados();

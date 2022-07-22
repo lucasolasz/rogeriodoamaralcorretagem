@@ -1,15 +1,28 @@
 <div class="container p-5">
     <div class="row">
 
-        <!-- <pre><?php //var_dump($dados) 
-                    ?></pre> -->
-        <!-- <span><i class="fa-solid fa-sliders-simple"></span></i> -->
+        <?php
+        
+        $val_cboTipoImovel = isset($dados['filtros']['cboTipoImovel']) ? $dados['filtros']['cboTipoImovel'] : '';
+        $val_txtValorMin = isset($dados['filtros']['txtValorMin']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorMin']) : '20000';
+        $val_txtValorMax = isset($dados['filtros']['txtValorMax']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorMax']) : '2000000';
+        $val_chkNumQuartos = isset($dados['filtros']['chkNumQuartos']) ? $dados['filtros']['chkNumQuartos'] : '';
+        $val_chkNumBanheiros = isset($dados['filtros']['chkNumBanheiros']) ? $dados['filtros']['chkNumBanheiros'] : '';
+        $val_chkVagas = isset($dados['filtros']['chkVagas']) ? $dados['filtros']['chkVagas'] : '';
+        $val_chkMobiliado = isset($dados['filtros']['chkMobiliado']) ? $dados['filtros']['chkMobiliado'] : '';
+        $val_chkAceitaPets = isset($dados['filtros']['chkAceitaPets']) ? $dados['filtros']['chkAceitaPets'] : '';
+        $val_txtAreaMin = isset($dados['filtros']['txtAreaMin']) ? $dados['filtros']['txtAreaMin'] : '20';
+        $val_txtAreaMax = isset($dados['filtros']['txtAreaMax']) ? $dados['filtros']['txtAreaMax'] : '1000';
+        $val_chkProxMetro = isset($dados['filtros']['chkProxMetro']) ? $dados['filtros']['chkProxMetro'] : '';
+
+
+        ?>
+        <!-- <pre><?php //var_dump($dados['filtros'])  ?></pre> -->
 
         <ul class="list-inline mt-3">
             <li class="list-inline-item transparente">
                 <a href="#" class="btn btn-dark mt-1" data-bs-toggle="modal" data-bs-target="#filtroModal"><span> <i class="fa-solid fa-sliders"></i></span> Filtros</a>
             </li>
-            <?= Alertas::mensagem('home'); ?>
         </ul>
 
 
@@ -22,8 +35,6 @@
                         <button type="button" class="btn-close p-3" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <button class="nav-link active" id="nav-alugar-tab" data-bs-toggle="tab" data-bs-target="#nav-alugar" type="button" role="tab" aria-controls="nav-alugar" aria-selected="true">Alugar</button>
@@ -39,8 +50,13 @@
                                     <div class="row mb-3 mt-4 p-3">
                                         <h6 class="mb-3">Tipo imóvel</h6>
                                         <select class="form-select" name="cboTipoImovel" id="cboTipoImovel">
-                                            <?php foreach ($dados['tipoImovel'] as $tipoImovel) { ?>
-                                                <option value="<?= $tipoImovel->id_tipo_imovel ?>"><?= $tipoImovel->ds_tipo_imovel ?></option>
+                                            <?php foreach ($dados['tipoImovel'] as $tipoImovel) {
+                                                $tipoImovelSelected = '';
+                                                if ($tipoImovel->id_tipo_imovel == $val_cboTipoImovel) {
+                                                    $tipoImovelSelected = 'selected';
+                                                }
+                                            ?>
+                                                <option <?= $tipoImovelSelected ?> value="<?= $tipoImovel->id_tipo_imovel ?>"><?= $tipoImovel->ds_tipo_imovel ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -50,27 +66,33 @@
                                     <div class="row mb-3 mt-3 p-3">
                                         <h6 class="mb-3">Valor</h6>
                                         <div class="col">
-                                            <label for="txtValorMin" class="form-label">Mínimo:</label>
-                                            <input type="text" class="money form-control" name="txtValorMin" id="txtValorMin" value="">
+                                            <label for="txtValorMin" class="form-label">Mínimo R$ 200</label>
+                                            <input type="text" class="money form-control" name="txtValorMin" id="txtValorMin" value="<?= number_format((($val_txtValorMin) / 100), 2, ",", ".") ?>">
                                         </div>
                                         <div class="col">
-                                            <label for="txtValorMax" class="form-label">Máximo:</label>
-                                            <input type="text" class="money form-control" name="txtValorMax" id="txtValorMax" value="">
+                                            <label for="txtValorMax" class="form-label">Máximo R$ 20.000</label>
+                                            <input type="text" class="money form-control" name="txtValorMax" id="txtValorMax" value="<?= number_format((($val_txtValorMax) / 100), 2, ",", ".") ?>">
                                         </div>
                                     </div>
 
                                     <hr>
 
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Dormitórios</h6>
                                         </div>
 
-                                        <?php for ($i = 1; $i < 5; $i++) { ?>
+                                        <?php for ($i = 1; $i < 5; $i++) {
+                                            $quartoChecked = '';
+
+                                            if ($i == $val_chkNumQuartos) {
+                                                $quartoChecked = 'checked';
+                                            }
+                                        ?>
                                             <div class="col">
                                                 <div class="card border-0">
                                                     <div class="card-body text-center">
-                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkNumQuartos" id="chkNumQuartos" value="<?= $i ?>"></div>
+                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkNumQuartos" id="chkNumQuartos" <?= $quartoChecked ?> value="<?= $i ?>"></div>
                                                         <small><?= $i . '+' ?></small>
                                                     </div>
                                                 </div>
@@ -79,15 +101,21 @@
                                     </div>
                                     <hr>
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Banheiros</h6>
                                         </div>
 
-                                        <?php for ($i = 1; $i < 5; $i++) { ?>
+                                        <?php for ($i = 1; $i < 5; $i++) {
+                                            $banheiroChecked = '';
+
+                                            if ($i == $val_chkNumBanheiros) {
+                                                $banheiroChecked = 'checked';
+                                            }
+                                        ?>
                                             <div class="col">
                                                 <div class="card border-0">
                                                     <div class="card-body text-center">
-                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkNumBanheiros" id="chkNumBanheiros" value="<?= $i ?>"></div>
+                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkNumBanheiros" <?= $banheiroChecked ?> id="chkNumBanheiros" value="<?= $i ?>"></div>
                                                         <small><?= $i . '+' ?></small>
                                                     </div>
                                                 </div>
@@ -97,24 +125,42 @@
 
                                     <hr>
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Vagas</h6>
                                         </div>
 
-                                        <?php for ($i = 1; $i < 4; $i++) { ?>
+                                        <?php
+
+                                        $temChecked = false;
+                                        $tantoFazCheckedVg = '';
+
+                                        for ($i = 1; $i < 4; $i++) {
+
+                                            $vagasChecked = '';
+
+                                            if ($i == $val_chkVagas) {
+                                                $temChecked = true;
+                                                $vagasChecked = 'checked';
+                                            }
+                                        ?>
                                             <div class="col">
                                                 <div class="card border-0">
                                                     <div class="card-body text-center">
-                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkVagas" id="chkVagas" value="<?= $i ?>"></div>
+                                                        <div class="feature"><input class="form-check-input" type="radio" name="chkVagas" <?= $vagasChecked ?> id="chkVagas" value="<?= $i ?>"></div>
                                                         <small><?= $i . '+' ?></small>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php } ?>
+                                        <?php }
+
+                                        if (!$temChecked) {
+                                            $tantoFazCheckedVg = 'checked';
+                                        } ?>
+
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkVagas" id="chkVagas" value="" checked></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkVagas" id="chkVagasT" value="" <?= $tantoFazCheckedVg ?>></div>
                                                     <small>Tanto faz</small>
                                                 </div>
                                             </div>
@@ -122,14 +168,33 @@
                                     </div>
 
                                     <hr>
+
+                                    <?php
+
+                                    $mobChkedS = '';
+                                    $mobChkedN = '';
+                                    $mobChkedTf = '';
+
+                                    if ($val_chkMobiliado == 'S') {
+                                        $mobChkedS = 'checked';
+                                    }
+                                    if ($val_chkMobiliado == 'N') {
+                                        $mobChkedN = 'checked';
+                                    }
+                                    if ($val_chkMobiliado == '') {
+                                        $mobChkedTf = 'checked';
+                                    }
+
+                                    ?>
+
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Mobiliado?</h6>
                                         </div>
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliado" value="S"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliado" value="S" <?= $mobChkedS ?>></div>
                                                     <small>Sim</small>
                                                 </div>
                                             </div>
@@ -137,7 +202,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliado" value="N"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliado" value="N" <?= $mobChkedN ?>></div>
                                                     <small>Não</small>
                                                 </div>
                                             </div>
@@ -145,7 +210,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliado" value="" checked></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkMobiliado" id="chkMobiliadoT" value="" <?= $mobChkedTf ?>></div>
                                                     <small>Tanto faz</small>
                                                 </div>
                                             </div>
@@ -155,14 +220,33 @@
 
 
                                     <hr>
+
+
+                                    <?php
+
+                                    $petChkedS = '';
+                                    $petChkedN = '';
+                                    $petChkedTf = '';
+
+                                    if ($val_chkAceitaPets == 'S') {
+                                        $petChkedS = 'checked';
+                                    }
+                                    if ($val_chkAceitaPets == 'N') {
+                                        $petChkedN = 'checked';
+                                    }
+                                    if ($val_chkAceitaPets == '') {
+                                        $petChkedTf = 'checked';
+                                    }
+
+                                    ?>
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Aceita pets?</h6>
                                         </div>
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPets" value="S"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPets" value="S" <?= $petChkedS ?>></div>
                                                     <small>Sim</small>
                                                 </div>
                                             </div>
@@ -170,7 +254,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPets" value="N"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPets" value="N" <?= $petChkedN ?>></div>
                                                     <small>Não</small>
                                                 </div>
                                             </div>
@@ -178,7 +262,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPets" value="" checked></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkAceitaPets" id="chkAceitaPetsT" value="" <?= $petChkedTf ?>></div>
                                                     <small>Tanto faz</small>
                                                 </div>
                                             </div>
@@ -189,24 +273,41 @@
                                     <div class="row mb-3 mt-3 p-3">
                                         <h6 class="mb-3">Área</h6>
                                         <div class="col">
-                                            <label for="txtAreaMin" class="form-label">Mínimo:</label>
-                                            <input type="text" class="form-control" name="txtAreaMin" id="txtAreaMin" value="">
+                                            <label for="txtAreaMin" class="form-label">Mínimo 20m²</label>
+                                            <input type="text" class="form-control" name="txtAreaMin" id="txtAreaMin" value="<?= $val_txtAreaMin ?>">
                                         </div>
                                         <div class="col">
-                                            <label for="txtAreaMax" class="form-label">Máximo:</label>
-                                            <input type="text" class="form-control" name="txtAreaMax" id="txtAreaMax" value="">
+                                            <label for="txtAreaMax" class="form-label">Máximo 1000m²</label>
+                                            <input type="text" class="form-control" name="txtAreaMax" id="txtAreaMax" value="<?= $val_txtAreaMax ?>">
                                         </div>
                                     </div>
 
                                     <hr>
+                                    <?php
+
+                                    $metroChkedS = '';
+                                    $metroChkedN = '';
+                                    $metroChkedTf = '';
+
+                                    if ($val_chkProxMetro == 'S') {
+                                        $metroChkedS = 'checked';
+                                    }
+                                    if ($val_chkProxMetro == 'N') {
+                                        $metroChkedN = 'checked';
+                                    }
+                                    if ($val_chkProxMetro == '') {
+                                        $metroChkedTf = 'checked';
+                                    }
+
+                                    ?>
                                     <div class="row mb-3 mt-3 p-3">
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <h6 class="mb-3">Próximo ao metrô?</h6>
                                         </div>
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetro" value="S"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetro" value="S" <?= $metroChkedS ?>></div>
                                                     <small>Sim</small>
                                                 </div>
                                             </div>
@@ -214,7 +315,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetro" value="N"></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetro" value="N" <?= $metroChkedN ?>></div>
                                                     <small>Não</small>
                                                 </div>
                                             </div>
@@ -222,7 +323,7 @@
                                         <div class="col">
                                             <div class="card border-0">
                                                 <div class="card-body text-center">
-                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetro" value="" checked></div>
+                                                    <div class="feature"><input class="form-check-input" type="radio" name="chkProxMetro" id="chkProxMetroT" value="" <?= $metroChkedTf ?>></div>
                                                     <small>Tanto faz</small>
                                                 </div>
                                             </div>
@@ -239,6 +340,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <input class="btn btn-light" type="button" value="Limpar Filtros" id="btnReset">
                         <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
                     </div>
                     </form>
@@ -356,5 +458,25 @@
             decimal: ',',
             // affixesStay: true
         });
+    });
+
+    $("#btnReset").click(function() {
+        $("#cboTipoImovel").val("1");
+        $("#txtValorMin").val("200,00");
+        $("#txtValorMax").val("20.000,00");       
+        $("input[name=chkNumQuartos]").prop( "checked", false);
+        $("input[name=chkNumBanheiros]").prop( "checked", false);
+        $("#chkVagasT").prop( "checked", true);
+        $("#chkMobiliadoT").prop( "checked", true);
+        $("#chkAceitaPetsT").prop( "checked", true);        
+        $("#txtAreaMin").val("20");
+        $("#txtAreaMax").val("1000");
+        $("#chkProxMetroT").prop( "checked", true);
+
+        // $("#chkNumQuartos").prop( "checked", false);
+        // $("#chkNumQuartos").val("2");
+        
+
+
     });
 </script>
