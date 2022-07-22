@@ -106,7 +106,7 @@ $dataPorExenso = $semana["$data"] . ", {$dia} de " . $mes_extenso["$mes"];
                     </div>
 
                     <div class="row mt-4">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-amaral">
                             Confirmar e agendar visita
                         </button>
                     </div>

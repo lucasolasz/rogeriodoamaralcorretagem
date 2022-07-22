@@ -449,7 +449,7 @@
 
                     <a href="<?= URL . '/Paginas/agendamentoImovel/' . $dados['imovel']->id_imovel ?>" class="text-start">
                         <div class="d-grid gap-2 mt-5">
-                            <button class="btn btn-primary" type="button">Agendar visita</button>
+                            <button class="btn btn-amaral" type="button">Agendar visita</button>
                         </div>
                     </a>
                 </div>
