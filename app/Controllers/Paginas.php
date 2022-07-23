@@ -21,6 +21,13 @@ class Paginas extends Controller
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
 
+        $comodidades = $this->imovelModel->listarComodidades();
+        $mobilias = $this->imovelModel->listarMobilias();
+        $bem_estar = $this->imovelModel->listarBemEstar();
+        $eletro = $this->imovelModel->listarEletros();
+        $comodos = $this->imovelModel->listarComodos();
+        $acessibilidade = $this->imovelModel->listarAcessibilidade();
+
         //Parâmetros enviados para o método do controller VIEW
         $dados = [
             'imovel' => $imovel,
@@ -28,20 +35,22 @@ class Paginas extends Controller
             'tipoNegociacao' => $tipoNegociacao,
             'tipoImovel' => $tipoImovel,
             'caracteristicasImovel' => $caracteristicasImovel,
-            'caracteristicasCondominio' => $caracteristicasCondominio
+            'caracteristicasCondominio' => $caracteristicasCondominio,
+            'comodidades' => $comodidades,
+            'mobilias' => $mobilias,
+            'bem_estar' => $bem_estar,
+            'eletro' => $eletro,
+            'comodos' => $comodos,
+            'acessibilidade' => $acessibilidade,
         ];
 
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/home', $dados);
     }
 
-
+    //Redireciona para uma página em que não é retornado nada no filtro
     public function naoEncontrou()
     {
-
-
-        // echo 'cheguei';
-
         //Chamada do novo objeto PAGINAS 
         $this->view('paginas/naoEncontrou');
     }
@@ -56,6 +65,13 @@ class Paginas extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
+
+        $comodidades = $this->imovelModel->listarComodidades();
+        $mobilias = $this->imovelModel->listarMobilias();
+        $bem_estar = $this->imovelModel->listarBemEstar();
+        $eletro = $this->imovelModel->listarEletros();
+        $comodos = $this->imovelModel->listarComodos();
+        $acessibilidade = $this->imovelModel->listarAcessibilidade();
 
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -75,14 +91,33 @@ class Paginas extends Controller
                 'txtAreaMin' => $formulario['txtAreaMin'],
                 'txtAreaMax' => $formulario['txtAreaMax'],
                 'chkProxMetro' => $formulario['chkProxMetro'],
-                'txtTipoNegociacao' => $formulario['txtTipoNegociacao']
-
+                'txtTipoNegociacao' => $formulario['txtTipoNegociacao'],
+                'comodidades' => $comodidades,
+                'mobilias' => $mobilias,
+                'bem_estar' => $bem_estar,
+                'eletro' => $eletro,
+                'comodos' => $comodos,
+                'acessibilidade' => $acessibilidade
             ];
 
 
             $dados['chkNumQuartos'] = isset($formulario['chkNumQuartos']) ? $formulario['chkNumQuartos'] : NULL;
 
             $dados['chkNumBanheiros'] = isset($formulario['chkNumBanheiros']) ? $formulario['chkNumBanheiros'] : NULL;
+
+            $dados['chkCaracCondominios'] = isset($formulario['chkCaracCondominios']) ? $formulario['chkCaracCondominios'] : "";
+
+            $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
+
+            $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
+
+            $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
+
+            $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
+
+            $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
+
+            $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
 
 
             if ($this->imovelModel->imovelFiltro($dados)) {
@@ -99,6 +134,12 @@ class Paginas extends Controller
                     'tipoImovel' => $tipoImovel,
                     'caracteristicasImovel' => $caracteristicasImovel,
                     'caracteristicasCondominio' => $caracteristicasCondominio,
+                    'comodidades' => $comodidades,
+                    'mobilias' => $mobilias,
+                    'bem_estar' => $bem_estar,
+                    'eletro' => $eletro,
+                    'comodos' => $comodos,
+                    'acessibilidade' => $acessibilidade,
                     // 'filtros' => $formulario
                 ];
 
