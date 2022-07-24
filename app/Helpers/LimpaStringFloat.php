@@ -19,7 +19,7 @@ class LimpaStringFloat
 
 
         if ($valor == "") {
-            return NULL;
+            return 0;
         } else {
             //Transforma em inteiro
             return intval($valor);

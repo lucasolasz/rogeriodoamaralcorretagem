@@ -41,18 +41,13 @@ class ImoveisController extends Controller
 
         if (isset($formulario)) {
 
-            // var_dump($formulario['cboTipoNegociacao']);
+            // var_dump($formulario);
             // exit();
 
             $dados = [
                 // 'txtTituloImovel' => $formulario['txtTituloImovel'],
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
-                'cboBairro' => $formulario['cboBairro'],
-                'tamArea' => LimpaStringFloat::limparString($formulario['tamArea']),
-                'qtdQuarto' => LimpaStringFloat::limparString($formulario['qtdQuarto']),
-                'qtdBanheiro' => LimpaStringFloat::limparString($formulario['qtdBanheiro']),
-                'qtdVagas' => LimpaStringFloat::limparString($formulario['qtdVagas']),
-                'txtNumAndar' => LimpaStringFloat::limparString($formulario['txtNumAndar']),
+                'cboBairro' => $formulario['cboBairro'],                
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
                 'chkMobilia' => $formulario['chkMobilia'],
                 'chkMetroProx' => $formulario['chkMetroProx'],
@@ -85,30 +80,24 @@ class ImoveisController extends Controller
                 'bairros' => $bairros
             ];
 
-            //  var_dump($dados);
-            // exit();
+            //Necessário deixar NULL para estes valores
+            $dados['tamArea'] = $formulario['tamArea'] == "" ? NULL : $formulario['tamArea'];
+            $dados['qtdQuarto'] = $formulario['qtdQuarto'] == "" ? NULL : $formulario['qtdQuarto'];
+            $dados['qtdBanheiro'] = $formulario['qtdBanheiro'] == "" ? NULL : $formulario['qtdBanheiro'];
+            $dados['qtdVagas'] = $formulario['qtdVagas'] == "" ? NULL : $formulario['qtdVagas'];
+            $dados['txtNumAndar'] = $formulario['txtNumAndar'] == "" ? NULL : $formulario['txtNumAndar'];
 
             //Váriaveis com sintaxe ternária
             $dados['fileFotos'] = isset($_FILES['fileFotos']) ? $_FILES['fileFotos'] : "";
-
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
-
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
-
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
-
             $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
-
             $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
-
             $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
-
             $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
-
             $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
-
             $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
-
             $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
 
             // var_dump($dados);
@@ -125,7 +114,7 @@ class ImoveisController extends Controller
             }
         } else {
             $dados = [
-                // 'txtTituloImovel' => '',
+                
                 'txtRuaImovel' => '',
                 'txtBairroImovel' => '',
                 'tamArea' => '',
@@ -213,10 +202,6 @@ class ImoveisController extends Controller
         $relacionaEletros = $this->imovelModel->filtroEletroPorId($id);
         $relacionaMobilias = $this->imovelModel->filtroMobiliaPorId($id);
 
-
-
-
-
         $bairros = $this->imovelModel->listarBairros();
 
         // var_dump($imovel);
@@ -233,12 +218,7 @@ class ImoveisController extends Controller
             $dados = [
                 'chkFotoDestaque' => $formulario['chkFotoDestaque'],
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
-                'cboBairro' => $formulario['cboBairro'],
-                'tamArea' => LimpaStringFloat::limparString($formulario['tamArea']),
-                'qtdQuarto' => LimpaStringFloat::limparString($formulario['qtdQuarto']),
-                'qtdBanheiro' => LimpaStringFloat::limparString($formulario['qtdBanheiro']),
-                'qtdVagas' => LimpaStringFloat::limparString($formulario['qtdVagas']),
-                'txtNumAndar' => LimpaStringFloat::limparString($formulario['txtNumAndar']),
+                'cboBairro' => $formulario['cboBairro'],                
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
                 'chkMobilia' => $formulario['chkMobilia'],
                 'chkMetroProx' => $formulario['chkMetroProx'],
@@ -281,27 +261,24 @@ class ImoveisController extends Controller
 
             ];
 
+            //Necessário deixar NULL para estes valores
+            $dados['tamArea'] = $formulario['tamArea'] == "" ? NULL : $formulario['tamArea'];
+            $dados['qtdQuarto'] = $formulario['qtdQuarto'] == "" ? NULL : $formulario['qtdQuarto'];
+            $dados['qtdBanheiro'] = $formulario['qtdBanheiro'] == "" ? NULL : $formulario['qtdBanheiro'];
+            $dados['qtdVagas'] = $formulario['qtdVagas'] == "" ? NULL : $formulario['qtdVagas'];
+            $dados['txtNumAndar'] = $formulario['txtNumAndar'] == "" ? NULL : $formulario['txtNumAndar'];
+
 
             $dados['fileFotos'] = isset($_FILES['fileFotos']) ? $_FILES['fileFotos'] : "";
-
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
-
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
-
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
-
             $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
-
             $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
-
             $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
-
             $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
-
             $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
-
             $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
-
             $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
 
 
