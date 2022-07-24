@@ -1,5 +1,5 @@
 .btnHome {
-    margin: 0;    
+    margin: 0;
     width: 200px;
     height: 70px;
 }
@@ -12,11 +12,15 @@
     color: #5BBFE6
 }
 
-.btn-amaral{
+.btn-amaral {
     background-color: #2D86FA;
     color: white;
 }
 
+.imgPerfil{
+    height: 130px;
+    width: 150px;
+}
 .total {
     color: green;
     /* color: #5BBFE6; */
@@ -68,13 +72,13 @@
 }
 
 
-.tamanho-padrao{
+.tamanho-padrao {
     height: 480px;
     width: 640px;
 }
 
 
-.tamanho-padrao-card{
+.tamanho-padrao-card {
     height: 300px;
     width: 400px;
 }
