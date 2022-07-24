@@ -50,7 +50,7 @@
                 <p class="blog-post-meta transparente"><?= ucfirst($dados['imovel']->ds_rua_imovel) . ', ' . $dados['imovel']->ds_bairro . ', Rio de Janeiro ' ?></p>
                 <p class="blog-post-meta transparente mt-0"><i class="fa-solid fa-clock"></i><?= ' Publicado em: ' . Checa::dataBr($dados['imovel']->publicado_em) ?></p>
 
-                <hr>
+                <hr class="transparente">
 
                 <div class="row">
 
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <hr>
+                <hr class="transparente">
 
                 <h5 class="mt-5"><i class="fa-solid fa-sink fa-lg"></i><b>&nbsp&nbsp&nbsp&nbspImóvel</b></h5>
 
@@ -403,7 +403,7 @@
                             <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_iptu / 100 ?></li>
                         </ol>
 
-                        <hr>
+                        <hr class="transparente">
 
                         <ol class="list-unstyled mb-3 list-inline">
                             <li class="list-inline-item transparente">Total</li>
@@ -434,7 +434,7 @@
                             <li class="list-inline-item valor transparente"><?= 'R$ ' . $dados['imovel']->mo_taxa_de_servico / 100 ?></li>
                         </ol>
 
-                        <hr>
+                        <hr class="transparente">
 
                         <ol class="list-unstyled mb-3 list-inline">
                             <li class="list-inline-item transparente">Total</li>

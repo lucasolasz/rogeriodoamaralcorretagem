@@ -77,12 +77,19 @@ class Paginas extends Controller
 
         if (isset($formulario)) {
 
+            // var_dump($formulario);
+            // exit();
+
             $dados = [
+                //Define o filtro se é Compra ou Aluguel
                 'tipoNegociacao' => $tipoNegociacao,
+
+                //Filtro Aluguel
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
                 'cboTipoImovel' => $formulario['cboTipoImovel'],
+                'btnradioValor' => $formulario['btnradioValor'],
                 'txtValorMin' => LimpaStringFloat::limparString($formulario['txtValorMin']),
                 'txtValorMax' => LimpaStringFloat::limparString($formulario['txtValorMax']),
                 'chkVagas' => $formulario['chkVagas'],
@@ -92,6 +99,20 @@ class Paginas extends Controller
                 'txtAreaMax' => $formulario['txtAreaMax'],
                 'chkProxMetro' => $formulario['chkProxMetro'],
                 'txtTipoNegociacao' => $formulario['txtTipoNegociacao'],
+
+                //Filtro Compra
+                'cboTipoImovelC' => $formulario['cboTipoImovelC'],
+                'txtValorCompraMin' => LimpaStringFloat::limparString($formulario['txtValorCompraMin']),
+                'txtValorCompraMax' => LimpaStringFloat::limparString($formulario['txtValorCompraMax']),
+                'txtCondMaisIptuMin' => LimpaStringFloat::limparString($formulario['txtCondMaisIptuMin']),
+                'txtCondMaisIptuMax' => LimpaStringFloat::limparString($formulario['txtCondMaisIptuMax']),
+                'chkVagasC' => $formulario['chkVagasC'],
+                'chkMobiliadoC' => $formulario['chkMobiliadoC'],
+                'chkAceitaPetsC' => $formulario['chkAceitaPetsC'],
+                'txtAreaMinC' => $formulario['txtAreaMinC'],
+                'txtAreaMaxC' => $formulario['txtAreaMaxC'],
+                'chkProxMetroC' => $formulario['chkProxMetroC'],
+
                 'comodidades' => $comodidades,
                 'mobilias' => $mobilias,
                 'bem_estar' => $bem_estar,
@@ -101,23 +122,32 @@ class Paginas extends Controller
             ];
 
 
+            // Filtro aluguel
             $dados['chkNumQuartos'] = isset($formulario['chkNumQuartos']) ? $formulario['chkNumQuartos'] : NULL;
-
             $dados['chkNumBanheiros'] = isset($formulario['chkNumBanheiros']) ? $formulario['chkNumBanheiros'] : NULL;
-
             $dados['chkCaracCondominios'] = isset($formulario['chkCaracCondominios']) ? $formulario['chkCaracCondominios'] : "";
-
             $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
-
             $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
-
             $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
-
             $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
-
             $dados['chkComodo'] = isset($formulario['chkComodo']) ? $formulario['chkComodo'] : "";
-
             $dados['chkAcessibilidade'] = isset($formulario['chkAcessibilidade']) ? $formulario['chkAcessibilidade'] : "";
+
+
+            // Filtro compra
+            $dados['chkNumQuartosC'] = isset($formulario['chkNumQuartosC']) ? $formulario['chkNumQuartosC'] : NULL;
+            $dados['chkNumBanheirosC'] = isset($formulario['chkNumBanheirosC']) ? $formulario['chkNumBanheirosC'] : NULL;
+            $dados['chkCaracCondominiosC'] = isset($formulario['chkCaracCondominiosC']) ? $formulario['chkCaracCondominiosC'] : "";
+            $dados['chkComodidadesC'] = isset($formulario['chkComodidadesC']) ? $formulario['chkComodidadesC'] : "";
+            $dados['chkMobiliasC'] = isset($formulario['chkMobiliasC']) ? $formulario['chkMobiliasC'] : "";
+            $dados['chkBemEstarC'] = isset($formulario['chkBemEstarC']) ? $formulario['chkBemEstarC'] : "";
+            $dados['chkEletroC'] = isset($formulario['chkEletroC']) ? $formulario['chkEletroC'] : "";
+            $dados['chkComodoC'] = isset($formulario['chkComodoC']) ? $formulario['chkComodoC'] : "";
+            $dados['chkAcessibilidadeC'] = isset($formulario['chkAcessibilidadeC']) ? $formulario['chkAcessibilidadeC'] : "";
+            
+            
+            // var_dump($dados);
+            // exit();
 
 
             if ($this->imovelModel->imovelFiltro($dados)) {

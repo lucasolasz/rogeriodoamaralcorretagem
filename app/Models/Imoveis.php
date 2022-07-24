@@ -910,121 +910,246 @@ class Imoveis
 
     public function imovelFiltro($dados)
     {
-
-
-        // var_dump($dados['chkComodidades']);
+        // var_dump($dados);
         // exit();
 
-        $query = "SELECT * FROM tb_imovel im
+        $query = "SELECT *, (mo_iptu + mo_condominio) as iptuMaisCondo, (mo_aluguel + mo_condominio + mo_iptu + mo_seguro_incendio + mo_taxa_de_servico) as valorTotalAluguel FROM tb_imovel im
         LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
         LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
         LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
         WHERE 1 = 1 AND fk_tipo_negociacao = {$dados['txtTipoNegociacao']}";
 
-        if (!$dados['cboTipoImovel'] == "") {
-            $query = $query . " AND fk_tipo_imovel = {$dados['cboTipoImovel']}";
-        }
+        // Caso seja filtro aluguel
+        if ($dados['txtTipoNegociacao'] == 2) {
 
-        if (!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == "") {
-            $query = $query . " AND mo_aluguel BETWEEN {$dados['txtValorMin']} AND {$dados['txtValorMax']}";
-        }
-
-        if (!$dados['chkNumQuartos'] == NULL) {
-            $query = $query . " AND qtd_quarto >= {$dados['chkNumQuartos']}";
-        }
-
-        if (!$dados['chkNumBanheiros'] == NULL) {
-            $query = $query . " AND qtd_banheiro >= {$dados['chkNumBanheiros']}";
-        }
-
-        if (!$dados['chkVagas'] == "") {
-            $query = $query . " AND qtd_vagas >= {$dados['chkVagas']}";
-        }
-
-        if (!$dados['chkMobiliado'] == "") {
-            $query = $query . " AND chk_mobilia = '{$dados['chkMobiliado']}'";
-        }
-
-        if (!$dados['chkAceitaPets'] == "") {
-            $query = $query . " AND chk_aceita_pet = '{$dados['chkAceitaPets']}'";
-        }
-
-        if (!$dados['txtAreaMin'] == "" && !$dados['txtAreaMax'] == "") {
-            $query = $query . " AND qtd_area BETWEEN {$dados['txtAreaMin']} AND {$dados['txtAreaMax']}";
-        }
-
-        if (!$dados['chkProxMetro'] == "") {
-            $query = $query . " AND chk_metro_prox = '{$dados['chkProxMetro']}'";
-        }
-
-        if (!$dados['chkCaracCondominios'] == "") {
-            $strCaracCondo = '';
-            foreach ($dados['chkCaracCondominios'] as $chkCaracCondominios) {
-                $strCaracCondo = $strCaracCondo . ',' . $chkCaracCondominios;
+            if (!$dados['cboTipoImovel'] == "") {
+                $query = $query . " AND fk_tipo_imovel = {$dados['cboTipoImovel']}";
             }
-            $strCaracCondoLimpa = substr($strCaracCondo, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_condo tricc WHERE tricc.fk_imovel = im.id_imovel AND tricc.fk_caracteristica_condominio in (" . $strCaracCondoLimpa . "))";
-        }
-
-        if (!$dados['chkComodidades'] == "") {
-            $strComodidades = '';
-            foreach ($dados['chkComodidades'] as $chkComodidades) {
-                $strComodidades = $strComodidades . ',' . $chkComodidades;
+            //Filtro de valor total 
+            if ($dados['btnradioValor'] == 2) {
+                if (!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == "") {
+                    $query = $query . " HAVING valorTotalAluguel BETWEEN {$dados['txtValorMin']} AND {$dados['txtValorMax']}";
+                }
+            } else {
+                if (!$dados['txtValorMin'] == "" && !$dados['txtValorMax'] == "") {
+                    $query = $query . " AND mo_aluguel BETWEEN {$dados['txtValorMin']} AND {$dados['txtValorMax']}";
+                }
             }
-            $strComodidadesLimpa = substr($strComodidades, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodidades tric WHERE tric.fk_imovel = im.id_imovel AND tric.fk_filtro_comodidades in (" . $strComodidadesLimpa . "))";
-        }
 
-        if (!$dados['chkMobilias'] == "") {
-            $strMobilias = '';
-            foreach ($dados['chkMobilias'] as $chkMobilias) {
-                $strMobilias = $strMobilias . ',' . $chkMobilias;
+
+            if (!$dados['chkNumQuartos'] == NULL) {
+                $query = $query . " AND qtd_quarto >= {$dados['chkNumQuartos']}";
             }
-            $strMobiliasLimpa = substr($strMobilias, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_mobilia trimo WHERE trimo.fk_imovel = im.id_imovel AND trimo.fk_filtro_mobilias in (" . $strMobiliasLimpa . "))";
-        }
-
-        if (!$dados['chkBemEstar'] == "") {
-            $strBemEstar = '';
-            foreach ($dados['chkBemEstar'] as $chkBemEstar) {
-                $strBemEstar = $strBemEstar . ',' . $chkBemEstar;
+            if (!$dados['chkNumBanheiros'] == NULL) {
+                $query = $query . " AND qtd_banheiro >= {$dados['chkNumBanheiros']}";
             }
-            $strBemEstarLimpa = substr($strBemEstar, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_bem_estar tribem WHERE tribem.fk_imovel = im.id_imovel AND tribem.fk_filtro_bem_estar in (" . $strBemEstarLimpa . "))";
-        }
-
-        if (!$dados['chkEletro'] == "") {
-            $strEletro = '';
-            foreach ($dados['chkEletro'] as $chkEletro) {
-                $strEletro = $strEletro . ',' . $chkEletro;
+            if (!$dados['chkVagas'] == "") {
+                $query = $query . " AND qtd_vagas >= {$dados['chkVagas']}";
             }
-            $strEletroLimpa = substr($strEletro, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_eletro trie WHERE trie.fk_imovel = im.id_imovel AND trie.fk_filtro_eletrodomestico in (" . $strEletroLimpa . "))";
-        }
-
-        if (!$dados['chkComodo'] == "") {
-            $strComodo = '';
-            foreach ($dados['chkComodo'] as $chkComodo) {
-                $strComodo = $strComodo . ',' . $chkComodo;
+            if (!$dados['chkMobiliado'] == "") {
+                $query = $query . " AND chk_mobilia = '{$dados['chkMobiliado']}'";
             }
-            $strComodoLimpa = substr($strComodo, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodos trico WHERE trico.fk_imovel = im.id_imovel AND trico.fk_filtro_comodos in (" . $strComodoLimpa . "))";
-        }
-
-        if (!$dados['chkAcessibilidade'] == "") {
-            $strAcessibilidade = '';
-            foreach ($dados['chkAcessibilidade'] as $chkAcessibilidade) {
-                $strAcessibilidade = $strAcessibilidade . ',' . $chkAcessibilidade;
+            if (!$dados['chkAceitaPets'] == "") {
+                $query = $query . " AND chk_aceita_pet = '{$dados['chkAceitaPets']}'";
             }
-            $strAcessibilidadeLimpa = substr($strAcessibilidade, 1);
 
-            $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_acessibilidade triac WHERE triac.fk_imovel = im.id_imovel AND triac.fk_filtro_acessibilidade in (" . $strAcessibilidadeLimpa . "))";
+            if (!$dados['txtAreaMin'] == "" && !$dados['txtAreaMax'] == "") {
+                $query = $query . " AND qtd_area BETWEEN {$dados['txtAreaMin']} AND {$dados['txtAreaMax']}";
+            }
+
+            if (!$dados['chkProxMetro'] == "") {
+                $query = $query . " AND chk_metro_prox = '{$dados['chkProxMetro']}'";
+            }
+
+            if (!$dados['chkCaracCondominios'] == "") {
+                $strCaracCondo = '';
+                foreach ($dados['chkCaracCondominios'] as $chkCaracCondominios) {
+                    $strCaracCondo = $strCaracCondo . ',' . $chkCaracCondominios;
+                }
+                $strCaracCondoLimpa = substr($strCaracCondo, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_condo tricc WHERE tricc.fk_imovel = im.id_imovel AND tricc.fk_caracteristica_condominio in (" . $strCaracCondoLimpa . "))";
+            }
+
+            if (!$dados['chkComodidades'] == "") {
+                $strComodidades = '';
+                foreach ($dados['chkComodidades'] as $chkComodidades) {
+                    $strComodidades = $strComodidades . ',' . $chkComodidades;
+                }
+                $strComodidadesLimpa = substr($strComodidades, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodidades tric WHERE tric.fk_imovel = im.id_imovel AND tric.fk_filtro_comodidades in (" . $strComodidadesLimpa . "))";
+            }
+
+            if (!$dados['chkMobilias'] == "") {
+                $strMobilias = '';
+                foreach ($dados['chkMobilias'] as $chkMobilias) {
+                    $strMobilias = $strMobilias . ',' . $chkMobilias;
+                }
+                $strMobiliasLimpa = substr($strMobilias, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_mobilia trimo WHERE trimo.fk_imovel = im.id_imovel AND trimo.fk_filtro_mobilias in (" . $strMobiliasLimpa . "))";
+            }
+
+            if (!$dados['chkBemEstar'] == "") {
+                $strBemEstar = '';
+                foreach ($dados['chkBemEstar'] as $chkBemEstar) {
+                    $strBemEstar = $strBemEstar . ',' . $chkBemEstar;
+                }
+                $strBemEstarLimpa = substr($strBemEstar, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_bem_estar tribem WHERE tribem.fk_imovel = im.id_imovel AND tribem.fk_filtro_bem_estar in (" . $strBemEstarLimpa . "))";
+            }
+
+            if (!$dados['chkEletro'] == "") {
+                $strEletro = '';
+                foreach ($dados['chkEletro'] as $chkEletro) {
+                    $strEletro = $strEletro . ',' . $chkEletro;
+                }
+                $strEletroLimpa = substr($strEletro, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_eletro trie WHERE trie.fk_imovel = im.id_imovel AND trie.fk_filtro_eletrodomestico in (" . $strEletroLimpa . "))";
+            }
+
+            if (!$dados['chkComodo'] == "") {
+                $strComodo = '';
+                foreach ($dados['chkComodo'] as $chkComodo) {
+                    $strComodo = $strComodo . ',' . $chkComodo;
+                }
+                $strComodoLimpa = substr($strComodo, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodos trico WHERE trico.fk_imovel = im.id_imovel AND trico.fk_filtro_comodos in (" . $strComodoLimpa . "))";
+            }
+
+            if (!$dados['chkAcessibilidade'] == "") {
+                $strAcessibilidade = '';
+                foreach ($dados['chkAcessibilidade'] as $chkAcessibilidade) {
+                    $strAcessibilidade = $strAcessibilidade . ',' . $chkAcessibilidade;
+                }
+                $strAcessibilidadeLimpa = substr($strAcessibilidade, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_acessibilidade triac WHERE triac.fk_imovel = im.id_imovel AND triac.fk_filtro_acessibilidade in (" . $strAcessibilidadeLimpa . "))";
+            }
+        } else {
+
+            // Caso seja filtro compra
+
+            if (!$dados['cboTipoImovel'] == "") {
+                $query = $query . " AND fk_tipo_imovel = {$dados['cboTipoImovelC']}";
+            }
+
+            if (!$dados['txtValorCompraMin'] == "" && !$dados['txtValorCompraMax'] == "") {
+                $query = $query . " AND mo_venda BETWEEN {$dados['txtValorCompraMin']} AND {$dados['txtValorCompraMax']}";
+            }
+
+            if (!$dados['txtCondMaisIptuMin'] == "" && !$dados['txtCondMaisIptuMax'] == "") {
+                $query = $query . " HAVING iptuMaisCondo BETWEEN {$dados['txtCondMaisIptuMin']} AND {$dados['txtCondMaisIptuMax']}";
+            }
+
+            if (!$dados['chkNumQuartosC'] == NULL) {
+                $query = $query . " AND qtd_quarto >= {$dados['chkNumQuartosC']}";
+            }
+
+            if (!$dados['chkNumBanheirosC'] == NULL) {
+                $query = $query . " AND qtd_banheiro >= {$dados['chkNumBanheirosC']}";
+            }
+
+            if (!$dados['chkVagasC'] == "") {
+                $query = $query . " AND qtd_vagas >= {$dados['chkVagasC']}";
+            }
+
+            if (!$dados['chkMobiliadoC'] == "") {
+                $query = $query . " AND chk_mobilia = '{$dados['chkMobiliadoC']}'";
+            }
+
+            if (!$dados['chkAceitaPetsC'] == "") {
+                $query = $query . " AND chk_aceita_pet = '{$dados['chkAceitaPetsC']}'";
+            }
+
+            if (!$dados['txtAreaMinC'] == "" && !$dados['txtAreaMaxC'] == "") {
+                $query = $query . " AND qtd_area BETWEEN {$dados['txtAreaMinC']} AND {$dados['txtAreaMaxC']}";
+            }
+
+            if (!$dados['chkProxMetroC'] == "") {
+                $query = $query . " AND chk_metro_prox = '{$dados['chkProxMetroC']}'";
+            }
+
+            if (!$dados['chkCaracCondominiosC'] == "") {
+                $strCaracCondoC = '';
+                foreach ($dados['chkCaracCondominiosC'] as $chkCaracCondominiosC) {
+                    $strCaracCondoC = $strCaracCondoC . ',' . $chkCaracCondominiosC;
+                }
+                $strCaracCondoCLimpa = substr($strCaracCondoC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_condo tricc WHERE tricc.fk_imovel = im.id_imovel AND tricc.fk_caracteristica_condominio in (" . $strCaracCondoCLimpa . "))";
+            }
+
+            if (!$dados['chkComodidadesC'] == "") {
+                $strComodidadesC = '';
+                foreach ($dados['chkComodidadesC'] as $chkComodidadesC) {
+                    $strComodidadesC = $strComodidadesC . ',' . $chkComodidadesC;
+                }
+                $strComodidadesCLimpa = substr($strComodidadesC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodidades tric WHERE tric.fk_imovel = im.id_imovel AND tric.fk_filtro_comodidades in (" . $strComodidadesCLimpa . "))";
+            }
+
+            if (!$dados['chkMobiliasC'] == "") {
+                $strMobiliasC = '';
+                foreach ($dados['chkMobiliasC'] as $chkMobiliasC) {
+                    $strMobiliasC = $strMobiliasC . ',' . $chkMobiliasC;
+                }
+                $strMobiliasCLimpa = substr($strMobiliasC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_mobilia trimo WHERE trimo.fk_imovel = im.id_imovel AND trimo.fk_filtro_mobilias in (" . $strMobiliasCLimpa . "))";
+            }
+
+            if (!$dados['chkBemEstarC'] == "") {
+                $strBemEstarC = '';
+                foreach ($dados['chkBemEstarC'] as $chkBemEstarC) {
+                    $strBemEstarC = $strBemEstarC . ',' . $chkBemEstarC;
+                }
+                $strBemEstarCLimpa = substr($strBemEstarC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_bem_estar tribem WHERE tribem.fk_imovel = im.id_imovel AND tribem.fk_filtro_bem_estar in (" . $strBemEstarCLimpa . "))";
+            }
+
+            if (!$dados['chkEletroC'] == "") {
+                $strEletroC = '';
+                foreach ($dados['chkEletroC'] as $chkEletroC) {
+                    $strEletroC = $strEletroC . ',' . $chkEletroC;
+                }
+                $strEletroCLimpa = substr($strEletroC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_eletro trie WHERE trie.fk_imovel = im.id_imovel AND trie.fk_filtro_eletrodomestico in (" . $strEletroCLimpa . "))";
+            }
+
+
+            if (!$dados['chkComodoC'] == "") {
+                $strComodoC = '';
+                foreach ($dados['chkComodoC'] as $chkComodoC) {
+                    $strComodoC = $strComodoC . ',' . $chkComodoC;
+                }
+                $strComodoCLimpa = substr($strComodoC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodos trico WHERE trico.fk_imovel = im.id_imovel AND trico.fk_filtro_comodos in (" . $strComodoCLimpa . "))";
+            }
+
+            if (!$dados['chkAcessibilidadeC'] == "") {
+                $strAcessibilidadeC = '';
+                foreach ($dados['chkAcessibilidadeC'] as $chkAcessibilidadeC) {
+                    $strAcessibilidadeC = $strAcessibilidadeC . ',' . $chkAcessibilidadeC;
+                }
+                $strAcessibilidadeCLimpa = substr($strAcessibilidadeC, 1);
+
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_acessibilidade triac WHERE triac.fk_imovel = im.id_imovel AND triac.fk_filtro_acessibilidade in (" . $strAcessibilidadeCLimpa . "))";
+            }
         }
 
         $query = $query . " ORDER BY im.publicado_em DESC";

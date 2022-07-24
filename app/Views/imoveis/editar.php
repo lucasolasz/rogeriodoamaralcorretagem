@@ -11,7 +11,7 @@
         <div class="card-body">
             <h2 class="card-title">Edtiar Imóvel</h2>
             <small>Preencha o formulário abaixo para editar o imóvel</small>
-            <hr>
+            <hr class="transparente">
 
             <form name="editar" method="POST" action="<?= URL . '/ImoveisController/editar/' . $dados['imovel']->id_imovel ?> " enctype="multipart/form-data">
 
@@ -35,7 +35,7 @@
                     </div>
                 <?php } ?>
 
-                <hr>
+                <hr class="transparente">
 
                 <div class="mb-3 mt-3">
                     <label for="cboTipoImovel" class="form-label">Tipo Imóvel: *</label>

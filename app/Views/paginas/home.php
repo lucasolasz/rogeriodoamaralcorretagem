@@ -3,8 +3,22 @@
 
         <?php
 
+        $val_txtTipoNegociacao = isset($dados['filtros']['txtTipoNegociacao']) ? $dados['filtros']['txtTipoNegociacao'] : '2';
+
+        //Define a aba ativa do filtro para enviar ao JavaScript no final da página
+        $tabAtiva = '';
+
+        if ($val_txtTipoNegociacao == 1) {
+            $tabAtiva = 'nav-comprar-tab';
+            $valTab = 1;
+        } else {
+            $tabAtiva = 'nav-alugar-tab';
+            $valTab = 2;
+        }
+
+        // Filtro aluguel
         $val_cboTipoImovel = isset($dados['filtros']['cboTipoImovel']) ? $dados['filtros']['cboTipoImovel'] : '';
-        $val_txtValorMin = isset($dados['filtros']['txtValorMin']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorMin']) : '20000';
+        $val_txtValorMin = isset($dados['filtros']['txtValorMin']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorMin']) : '50000';
         $val_txtValorMax = isset($dados['filtros']['txtValorMax']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorMax']) : '2000000';
         $val_chkNumQuartos = isset($dados['filtros']['chkNumQuartos']) ? $dados['filtros']['chkNumQuartos'] : '';
         $val_chkNumBanheiros = isset($dados['filtros']['chkNumBanheiros']) ? $dados['filtros']['chkNumBanheiros'] : '';
@@ -21,6 +35,28 @@
         $val_chkEletro = isset($dados['filtros']['chkEletro']) ? $dados['filtros']['chkEletro'] : '';
         $val_chkComodo = isset($dados['filtros']['chkComodo']) ? $dados['filtros']['chkComodo'] : '';
         $val_chkAcessibilidade = isset($dados['filtros']['chkAcessibilidade']) ? $dados['filtros']['chkAcessibilidade'] : '';
+
+        // Filtro compra IDs e Names Terminado com C
+        $val_cboTipoImovelC = isset($dados['filtros']['cboTipoImovelC']) ? $dados['filtros']['cboTipoImovelC'] : '';
+        $val_txtValorCompraMin = isset($dados['filtros']['txtValorCompraMin']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorCompraMin']) : '15000000';
+        $val_txtValorCompraMax = isset($dados['filtros']['txtValorCompraMax']) ? LimpaStringFloat::limparString($dados['filtros']['txtValorCompraMax']) : '2000000000';
+        $val_txtCondMaisIptuMin = isset($dados['filtros']['val_txtCondMaisIptuMin']) ? LimpaStringFloat::limparString($dados['filtros']['val_txtCondMaisIptuMin']) : '0';
+        $val_txtCondMaisIptuMax = isset($dados['filtros']['txtCondMaisIptuMax']) ? LimpaStringFloat::limparString($dados['filtros']['txtCondMaisIptuMax']) : '1500000';
+        $val_chkNumQuartosC = isset($dados['filtros']['chkNumQuartosC']) ? $dados['filtros']['chkNumQuartosC'] : '';
+        $val_chkNumBanheirosC = isset($dados['filtros']['chkNumBanheirosC']) ? $dados['filtros']['chkNumBanheirosC'] : '';
+        $val_chkVagasC = isset($dados['filtros']['chkVagasC']) ? $dados['filtros']['chkVagasC'] : '';
+        $val_chkMobiliadoC = isset($dados['filtros']['chkMobiliadoC']) ? $dados['filtros']['chkMobiliadoC'] : '';
+        $val_chkAceitaPetsC = isset($dados['filtros']['chkAceitaPetsC']) ? $dados['filtros']['chkAceitaPetsC'] : '';
+        $val_txtAreaMinC = isset($dados['filtros']['txtAreaMinC']) ? $dados['filtros']['txtAreaMinC'] : '20';
+        $val_txtAreaMaxC = isset($dados['filtros']['txtAreaMaxC']) ? $dados['filtros']['txtAreaMaxC'] : '1000';
+        $val_chkProxMetroC = isset($dados['filtros']['chkProxMetroC']) ? $dados['filtros']['chkProxMetroC'] : '';
+        $val_chkCaracCondominiosC = isset($dados['filtros']['chkCaracCondominiosC']) ? $dados['filtros']['chkCaracCondominiosC'] : '';
+        $val_chkComodidadesC = isset($dados['filtros']['chkComodidadesC']) ? $dados['filtros']['chkComodidadesC'] : '';
+        $val_chkMobiliasC = isset($dados['filtros']['chkMobiliasC']) ? $dados['filtros']['chkMobiliasC'] : '';
+        $val_chkBemEstarC = isset($dados['filtros']['chkBemEstarC']) ? $dados['filtros']['chkBemEstarC'] : '';
+        $val_chkEletroC = isset($dados['filtros']['chkEletroC']) ? $dados['filtros']['chkEletroC'] : '';
+        $val_chkComodoC = isset($dados['filtros']['chkComodoC']) ? $dados['filtros']['chkComodoC'] : '';
+        $val_chkAcessibilidadeC = isset($dados['filtros']['chkAcessibilidadeC']) ? $dados['filtros']['chkAcessibilidadeC'] : '';
 
         //Invoca página com filtro
         include APP . '/Views/paginas/filtro.php';
@@ -122,9 +158,24 @@
             decimal: ',',
             // affixesStay: true
         });
+
+
+        $('#<?= $tabAtiva ?>').tab('show');
+        $("input[name=txtTipoNegociacao]").val(<?= $valTab ?>);
+    });
+
+
+    $("#nav-alugar-tab").click(function() {
+        $("input[name=txtTipoNegociacao]").val(2);
+    });
+
+    $("#nav-comprar-tab").click(function() {
+        $("input[name=txtTipoNegociacao]").val(1);
     });
 
     $("#btnReset").click(function() {
+
+        //Filtro aba aluguel
         $("#cboTipoImovel").val("1");
         $("#txtValorMin").val("200,00");
         $("#txtValorMax").val("20.000,00");
@@ -143,5 +194,27 @@
         $(".chkEletro").prop("checked", false);
         $(".chkComodo").prop("checked", false);
         $(".chkAcessibilidade").prop("checked", false);
+
+        //Filtro aba comprar
+        $("#cboTipoImovelC").val("1");
+        $("#txtValorCompraMin").val("150.000,00");
+        $("#txtValorCompraMax").val("20.000.000,00");
+        $("#txtCondMaisIptuMin").val("0,00");
+        $("#txtCondMaisIptuMax").val("15.000,00");
+        $("input[name=chkNumQuartosC]").prop("checked", false);
+        $("input[name=chkNumBanheirosC]").prop("checked", false);
+        $("#chkVagasTC").prop("checked", true);
+        $("#chkMobiliadoTC").prop("checked", true);
+        $("#chkAceitaPetsTC").prop("checked", true);
+        $("#txtAreaMinC").val("20");
+        $("#txtAreaMaxC").val("1000");
+        $("#chkProxMetroTC").prop("checked", true);
+        $(".chkCaracCondominiosC").prop("checked", false);
+        $(".chkComodidadesC").prop("checked", false);
+        $(".chkMobiliasC").prop("checked", false);
+        $(".chkBemEstarC").prop("checked", false);
+        $(".chkEletroC").prop("checked", false);
+        $(".chkComodoC").prop("checked", false);
+        $(".chkAcessibilidadeC").prop("checked", false);
     });
 </script>
