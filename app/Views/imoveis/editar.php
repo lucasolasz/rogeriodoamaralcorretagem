@@ -18,6 +18,7 @@
                 <h3>Imagens</h3>
 
                 <?= Alertas::mensagem('imagem') ?>
+                <?= Alertas::mensagem('imagemExtra') ?>
 
                 <?php foreach ($dados['fotosImovel'] as $fotosImovel) { ?>
                     <div class="text-center m-3">
@@ -28,7 +29,7 @@
                                 <input class="form-check-input" type="radio" name="chkFotoDestaque" id="chkFotoDestaque" checked value="<?= $fotosImovel->id_anexo ?>">
                             </label>
                         <?php } else { ?>
-                            <label class="form-check-label" for="chkFotoDestaque"> &nbsp&nbsp Foto Destaque
+                            <label class="form-check-label" for="chkFotoDestaque"> &nbsp&nbsp Foto destaque
                                 <input class="form-check-input" type="radio" name="chkFotoDestaque" id="chkFotoDestaque" value="<?= $fotosImovel->id_anexo ?>">
                             </label>
                         <?php } ?>

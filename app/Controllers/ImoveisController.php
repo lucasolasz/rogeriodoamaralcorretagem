@@ -47,7 +47,7 @@ class ImoveisController extends Controller
             $dados = [
                 // 'txtTituloImovel' => $formulario['txtTituloImovel'],
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
-                'cboBairro' => $formulario['cboBairro'],                
+                'cboBairro' => $formulario['cboBairro'],
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
                 'chkMobilia' => $formulario['chkMobilia'],
                 'chkMetroProx' => $formulario['chkMetroProx'],
@@ -114,7 +114,7 @@ class ImoveisController extends Controller
             }
         } else {
             $dados = [
-                
+
                 'txtRuaImovel' => '',
                 'txtBairroImovel' => '',
                 'tamArea' => '',
@@ -216,9 +216,9 @@ class ImoveisController extends Controller
             // exit();
 
             $dados = [
-                'chkFotoDestaque' => $formulario['chkFotoDestaque'],
+                // 'chkFotoDestaque' => $formulario['chkFotoDestaque'],
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
-                'cboBairro' => $formulario['cboBairro'],                
+                'cboBairro' => $formulario['cboBairro'],
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
                 'chkMobilia' => $formulario['chkMobilia'],
                 'chkMetroProx' => $formulario['chkMetroProx'],
@@ -269,6 +269,8 @@ class ImoveisController extends Controller
             $dados['txtNumAndar'] = $formulario['txtNumAndar'] == "" ? NULL : $formulario['txtNumAndar'];
 
 
+            $dados['chkFotoDestaque'] = isset($formulario['chkFotoDestaque']) ? $formulario['chkFotoDestaque'] : "";
+            $dados['fotosImovel'] = !empty($fotosImovel) ? $fotosImovel : "";
             $dados['fileFotos'] = isset($_FILES['fileFotos']) ? $_FILES['fileFotos'] : "";
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
@@ -309,7 +311,7 @@ class ImoveisController extends Controller
                 'eletro' => $eletro,
                 'comodos' => $comodos,
                 'acessibilidade' => $acessibilidade,
-                'fotosImovel' => $fotosImovel,
+                // 'fotosImovel' => $fotosImovel,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
                 'relacionaCaracCondo' => $relacionaCaracCondo,
                 'relacionaAcessibilidade' => $relacionaAcessibilidade,
@@ -338,6 +340,8 @@ class ImoveisController extends Controller
                 'tel_proprietario_erro' => '',
                 'email_proprietario_erro' => ''
             ];
+
+            $dados['fotosImovel'] = isset($fotosImovel) ? $fotosImovel : "";
         }
 
 
@@ -355,7 +359,8 @@ class ImoveisController extends Controller
         ];
 
         if ($this->imovelModel->deletarFoto($dados)) {
-            Alertas::mensagem('imagem', 'Imagem deletada com sucesso');
+            Alertas::mensagem('imagem', 'Imagem deletada com sucesso.');
+            Alertas::mensagem('imagemExtra', 'Caso tenha sido a <b>Foto destaque</b>, escolha uma nova para substituí-la.', 'alert alert-warning');
             Redirecionamento::redirecionar('ImoveisController/editar/' . $fk_imovel->fk_imovel);
         } else {
             Alertas::mensagem('imagem', 'Não foi deletar a imagem do imóvel', 'alert alert-danger');

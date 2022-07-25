@@ -240,7 +240,6 @@ class Imoveis
             }
         }
 
-
         //Realiza as operações de anexo, se houver anexo
         if (!$dados['fileFotos']['name'][0] == "") {
 
@@ -326,7 +325,7 @@ class Imoveis
     {
 
 
-        // var_dump($dados['chkFotoDestaque']);
+        // var_dump($dados['fileFotos']['name']);
         // exit();
 
         $atualizarErro = false;
@@ -576,8 +575,14 @@ class Imoveis
             }
         }
 
+
+        // var_dump($dados['fotosImovel']);
+        // exit();
+
+
+
         //Realiza as operações de anexo, se houver anexo
-        if (!$dados['fileFotos'] == "") {
+        if (!$dados['fileFotos']['name'][0] == "") {
 
             $pastaArquivo = "imovel_id_" . $dados['imovel']->id_imovel;
             $upload = new Upload();
@@ -627,14 +632,36 @@ class Imoveis
                     // $nomeArquivo = $upload->getResultado();
                     // $pathArquivo = $destination_img;
 
+                    if ($dados['fotosImovel'] == "") {
 
+                        if ($i == 0) {
 
-                    $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
-                    $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
-                    $this->db->bind("nm_path_arquivo", $novoDiretorio);
-                    $this->db->bind("nm_arquivo", $nomeArquivo);
-                    if (!$this->db->executa()) {
-                        $atualizarErro = true;
+                            $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
+                            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                            $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                            $this->db->bind("nm_arquivo", $nomeArquivo);
+                            $this->db->bind("chk_destaque", "S");
+                            if (!$this->db->executa()) {
+                                $atualizarErro = true;
+                            }
+                        } else {
+                            $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                            $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                            $this->db->bind("nm_arquivo", $nomeArquivo);
+                            if (!$this->db->executa()) {
+                                $atualizarErro = true;
+                            }
+                        }
+                    } else {
+
+                        $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                        $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
+                        $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                        $this->db->bind("nm_arquivo", $nomeArquivo);
+                        if (!$this->db->executa()) {
+                            $atualizarErro = true;
+                        }
                     }
                 } else {
                     echo $upload->getErro();
