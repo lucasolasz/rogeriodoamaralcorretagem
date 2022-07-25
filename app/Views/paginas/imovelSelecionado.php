@@ -155,11 +155,73 @@
                                     <div class="feature"><i class="fa-solid fa-train-subway transparente"></i></div>
                                     <small>Não próx.</small>
                                 <?php } ?>
-
-
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+
+                        <?php if ($dados['imovel']->fk_tipo_negociacao == 1) {
+
+                            $ruaSilenciosa = '';
+                            $solDaManha = '';
+                            $vistaLivre = '';
+
+                            foreach ($dados['relacBemEstar'] as $relacBemEstar) {
+
+
+                                if ($relacBemEstar->fk_filtro_bem_estar == 2) {
+                                    $ruaSilenciosa = 'S';
+                                }
+
+                                if ($relacBemEstar->fk_filtro_bem_estar == 3) {
+                                    $solDaManha = 'S';
+                                }
+
+                                if ($relacBemEstar->fk_filtro_bem_estar == 5) {
+                                    $vistaLivre = 'S';
+                                }
+                            } ?>
+
+
+                            <?php if ($solDaManha == "S") { ?>
+                                <div class="col">
+                                    <div class="card border-0">
+                                        <div class="card-body text-center">
+
+                                            <div class="feature"><i class="fa-solid fa-sun transparente-azul"></i></div>
+                                            <small>Sol da manhã</small>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <?php if ($ruaSilenciosa == "S") { ?>
+                                <div class="col">
+                                    <div class="card border-0">
+                                        <div class="card-body text-center">
+                                            <div class="feature"><i class="fa-solid fa-volume-xmark transparente-azul"></i></div>
+                                            <small>Rua Silenciosa</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }  ?>
+
+                            <?php if ($vistaLivre == "S") { ?>
+                                <div class="col">
+                                    <div class="card border-0">
+                                        <div class="card-body text-center">
+                                            <div class="feature"><i class="fa-solid fa-image transparente-azul"></i></div>
+                                            <small>Vista livre</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                        <?php } ?>
+                    </div>
+
                 </div>
 
                 <hr class="transparente">

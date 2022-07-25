@@ -239,6 +239,7 @@ class Paginas extends Controller
     {
 
         $imovel = $this->imovelModel->lerImovelSelecionadoPorId($id);
+        $relacBemEstar = $this->imovelModel->lerRelacBemEstarPorId($id);
         $anexos = $this->imovelModel->lerFotosPorId($id);
         $relacCaracImovel = $this->imovelModel->caracImovelPorId($id);
         $relacCaracCondo = $this->imovelModel->caracCondoPorId($id);
@@ -252,7 +253,8 @@ class Paginas extends Controller
             'relacCaracImovel' => $relacCaracImovel,
             'relacCaracCondo' => $relacCaracCondo,
             'caracCondo' => $caracCondo,
-            'caracImovel' => $caracImovel
+            'caracImovel' => $caracImovel,
+            'relacBemEstar' => $relacBemEstar
 
         ];
 

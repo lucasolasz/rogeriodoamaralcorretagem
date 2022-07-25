@@ -395,7 +395,7 @@ class Imoveis
             $atualizarErro = true;
         }
 
-        if (!$dados['chkCaracteristicaImovel'] == "") {
+        if (!$dados['chkCaracteristicaImovel'] == "" or $dados['chkCaracteristicaImovel'] == "") {
 
 
             //Apaga os anteriores e salva as novas opções escolhidas
@@ -416,7 +416,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkCaracteristicaCondominio'] == "") {
+        if (!$dados['chkCaracteristicaCondominio'] == "" or $dados['chkCaracteristicaCondominio'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
@@ -436,7 +436,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkComodidades'] == "") {
+        if (!$dados['chkComodidades'] == "" or $dados['chkComodidades'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_comodidades WHERE fk_imovel = :fk_imovel");
@@ -456,7 +456,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkMobilias'] == "") {
+        if (!$dados['chkMobilias'] == "" or $dados['chkMobilias'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_mobilia WHERE fk_imovel = :fk_imovel");
@@ -478,7 +478,9 @@ class Imoveis
 
 
 
-        if (!$dados['chkBemEstar'] == "") {
+        if (!$dados['chkBemEstar'] == "" or $dados['chkBemEstar'] == "") {
+
+            
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :fk_imovel");
@@ -486,6 +488,8 @@ class Imoveis
             if (!$this->db->executa()) {
                 $atualizarErro = true;
             }
+
+
 
             foreach ($dados['chkBemEstar'] as $chkBemEstar) {
 
@@ -498,7 +502,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkEletro'] == "") {
+        if (!$dados['chkEletro'] == "" or $dados['chkEletro'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_eletro WHERE fk_imovel = :fk_imovel");
@@ -518,7 +522,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkComodo'] == "") {
+        if (!$dados['chkComodo'] == "" or $dados['chkComodo'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_comodos WHERE fk_imovel = :fk_imovel");
@@ -538,7 +542,7 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkAcessibilidade'] == "") {
+        if (!$dados['chkAcessibilidade'] == "" or $dados['chkAcessibilidade'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_acessibilidade WHERE fk_imovel = :fk_imovel");
@@ -781,6 +785,16 @@ class Imoveis
         $this->db->bind("id_imovel", $id);
 
         return $this->db->resultado();
+    }
+
+    public function lerRelacBemEstarPorId($id)
+    {
+
+        $this->db->query("SELECT * FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :id_imovel");
+
+        $this->db->bind("id_imovel", $id);
+
+        return $this->db->resultados();
     }
 
     public function lerFotosPorId($id)
