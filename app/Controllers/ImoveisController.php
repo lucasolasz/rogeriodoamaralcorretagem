@@ -402,4 +402,28 @@ class ImoveisController extends Controller
             Redirecionamento::redirecionar('ImoveisController');
         }
     }
+
+
+    public function pesquisar()
+    {
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) {
+
+            if (!$formulario['pesquisaImovel'] == "") {
+                $dados = [
+                    'imoveis' => $this->imovelModel->lerImovelPesquisaPorId($formulario['pesquisaImovel'])
+                ];
+            } else {
+
+                $dados = [
+                    'imoveis' => $this->imovelModel->listarImoveis()
+                ];
+            }
+        }
+
+        //Retorna para a view
+        $this->view('imoveis/index', $dados);
+    }
 }

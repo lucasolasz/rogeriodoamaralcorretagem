@@ -799,6 +799,21 @@ class Imoveis
         return $this->db->resultado();
     }
 
+    public function lerImovelPesquisaPorId($id)
+    {
+
+        $this->db->query("SELECT im.*, tti.ds_tipo_imovel, ttn.ds_tipo_negociacao, tba.ds_bairro FROM tb_imovel im
+        LEFT JOIN tb_tipo_imovel tti ON tti.id_tipo_imovel = im.fk_tipo_imovel 
+        LEFT JOIN tb_tipo_negociacao ttn ON ttn.id_tipo_negociacao = im.fk_tipo_negociacao
+        LEFT JOIN tb_bairros tba ON tba.id_bairro = im.fk_bairro
+        WHERE im.id_imovel = :id_imovel
+        ORDER BY im.publicado_em DESC");
+
+        $this->db->bind("id_imovel", $id);
+
+        return $this->db->resultados();
+    }
+
     public function lerRelacBemEstarPorId($id)
     {
 

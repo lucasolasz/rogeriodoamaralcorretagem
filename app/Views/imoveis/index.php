@@ -6,13 +6,18 @@
 
         <div class="card-header">
 
-            <h5>Imóveis
-                <div style="float: right;">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand">Imóveis</a>
+                    <form class="d-flex" action="<?= URL . '/ImoveisController/pesquisar' ?>" method="POST">
+                        <input class="form-control me-2" type="search" placeholder="Digite o id do imóvel" aria-label="Search" name="pesquisaImovel">
+                        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                    </form>
                     <a href="<?= URL ?>/ImoveisController/cadastrar" class="btn btn-primary">Novo Imóvel</a>
                 </div>
-            </h5>
-
+            </nav>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -46,7 +51,7 @@
                                     <td><?= $imoveis->qtd_area . "m²" ?></td>
                                 <?php } else { ?>
                                     <td></td>
-                                <?php } ?>                                
+                                <?php } ?>
                                 <?php if (!$imoveis->mo_aluguel == NULL) { ?>
                                     <td><?= "R$ " . number_format((($imoveis->mo_aluguel) / 100), 2, ",", ".") ?></td>
                                 <?php } else { ?>
