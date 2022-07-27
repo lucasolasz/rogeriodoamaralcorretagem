@@ -144,8 +144,8 @@ class Paginas extends Controller
             $dados['chkEletroC'] = isset($formulario['chkEletroC']) ? $formulario['chkEletroC'] : "";
             $dados['chkComodoC'] = isset($formulario['chkComodoC']) ? $formulario['chkComodoC'] : "";
             $dados['chkAcessibilidadeC'] = isset($formulario['chkAcessibilidadeC']) ? $formulario['chkAcessibilidadeC'] : "";
-            
-            
+
+
             // var_dump($dados);
             // exit();
 
@@ -245,6 +245,26 @@ class Paginas extends Controller
         $relacCaracCondo = $this->imovelModel->caracCondoPorId($id);
         $caracCondo = $this->imovelModel->listarCaracteristicasCondominio();
         $caracImovel = $this->imovelModel->listarCaracteristicasImovel();
+        
+        // Captura dos valores de carac de imovel para exibir os indisponíveis no imóvel selecionado
+        $relacCaracImovelInd = $this->imovelModel->caracImovelPorId($id);
+        $fk_caracteristica_imovel = '';
+        foreach ($relacCaracImovelInd as $relacCaracImovelInd) {
+            $fk_caracteristica_imovel = $fk_caracteristica_imovel . ',' .   $relacCaracImovelInd->fk_caracteristica_imovel;
+        }
+        $fk_carac_imo_limpa = substr($fk_caracteristica_imovel, 1);
+        $caracImovelInd = $this->imovelModel->listarCaracteristicasImovelIndisponivel($fk_carac_imo_limpa);
+
+        //Captura dos valores de carac de condominio para exibir os indisponíveis no imóvel selecionado
+        $relacCaracCondInd = $this->imovelModel->caracCondoPorId($id);
+        $fk_caracteristica_condominio = '';
+        foreach ($relacCaracCondInd as $relacCaracCondInd) {
+            $fk_caracteristica_condominio = $fk_caracteristica_condominio . ',' .   $relacCaracCondInd->fk_caracteristica_condominio;
+        }
+        $fk_carac_cond_limpa = substr($fk_caracteristica_condominio, 1);
+        $caracCondInd = $this->imovelModel->listarCaracteristicasCondoIndisponivel($fk_carac_cond_limpa);
+
+       
 
         //Parâmetros enviados para o método do controller VIEW
         $dados = [
@@ -252,10 +272,11 @@ class Paginas extends Controller
             'anexos' => $anexos,
             'relacCaracImovel' => $relacCaracImovel,
             'relacCaracCondo' => $relacCaracCondo,
+            'caracImovelInd' => $caracImovelInd,
+            'caracCondInd' => $caracCondInd,
             'caracCondo' => $caracCondo,
             'caracImovel' => $caracImovel,
             'relacBemEstar' => $relacBemEstar
-
         ];
 
 

@@ -236,7 +236,7 @@
                         <div class="col">
                             <p style="margin-left: 7vh;" class="transparente">
                                 <?php
-                                $ids_imoveis = [];
+
                                 foreach ($dados['relacCaracImovel'] as $relacCaracImovel) {
 
                                     if ($relacCaracImovel->fk_imovel == $dados['imovel']->id_imovel) {
@@ -244,7 +244,6 @@
                                         foreach ($dados['caracImovel'] as $caracImovel) {
                                             if ($relacCaracImovel->fk_caracteristica_imovel == $caracImovel->id_caracteristica_imovel) {
                                                 echo $caracImovel->ds_caracteristica_imovel . ', ';
-                                                array_push($ids_imoveis, $caracImovel->id_caracteristica_imovel);
                                             }
                                         }
                                     }
@@ -261,22 +260,20 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p style="margin-left: 7vh;" class="transparente">A fazer
-                                <!-- <?php
-                                        $ids_imoveis = [];
-                                        foreach ($dados['relacCaracImovel'] as $relacCaracImovel) {
+                            <p style="margin-left: 7vh;" class="transparente">
+                                <?php
+                                $x = 0;
+                                foreach ($dados['caracImovelInd'] as $caracImovelInd) {
 
-                                            if ($relacCaracImovel->fk_imovel == $dados['imovel']->id_imovel) {
+                                    if ($x == 0) {
+                                        echo $caracImovelInd->ds_caracteristica_imovel;
+                                    } else {
+                                        echo ', ' . $caracImovelInd->ds_caracteristica_imovel;
+                                    }
 
-                                                foreach ($dados['caracImovel'] as $caracImovel) {
-                                                    if ($relacCaracImovel->fk_caracteristica_imovel == $caracImovel->id_caracteristica_imovel) {
-                                                        echo $caracImovel->ds_caracteristica_imovel . ', ';
-                                                        array_push($ids_imoveis, $caracImovel->id_caracteristica_imovel);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        ?> -->
+                                    $x++;
+                                }
+                                ?>
                             </p>
                         </div>
                     </div>
@@ -317,8 +314,20 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p style="margin-left: 7vh;" class="transparente">A fazer
+                            <p style="margin-left: 7vh;" class="transparente">
+                            <?php
+                                $x = 0;
+                                foreach ($dados['caracCondInd'] as $caracCondInd) {
 
+                                    if ($x == 0) {
+                                        echo $caracCondInd->ds_caracteristica_condominio;
+                                    } else {
+                                        echo ', ' . $caracCondInd->ds_caracteristica_condominio;
+                                    }
+
+                                    $x++;
+                                }
+                                ?>
                             </p>
                         </div>
                     </div>

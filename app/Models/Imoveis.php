@@ -54,6 +54,18 @@ class Imoveis
         return $this->db->resultados();
     }
 
+    public function listarCaracteristicasImovelIndisponivel($fk_carac_imovel)
+    {
+        $this->db->query("SELECT * FROM tb_caracteristicas_imovel WHERE id_caracteristica_imovel not in ($fk_carac_imovel) ORDER BY ds_caracteristica_imovel");
+        return $this->db->resultados();
+    }
+
+    public function listarCaracteristicasCondoIndisponivel($fk_carac_condo)
+    {
+        $this->db->query("SELECT * FROM tb_caracteristicas_condominio WHERE id_caracteristica_condominio not in ($fk_carac_condo) ORDER BY ds_caracteristica_condominio");
+        return $this->db->resultados();
+    }
+
     public function listarComodidades()
     {
         $this->db->query("SELECT * FROM tb_filtro_comodidades ORDER BY ds_filtro_comodidades");
