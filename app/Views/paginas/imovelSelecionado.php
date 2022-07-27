@@ -262,16 +262,18 @@
                         <div class="col">
                             <p style="margin-left: 7vh;" class="transparente">
                                 <?php
-                                $x = 0;
-                                foreach ($dados['caracImovelInd'] as $caracImovelInd) {
+                                if (!$dados['caracImovelInd'] == "") {
+                                    $x = 0;
+                                    foreach ($dados['caracImovelInd'] as $caracImovelInd) {
 
-                                    if ($x == 0) {
-                                        echo $caracImovelInd->ds_caracteristica_imovel;
-                                    } else {
-                                        echo ', ' . $caracImovelInd->ds_caracteristica_imovel;
+                                        if ($x == 0) {
+                                            echo $caracImovelInd->ds_caracteristica_imovel;
+                                        } else {
+                                            echo ', ' . $caracImovelInd->ds_caracteristica_imovel;
+                                        }
+
+                                        $x++;
                                     }
-
-                                    $x++;
                                 }
                                 ?>
                             </p>
@@ -289,7 +291,6 @@
                         <div class="col">
                             <p style="margin-left: 7vh;" class="transparente">
                                 <?php
-                                $ids_imoveis = [];
                                 foreach ($dados['relacCaracCondo'] as $relacCaracCondo) {
 
                                     if ($relacCaracCondo->fk_imovel == $dados['imovel']->id_imovel) {
@@ -297,7 +298,6 @@
                                         foreach ($dados['caracCondo'] as $caracCondo) {
                                             if ($relacCaracCondo->fk_caracteristica_condominio == $caracCondo->id_caracteristica_condominio) {
                                                 echo $caracCondo->ds_caracteristica_condominio . ', ';
-                                                array_push($ids_imoveis, $caracCondo->id_caracteristica_condominio);
                                             }
                                         }
                                     }
@@ -315,17 +315,19 @@
                     <div class="row">
                         <div class="col">
                             <p style="margin-left: 7vh;" class="transparente">
-                            <?php
-                                $x = 0;
-                                foreach ($dados['caracCondInd'] as $caracCondInd) {
+                                <?php
+                                if (!$dados['caracCondInd'] == "") {
+                                    $x = 0;
+                                    foreach ($dados['caracCondInd'] as $caracCondInd) {
 
-                                    if ($x == 0) {
-                                        echo $caracCondInd->ds_caracteristica_condominio;
-                                    } else {
-                                        echo ', ' . $caracCondInd->ds_caracteristica_condominio;
+                                        if ($x == 0) {
+                                            echo $caracCondInd->ds_caracteristica_condominio;
+                                        } else {
+                                            echo ', ' . $caracCondInd->ds_caracteristica_condominio;
+                                        }
+
+                                        $x++;
                                     }
-
-                                    $x++;
                                 }
                                 ?>
                             </p>
