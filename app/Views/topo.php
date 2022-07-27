@@ -55,13 +55,15 @@
                                     <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelVenda' ?>">Imóveis para comprar</a></li>
                                 </ul>
                             </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Legalização de imóveis</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= URL . '/Paginas/contato' ?>">Contato</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= URL . '/Paginas/sobre' ?>">Sobre nós</a>
-                            </li>
+                            </li>                           
                             <?php if (isset($_SESSION['id_usuario'])) { ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Cadastro</a>
