@@ -51,11 +51,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Buscar Imóveis</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelAluguel'?>">Imóveis para alugar</a></li>
-                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelVenda'?>">Imóveis para comprar</a></li>
+                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelAluguel' ?>">Imóveis para alugar</a></li>
+                                    <li><a class="dropdown-item" aria-current="page" href="<?= URL . '/Paginas/imovelVenda' ?>">Imóveis para comprar</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= URL . '/Paginas/contato' ?>">Contato</a>
                             </li>
@@ -77,12 +77,7 @@
                                 <p>Olá, <?= ucfirst($_SESSION['ds_nome_usuario']); ?>, Seja bem vindo(a)</p>
                                 <a class="btn btn-sm btn-danger" href="<?= URL . '/UsuariosController/sair' ?>">Sair</a>
                             </span>
-                        <?php } else { ?>
-                            <span class="">
-                                <a class="btn btn-primary" href="<?= URL . '/UsuariosController/login' ?>">Entrar</a>
-                            </span>
                         <?php } ?>
-
                     </div>
                 </div>
             </nav>
