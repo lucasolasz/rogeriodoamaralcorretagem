@@ -1,6 +1,6 @@
 <?php
 
-$celular = "5521982341060";
+$celular = "5521960146947";
 
 $dataEscolhida = Checa::dataBr($dados['txtDataHidden']);
 $horaEscolhida = Checa::horaFormat($dados['txtHoraHidden']);

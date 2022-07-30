@@ -1,6 +1,6 @@
 <?php
 // var_dump($dados);
-$celular = "5521982341060";
+$celular = "5521960146947";
 
 ?>
 
