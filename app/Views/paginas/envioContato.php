@@ -9,7 +9,7 @@ $id_imovel = strval($dados['imovel']->id_imovel);
 $ds_rua_imovel = strval($dados['imovel']->ds_rua_imovel);
 $bairro = strval($dados['imovel']->ds_bairro);
 
-$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", Possuo o E-mail: " . $dados['txtEmailContato'] . ", Telefone: " . $dados['txtTelefoneContato'] . ". Acabo de solicitar um agendamento para o Imóvel: " . " Id= ##00" . $id_imovel . ", Data: " . $dataEscolhida . ", Hora: " . $horaEscolhida . ", Endereço: " . $ds_rua_imovel . ", " . $bairro . ". Este horário está disponível?";
+$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", Possuo o E-mail: " . $dados['txtEmailContato'] . ", Telefone: " . $dados['txtTelefoneContato'] . ". Acabo de solicitar um agendamento para o Imóvel: " . " Id:" . $id_imovel . ", Data: " . $dataEscolhida . ", Hora: " . $horaEscolhida . ", Endereço: " . $ds_rua_imovel . ", " . $bairro . ". Este horário está disponível?";
 
 $textoEncoded = urlencode($texto);
 
