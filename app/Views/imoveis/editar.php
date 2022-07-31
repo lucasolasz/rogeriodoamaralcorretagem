@@ -212,6 +212,13 @@
 
                 <h3>Proximidades</h3>
 
+                <label class="form-check-label mt-3 mb-2" for="txtSobreImovel">
+                    Sobre esse imóvel
+                </label>
+                <div class="form-floating">
+                    <textarea class="form-control txtarea" id="txtSobreImovel" name="txtSobreImovel" maxlength="500"><?= $dados['imovel']->txt_sobre_imovel ?></textarea>
+                </div>
+
 
                 <label class="form-check-label mt-3 mb-2" for="txtEscolaColegio">
                     Escolas ou colégios

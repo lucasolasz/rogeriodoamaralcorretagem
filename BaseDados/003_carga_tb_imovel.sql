@@ -192,7 +192,9 @@ INSERT INTO tb_tipo_imovel (id_tipo_imovel, ds_tipo_imovel) VALUES
 	(1, 'Apartamento'),
 	(2, 'Casa de Condomínio'),
 	(3, 'Casa'),
-	(4, 'Kitnet/Studio');
+	(4, 'Kitnet/Studio'),
+	(5, 'Terreno'),
+	(6, 'Empreendimento');
 
 
 CREATE TABLE IF NOT EXISTS tb_imovel (
@@ -209,6 +211,7 @@ CREATE TABLE IF NOT EXISTS tb_imovel (
   fk_bairro SMALLINT unsigned DEFAULT NULL,
   fk_tipo_imovel TINYINT unsigned DEFAULT NULL,
   fk_tipo_negociacao TINYINT unsigned DEFAULT NULL,
+  txt_sobre_imovel varchar(500) DEFAULT NULL,
   txt_escolas_colegios varchar(500) DEFAULT NULL,
   txt_transporte_publico varchar(500) DEFAULT NULL,
   txt_faculdades varchar(500) DEFAULT NULL,

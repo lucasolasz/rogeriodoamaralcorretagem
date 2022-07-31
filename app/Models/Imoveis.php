@@ -111,7 +111,7 @@ class Imoveis
         $armazenarErro = false;
 
 
-        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, txt_shopping, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :txt_shopping, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
+        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_sobre_imovel, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, txt_shopping, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_sobre_imovel, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :txt_shopping, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
 
         $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
         $this->db->bind("qtd_area", $dados['tamArea']);
@@ -125,6 +125,7 @@ class Imoveis
         $this->db->bind("fk_bairro", $dados['cboBairro']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
         $this->db->bind("fk_tipo_negociacao", $dados['cboTipoNegociacao']);
+        $this->db->bind("txt_sobre_imovel", $dados['txtSobreImovel']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
         $this->db->bind("txt_transporte_publico", $dados['txtTransportePublico']);
         $this->db->bind("txt_faculdades", $dados['txtFaculdades']);
@@ -363,6 +364,7 @@ class Imoveis
         fk_bairro = :fk_bairro,
         fk_tipo_imovel = :fk_tipo_imovel,
         fk_tipo_negociacao = :fk_tipo_negociacao,
+        txt_sobre_imovel = :txt_sobre_imovel,
         txt_escolas_colegios = :txt_escolas_colegios,
         txt_transporte_publico = :txt_transporte_publico,
         txt_faculdades = :txt_faculdades,
@@ -393,6 +395,7 @@ class Imoveis
         $this->db->bind("fk_bairro", $dados['cboBairro']);
         $this->db->bind("fk_tipo_imovel", $dados['cboTipoImovel']);
         $this->db->bind("fk_tipo_negociacao", $dados['cboTipoNegociacao']);
+        $this->db->bind("txt_sobre_imovel", $dados['txtSobreImovel']);
         $this->db->bind("txt_escolas_colegios", $dados['txtEscolaColegio']);
         $this->db->bind("txt_transporte_publico", $dados['txtTransportePublico']);
         $this->db->bind("txt_faculdades", $dados['txtFaculdades']);

@@ -8,7 +8,7 @@
                     <?php foreach ($dados['anexos'] as $anexos) {
 
                         if ($anexos->chk_destaque == 'S') {
-                            echo "<div class='carousel-item active'><img src='" . URL . DIRECTORY_SEPARATOR . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100 tamanho-padrao'alt=''></div>";
+                            echo "<div class='carousel-item active'><img src='" . URL . DIRECTORY_SEPARATOR . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100 tamanho-padrao' alt=''></div>";
                         } else {
 
                             echo "<div class='carousel-item'><img src='" . URL . DIRECTORY_SEPARATOR . $anexos->nm_path_arquivo . DIRECTORY_SEPARATOR . $anexos->nm_arquivo . "' class='d-block w-100 tamanho-padrao' alt=''></div>";
@@ -336,6 +336,19 @@
                 </div>
 
                 <h3 class="mt-5">Proximidades</h3>
+
+                <?php if (!$dados['imovel']->txt_sobre_imovel == "") { ?>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <h5><i class="bi bi-filter-left fa-lg"></i><b>&nbsp&nbsp&nbsp&nbspSobre esse imóvel</b></h5>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p style="margin-left: 7vh;" class="transparente"> <?= $dados['imovel']->txt_sobre_imovel ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
 
                 <?php if (!$dados['imovel']->txt_escolas_colegios == "") { ?>
                     <div class="row mt-5">
