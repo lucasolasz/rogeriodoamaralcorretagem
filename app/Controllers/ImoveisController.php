@@ -29,7 +29,6 @@ class ImoveisController extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
-        $comodidades = $this->imovelModel->listarComodidades();
         $mobilias = $this->imovelModel->listarMobilias();
         $bem_estar = $this->imovelModel->listarBemEstar();
         $eletro = $this->imovelModel->listarEletros();
@@ -71,7 +70,6 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
-                'comodidades' => $comodidades,
                 'mobilias' => $mobilias,
                 'bem_estar' => $bem_estar,
                 'eletro' => $eletro,
@@ -93,7 +91,6 @@ class ImoveisController extends Controller
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
             $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
-            $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
             $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
             $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
             $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
@@ -161,7 +158,6 @@ class ImoveisController extends Controller
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
                 'caracteristicasCondominio' => $caracteristicasCondominio,
-                'comodidades' => $comodidades,
                 'mobilias' => $mobilias,
                 'bem_estar' => $bem_estar,
                 'eletro' => $eletro,
@@ -183,7 +179,6 @@ class ImoveisController extends Controller
         $tipoImovel = $this->imovelModel->listarTipoImovel();
         $caracteristicasImovel = $this->imovelModel->listarCaracteristicasImovel();
         $caracteristicasCondominio = $this->imovelModel->listarCaracteristicasCondominio();
-        $comodidades = $this->imovelModel->listarComodidades();
         $mobilias = $this->imovelModel->listarMobilias();
         $bem_estar = $this->imovelModel->listarBemEstar();
         $eletro = $this->imovelModel->listarEletros();
@@ -242,8 +237,7 @@ class ImoveisController extends Controller
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
-                'caracteristicasCondominio' => $caracteristicasCondominio,
-                'comodidades' => $comodidades,
+                'caracteristicasCondominio' => $caracteristicasCondominio,                
                 'mobilias' => $mobilias,
                 'bem_estar' => $bem_estar,
                 'eletro' => $eletro,
@@ -275,8 +269,7 @@ class ImoveisController extends Controller
             $dados['moValorAluguel'] = isset($formulario['moValorAluguel']) ? LimpaStringFloat::limparString($formulario['moValorAluguel']) : NULL;
             $dados['moValorVenda'] = isset($formulario['moValorVenda']) ? LimpaStringFloat::limparString($formulario['moValorVenda']) : NULL;
             $dados['chkCaracteristicaImovel'] = isset($formulario['chkCaracteristicaImovel']) ? $formulario['chkCaracteristicaImovel'] : "";
-            $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";
-            $dados['chkComodidades'] = isset($formulario['chkComodidades']) ? $formulario['chkComodidades'] : "";
+            $dados['chkCaracteristicaCondominio'] = isset($formulario['chkCaracteristicaCondominio']) ? $formulario['chkCaracteristicaCondominio'] : "";            
             $dados['chkMobilias'] = isset($formulario['chkMobilias']) ? $formulario['chkMobilias'] : "";
             $dados['chkBemEstar'] = isset($formulario['chkBemEstar']) ? $formulario['chkBemEstar'] : "";
             $dados['chkEletro'] = isset($formulario['chkEletro']) ? $formulario['chkEletro'] : "";
@@ -304,14 +297,12 @@ class ImoveisController extends Controller
                 'tipoNegociacao' => $tipoNegociacao,
                 'tipoImovel' => $tipoImovel,
                 'caracteristicasImovel' => $caracteristicasImovel,
-                'caracteristicasCondominio' => $caracteristicasCondominio,
-                'comodidades' => $comodidades,
+                'caracteristicasCondominio' => $caracteristicasCondominio,                
                 'mobilias' => $mobilias,
                 'bem_estar' => $bem_estar,
                 'eletro' => $eletro,
                 'comodos' => $comodos,
                 'acessibilidade' => $acessibilidade,
-                // 'fotosImovel' => $fotosImovel,
                 'relacionaCaracImovel' => $relacionaCaracImovel,
                 'relacionaCaracCondo' => $relacionaCaracCondo,
                 'relacionaAcessibilidade' => $relacionaAcessibilidade,
@@ -391,14 +382,14 @@ class ImoveisController extends Controller
             if ($this->imovelModel->deletarImovel($dados)) {
 
                 //Para exibir mensagem success , não precisa informar o tipo de classe
-                Alertas::mensagem('imoveis', 'Imagem deletada com sucesso');
+                Alertas::mensagem('imoveis', 'Imóvel deletado com sucesso');
                 Redirecionamento::redirecionar('ImoveisController');
             } else {
-                Alertas::mensagem('imoveis', 'Não foi possível deletar o evento', 'alert alert-danger');
+                Alertas::mensagem('imoveis', 'Não foi possível deletar o imóvel', 'alert alert-danger');
                 Redirecionamento::redirecionar('ImoveisController');
             }
         } else {
-            Alertas::mensagem('imoveis', 'Não foi possível deletar o evento', 'alert alert-danger');
+            Alertas::mensagem('imoveis', 'Não foi possível deletar o imóvel', 'alert alert-danger');
             Redirecionamento::redirecionar('ImoveisController');
         }
     }

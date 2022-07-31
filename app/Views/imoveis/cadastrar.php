@@ -317,15 +317,6 @@
                     <?php } ?>
                 </div>
 
-                <h3>Comodidades</h3>
-                <div class="mb-3 mt-3 row">
-                    <?php foreach ($dados['comodidades'] as $comodidades) { ?>
-                        <div class="col-5 m-2">
-                            <input type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_filtro_comodidades ?>"> <?= $comodidades->ds_filtro_comodidades ?>
-                        </div>
-                    <?php } ?>
-                </div>
-
                 <h3>Mobilias</h3>
                 <div class="mb-3 mt-3 row">
                     <?php foreach ($dados['mobilias'] as $mobilias) { ?>
@@ -396,7 +387,7 @@
 
                 <div class="mb-3">
                     <label for="fileFotos" class="form-label">Fotos:</label>
-                    <input class="form-control" type="file" id="fileFotos" name="fileFotos[]" multiple>
+                    <input class="form-control" type="file" id="fileFotos" accept="image/png, image/jpeg" name="fileFotos[]" multiple>
 
                 </div>
                 <!-- <img id='img' /> -->

@@ -372,26 +372,6 @@
                     <?php } ?>
                 </div>
 
-                <h3>Comodidades</h3>
-
-                <div class="mb-3 mt-3 row">
-                    <?php foreach ($dados['comodidades'] as $comodidades) {
-
-                        $comodidadeChk = '';
-
-                        foreach ($dados['relacionaComodidades'] as $relacionaComodidades) {
-
-                            if ($comodidades->id_filtro_comodidades == $relacionaComodidades->fk_filtro_comodidades) {
-                                $comodidadeChk = 'checked';
-                            }
-                        }
-                    ?>
-                        <div class="col-5 m-2">
-                            <input type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_filtro_comodidades ?>" <?= $comodidadeChk ?>> <?= $comodidades->ds_filtro_comodidades ?>
-                        </div>
-                    <?php } ?>
-                </div>
-
                 <h3>Mobilias</h3>
 
                 <div class="mb-3 mt-3 row">
@@ -517,7 +497,7 @@
 
                 <div class="mb-3">
                     <label for="fileFotos" class="form-label">Fotos:</label>
-                    <input class="form-control" type="file" id="fileFotos" name="fileFotos[]" multiple>
+                    <input class="form-control" type="file" id="fileFotos" accept="image/png, image/jpeg" name="fileFotos[]" multiple>
 
                 </div>
                 <!-- <img id='img' /> -->

@@ -357,7 +357,7 @@
                             <hr class="transparente">
                             <div class="row mb-3 mt-3 p-3">
                                 <h6 class="mb-3">Comodidades</h6>
-                                <?php foreach ($dados['comodidades'] as $comodidades) {
+                                <?php foreach ($dados['caracteristicasImovel'] as $comodidades) {
 
                                     $comodidadeCk = '';
 
@@ -372,7 +372,7 @@
                                     }
                                 ?>
                                     <div class="col-5 m-2">
-                                        <input class="chkComodidades" type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_filtro_comodidades ?>" <?= $comodidadeCk ?>> <?= $comodidades->ds_filtro_comodidades ?>
+                                        <input class="chkComodidades" type="checkbox" name="chkComodidades[]" value="<?= $comodidades->id_caracteristica_imovel ?>" <?= $comodidadeCk ?>> <?= $comodidades->ds_caracteristica_imovel ?>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -812,7 +812,7 @@
                             <hr class="transparente">
                             <div class="row mb-3 mt-3 p-3">
                                 <h6 class="mb-3">Comodidades</h6>
-                                <?php foreach ($dados['comodidades'] as $comodidades) {
+                                <?php foreach ($dados['caracteristicasImovel'] as $comodidades) {
 
                                     $comodidadeCkC = '';
 
@@ -827,7 +827,7 @@
                                     }
                                 ?>
                                     <div class="col-5 m-2">
-                                        <input class="chkComodidadesC" type="checkbox" name="chkComodidadesC[]" value="<?= $comodidades->id_filtro_comodidades ?>" <?= $comodidadeCkC ?>> <?= $comodidades->ds_filtro_comodidades ?>
+                                        <input class="chkComodidadesC" type="checkbox" name="chkComodidadesC[]" value="<?= $comodidades->id_caracteristica_imovel ?>" <?= $comodidadeCkC ?>> <?= $comodidades->ds_caracteristica_imovel ?>
                                     </div>
                                 <?php } ?>
                             </div>

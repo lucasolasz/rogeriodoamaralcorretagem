@@ -174,19 +174,6 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkComodidades'] == "") {
-
-            foreach ($dados['chkComodidades'] as $chkComodidades) {
-
-                $this->db->query("INSERT INTO tb_relac_imovel_comodidades (fk_filtro_comodidades, fk_imovel) VALUES (:fk_filtro_comodidades, :fk_imovel)");
-                $this->db->bind("fk_filtro_comodidades", $chkComodidades);
-                $this->db->bind("fk_imovel", $proximoIdImovel);
-                if (!$this->db->executa()) {
-                    $armazenarErro = true;
-                }
-            }
-        }
-
         if (!$dados['chkMobilias'] == "") {
 
             foreach ($dados['chkMobilias'] as $chkMobilias) {
@@ -260,6 +247,10 @@ class Imoveis
             $tamanhoArray = count($dados['fileFotos']['name']);
 
 
+            //Array vazio para armazenar o nome das imagens que foram para pasta temp. 
+            //Array utilizado para quando retornar algum erro
+            $nomes = [];
+
             for ($i = 0; $i < $tamanhoArray; $i++) {
 
                 $arrayImagem = [
@@ -273,58 +264,74 @@ class Imoveis
                 $upload->imagem($arrayImagem, NULL, 'temp');
 
 
-                //Inicio do processamento de compressao
-                $nomeArquivo = $upload->getResultado();
 
-                //Path da imagem que foi feito upload  (pasta temp)           
-                $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
+                if (!$upload->getErro() == NULL) {
+                    echo $upload->getErro() . '<br>';
 
-                //Cria pasta dos arquivos individualmente de acordo com id
-                if (!file_exists($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo)) {
-                    mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
-                }
-                $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
+                    foreach ($nomes as $nomes) {
+                        $upload->deletarArquivo(null, $nomes);
+                    }
 
-                //Monta o diretorio destino da pagina comprimida
-                $destination_img = $novoDiretorio . DIRECTORY_SEPARATOR . $nomeArquivo;
+                    break;
+                    
+                } else {
 
-                //Executa a compressao
-                ComprimirFoto::comprimir($path_arquivo, $destination_img, 40);
+                    //Inicio do processamento de compressao
+                    $nomeArquivo = $upload->getResultado();
 
-                //Invoca metodo para deletar o arquivo temporario
-                $upload->deletarArquivo(null, $path_arquivo);
+                    //Path da imagem que foi feito upload  (pasta temp)           
+                    $path_arquivo = $upload->getPath() . DIRECTORY_SEPARATOR . $nomeArquivo;
 
-                // echo $upload->getResultado() . ' da pasta temporaria';
+                    $nomes[] = $path_arquivo;
 
-                // echo $upload->getResultado();
-                // exit();
+                    //Cria pasta dos arquivos individualmente de acordo com id
+                    if (!file_exists($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo)) {
+                        mkdir($upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo, 0777);
+                    }
+                    $novoDiretorio = $upload->getPathDefault() . DIRECTORY_SEPARATOR . $pastaArquivo;
+
+                    //Monta o diretorio destino da pagina comprimida
+                    $destination_img = $novoDiretorio . DIRECTORY_SEPARATOR . $nomeArquivo;
+
+                    //Executa a compressao
+                    ComprimirFoto::comprimir($path_arquivo, $destination_img, 40);
+
+                    //Invoca metodo para deletar o arquivo temporario
+                    $upload->deletarArquivo(null, $path_arquivo);
+
+                    // echo $upload->getResultado() . ' da pasta temporaria';
+
+                    // echo $upload->getResultado();
+                    // exit();
 
 
-                if ($upload->getResultado()) {
+                    if ($upload->getResultado()) {
 
-                    if ($i == 0) {
-                        $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
-                        $this->db->bind("fk_imovel", $proximoIdImovel);
-                        $this->db->bind("nm_path_arquivo", $novoDiretorio);
-                        $this->db->bind("nm_arquivo", $nomeArquivo);
-                        $this->db->bind("chk_destaque", "S");
-                        if (!$this->db->executa()) {
-                            $armazenarErro = true;
+                        if ($i == 0) {
+                            $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo, chk_destaque) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo, :chk_destaque)");
+                            $this->db->bind("fk_imovel", $proximoIdImovel);
+                            $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                            $this->db->bind("nm_arquivo", $nomeArquivo);
+                            $this->db->bind("chk_destaque", "S");
+                            if (!$this->db->executa()) {
+                                $armazenarErro = true;
+                            }
+                        } else {
+                            $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
+                            $this->db->bind("fk_imovel", $proximoIdImovel);
+                            $this->db->bind("nm_path_arquivo", $novoDiretorio);
+                            $this->db->bind("nm_arquivo", $nomeArquivo);
+                            if (!$this->db->executa()) {
+                                $armazenarErro = true;
+                            }
                         }
                     } else {
-                        $this->db->query("INSERT INTO tb_anexo (fk_imovel, nm_path_arquivo, nm_arquivo) VALUES (:fk_imovel, :nm_path_arquivo, :nm_arquivo)");
-                        $this->db->bind("fk_imovel", $proximoIdImovel);
-                        $this->db->bind("nm_path_arquivo", $novoDiretorio);
-                        $this->db->bind("nm_arquivo", $nomeArquivo);
-                        if (!$this->db->executa()) {
-                            $armazenarErro = true;
-                        }
+                        echo $upload->getErro();
                     }
-                } else {
-                    echo $upload->getErro();
                 }
             }
         }
+
         if ($armazenarErro) {
             return false;
         } else {
@@ -448,26 +455,6 @@ class Imoveis
             }
         }
 
-        if (!$dados['chkComodidades'] == "" or $dados['chkComodidades'] == "") {
-
-            //Apaga os anteriores e salva as novas opções escolhidas
-            $this->db->query("DELETE FROM tb_relac_imovel_comodidades WHERE fk_imovel = :fk_imovel");
-            $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
-            if (!$this->db->executa()) {
-                $atualizarErro = true;
-            }
-
-            foreach ($dados['chkComodidades'] as $chkComodidades) {
-
-                $this->db->query("INSERT INTO tb_relac_imovel_comodidades (fk_filtro_comodidades, fk_imovel) VALUES (:fk_filtro_comodidades, :fk_imovel)");
-                $this->db->bind("fk_filtro_comodidades", $chkComodidades);
-                $this->db->bind("fk_imovel", $dados['imovel']->id_imovel);
-                if (!$this->db->executa()) {
-                    $atualizarErro = true;
-                }
-            }
-        }
-
         if (!$dados['chkMobilias'] == "" or $dados['chkMobilias'] == "") {
 
             //Apaga os anteriores e salva as novas opções escolhidas
@@ -492,7 +479,7 @@ class Imoveis
 
         if (!$dados['chkBemEstar'] == "" or $dados['chkBemEstar'] == "") {
 
-            
+
 
             //Apaga os anteriores e salva as novas opções escolhidas
             $this->db->query("DELETE FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :fk_imovel");
@@ -889,6 +876,35 @@ class Imoveis
             rmdir($pastaPrincipal);
         }
 
+        $this->db->query("DELETE FROM tb_relac_imovel_acessibilidade WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_relac_imovel_bem_estar WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_relac_imovel_comodos WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_relac_imovel_eletro WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
+
+        $this->db->query("DELETE FROM tb_relac_imovel_mobilia WHERE fk_imovel = :fk_imovel");
+        $this->db->bind("fk_imovel", $id_imovel);
+        if (!$this->db->executa()) {
+            $deletarErro = true;
+        }
 
         $this->db->query("DELETE FROM tb_relac_imovel_carac_condo WHERE fk_imovel = :fk_imovel");
         $this->db->bind("fk_imovel", $id_imovel);
@@ -1045,6 +1061,7 @@ class Imoveis
                 $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_condo tricc WHERE tricc.fk_imovel = im.id_imovel AND tricc.fk_caracteristica_condominio in (" . $strCaracCondoLimpa . "))";
             }
 
+            //COMODIDADES no filtro são as características de imóvel na hora do cadastro.
             if (!$dados['chkComodidades'] == "") {
                 $strComodidades = '';
                 foreach ($dados['chkComodidades'] as $chkComodidades) {
@@ -1052,7 +1069,7 @@ class Imoveis
                 }
                 $strComodidadesLimpa = substr($strComodidades, 1);
 
-                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodidades tric WHERE tric.fk_imovel = im.id_imovel AND tric.fk_filtro_comodidades in (" . $strComodidadesLimpa . "))";
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_imovel trici WHERE trici.fk_imovel = im.id_imovel AND trici.fk_caracteristica_imovel in (" . $strComodidadesLimpa . "))";
             }
 
             if (!$dados['chkMobilias'] == "") {
@@ -1158,6 +1175,7 @@ class Imoveis
                 $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_condo tricc WHERE tricc.fk_imovel = im.id_imovel AND tricc.fk_caracteristica_condominio in (" . $strCaracCondoCLimpa . "))";
             }
 
+            //COMODIDADES no filtro são as características de imóvel na hora do cadastro. 
             if (!$dados['chkComodidadesC'] == "") {
                 $strComodidadesC = '';
                 foreach ($dados['chkComodidadesC'] as $chkComodidadesC) {
@@ -1165,7 +1183,7 @@ class Imoveis
                 }
                 $strComodidadesCLimpa = substr($strComodidadesC, 1);
 
-                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_comodidades tric WHERE tric.fk_imovel = im.id_imovel AND tric.fk_filtro_comodidades in (" . $strComodidadesCLimpa . "))";
+                $query = $query . " AND EXISTS (SELECT * FROM tb_relac_imovel_carac_imovel trici WHERE trici.fk_imovel = im.id_imovel AND trici.fk_caracteristica_imovel in (" . $strComodidadesCLimpa . "))";
             }
 
             if (!$dados['chkMobiliasC'] == "") {
