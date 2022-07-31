@@ -1,3 +1,4 @@
 #ignora as pastas do eclipse 
 uploads/
 debug.php
+.htaccess copy
