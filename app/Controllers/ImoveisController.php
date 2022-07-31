@@ -44,7 +44,7 @@ class ImoveisController extends Controller
             // exit();
 
             $dados = [
-                // 'txtTituloImovel' => $formulario['txtTituloImovel'],
+            
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
                 'cboBairro' => $formulario['cboBairro'],
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
@@ -76,7 +76,8 @@ class ImoveisController extends Controller
                 'eletro' => $eletro,
                 'comodos' => $comodos,
                 'acessibilidade' => $acessibilidade,
-                'bairros' => $bairros
+                'bairros' => $bairros,
+                'txtLinkVideo' => $formulario['txtLinkVideo']
             ];
 
             //Necessário deixar NULL para estes valores
@@ -165,7 +166,8 @@ class ImoveisController extends Controller
                 'eletro' => $eletro,
                 'comodos' => $comodos,
                 'acessibilidade' => $acessibilidade,
-                'bairros' => $bairros
+                'bairros' => $bairros,
+                'txtLinkVideo' => ''
 
             ];
         }
@@ -213,7 +215,7 @@ class ImoveisController extends Controller
             // exit();
 
             $dados = [
-                // 'chkFotoDestaque' => $formulario['chkFotoDestaque'],
+                
                 'txtRuaImovel' => $formulario['txtRuaImovel'],
                 'cboBairro' => $formulario['cboBairro'],
                 'chkAceitaPet' => $formulario['chkAceitaPet'],
@@ -254,7 +256,8 @@ class ImoveisController extends Controller
                 'relacionaComodos' => $relacionaComodos,
                 'relacionaEletros' => $relacionaEletros,
                 'relacionaMobilias' => $relacionaMobilias,
-                'bairros' => $bairros
+                'bairros' => $bairros,
+                'txtLinkVideo' => $formulario['txtLinkVideo']
 
             ];
 
@@ -332,7 +335,8 @@ class ImoveisController extends Controller
                 'taxa_servico_erro' => '',
                 'nome_proprietario_erro' => '',
                 'tel_proprietario_erro' => '',
-                'email_proprietario_erro' => ''
+                'email_proprietario_erro' => '',
+                'txtLinkVideo' => ''
             ];
 
             $dados['fotosImovel'] = isset($fotosImovel) ? $fotosImovel : "";

@@ -392,6 +392,11 @@
                     <div class="invalid-feedback"><?= $dados['email_proprietario_erro'] ?></div>
                 </div>
 
+                <div class="mb-3 mt-3">
+                    <label for="txtLinkVideo" class="form-label">Link Vídeo:</label>
+                    <input type="text" class="form-control" name="txtLinkVideo" id="txtLinkVideo" value="<?= $dados['txtLinkVideo'] ?>">
+                </div>
+
                 <div class="mb-3">
                     <label for="fileFotos" class="form-label">Fotos:</label>
                     <input class="form-control" type="file" id="fileFotos" accept="image/png, image/jpeg" name="fileFotos[]" multiple>

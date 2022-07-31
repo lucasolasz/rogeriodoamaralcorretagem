@@ -40,7 +40,7 @@
                     <a href="#" class="btn btn-amaral mt-1"><span> <i class="fa-solid fa-image"></i></span> Fotos</a>
                 </li>
                 <li class="list-inline-item transparente">
-                    <a href="#" class="btn btn-amaral mt-1"><span> <i class="fa-solid fa-video"></i></span> Video</a>
+                    <a href="<?= $dados['imovel']->txt_link_video ?>" class="btn btn-amaral mt-1" target="_blank"><span> <i class="fa-solid fa-video"></i></span> Video</a>
                 </li>
             </ul>
 

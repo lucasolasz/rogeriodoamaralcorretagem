@@ -1,6 +1,6 @@
 <?php 
 
-//Parametros para o Banco
+// Parametros para o Banco
 // define('DB_HOST', 'localhost');
 // define('DB_USER', 'root');
 // define('DB_PASS', '');
@@ -23,4 +23,4 @@ define('URL', 'https://rogeriodoamaralcorretagem.com.br');
 
 define('APP_NOME', 'Rogério do Amaral - Corretagem');
 
-define('APP_VERSAO', '1.3.16');
+define('APP_VERSAO', '1.3.17');

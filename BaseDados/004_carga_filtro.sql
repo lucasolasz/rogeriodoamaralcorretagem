@@ -171,3 +171,6 @@ CREATE TABLE tb_relac_imovel_mobilia (
   CONSTRAINT fk_filtro_mobilias_tb_relac_imovel_mobilia FOREIGN KEY (fk_filtro_mobilias) REFERENCES tb_filtro_mobilias (id_filtro_mobilias),
   CONSTRAINT fk_imovel_tb_relac_imovel_mobilia FOREIGN KEY (fk_imovel) REFERENCES tb_imovel (id_imovel)
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE tb_imovel ADD txt_link_video varchar(100) DEFAULT NULL;

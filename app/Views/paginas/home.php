@@ -103,7 +103,7 @@
                             </button>
                         </div>
 
-                        <a href="<?= URL . '/Paginas/imovelSelecionado/' . $imovel->id_imovel ?>" class="btn text-start">
+                        <a href="<?= URL . '/Paginas/imovelSelecionado/' . $imovel->id_imovel ?>" target="_blank" class="btn text-start">
                             <div class="card-body">
                                 <small><?= $imovel->ds_tipo_imovel ?></small>
                                 <h5 class="card-title mt-3 mb-0"><?= ucfirst($imovel->ds_rua_imovel) ?></h5>

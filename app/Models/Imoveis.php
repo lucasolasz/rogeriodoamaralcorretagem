@@ -111,7 +111,7 @@ class Imoveis
         $armazenarErro = false;
 
 
-        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_sobre_imovel, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, txt_shopping, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_sobre_imovel, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :txt_shopping, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario)");
+        $this->db->query("INSERT INTO tb_imovel (ds_rua_imovel, qtd_area, qtd_quarto, qtd_banheiro, qtd_vagas, num_andar, chk_aceita_pet, chk_mobilia, chk_metro_prox, fk_bairro, fk_tipo_imovel, fk_tipo_negociacao, txt_sobre_imovel, txt_escolas_colegios, txt_transporte_publico, txt_faculdades, txt_entretenimento, txt_hospitais, txt_parque_area_verde, txt_shopping, mo_aluguel, mo_venda, mo_condominio, mo_iptu, mo_seguro_incendio, mo_taxa_de_servico, ds_nome_proprietario, num_telefone_proprietario, ds_email_proprietario, txt_link_video) VALUES (:ds_rua_imovel ,:qtd_area, :qtd_quarto, :qtd_banheiro, :qtd_vagas, :num_andar, :chk_aceita_pet, :chk_mobilia, :chk_metro_prox, :fk_bairro, :fk_tipo_imovel, :fk_tipo_negociacao, :txt_sobre_imovel, :txt_escolas_colegios, :txt_transporte_publico, :txt_faculdades, :txt_entretenimento, :txt_hospitais, :txt_parque_area_verde, :txt_shopping, :mo_aluguel, :mo_venda, :mo_condominio, :mo_iptu, :mo_seguro_incendio, :mo_taxa_de_servico, :ds_nome_proprietario, :num_telefone_proprietario, :ds_email_proprietario, :txt_link_video)");
 
         $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
         $this->db->bind("qtd_area", $dados['tamArea']);
@@ -142,6 +142,7 @@ class Imoveis
         $this->db->bind("ds_nome_proprietario", $dados['txtNomeProprietario']);
         $this->db->bind("num_telefone_proprietario", $dados['txtTelProprietario']);
         $this->db->bind("ds_email_proprietario", $dados['txtEmailProprietario']);
+        $this->db->bind("txt_link_video", $dados['txtLinkVideo']);
         if (!$this->db->executa()) {
             $armazenarErro = true;
         }
@@ -380,7 +381,8 @@ class Imoveis
         mo_taxa_de_servico = :mo_taxa_de_servico,
         ds_nome_proprietario = :ds_nome_proprietario,
         num_telefone_proprietario = :num_telefone_proprietario,
-        ds_email_proprietario = :ds_email_proprietario
+        ds_email_proprietario = :ds_email_proprietario,
+        txt_link_video = :txt_link_video
         WHERE id_imovel = :id_imovel");
 
         $this->db->bind("ds_rua_imovel", $dados['txtRuaImovel']);
@@ -413,6 +415,7 @@ class Imoveis
         $this->db->bind("num_telefone_proprietario", $dados['txtTelProprietario']);
         $this->db->bind("ds_email_proprietario", $dados['txtEmailProprietario']);
         $this->db->bind("id_imovel", $dados['imovel']->id_imovel);
+        $this->db->bind("txt_link_video", $dados['txtLinkVideo']);
         if (!$this->db->executa()) {
             $atualizarErro = true;
         }
