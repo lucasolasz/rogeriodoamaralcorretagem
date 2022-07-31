@@ -2,11 +2,14 @@
 
 $celular = "5521960146947";
 
-$dataEscolhida = Checa::dataBr($dados['txtDataHidden']);
-$horaEscolhida = Checa::horaFormat($dados['txtHoraHidden']);
+$dataEscolhida = strval(Checa::dataBr($dados['txtDataHidden']));
+$horaEscolhida = strval(Checa::horaFormat($dados['txtHoraHidden']));
 
+$id_imovel = strval($dados['imovel']->id_imovel);
+$ds_rua_imovel = strval($dados['imovel']->ds_rua_imovel);
+$bairro = strval($dados['imovel']->ds_bairro);
 
-$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", Possuo o E-mail: " . $dados['txtEmailContato'] . ", Telefone: " . $dados['txtTelefoneContato'] . ". Acabo de solicitar um agendamento para o Imóvel: " . " Id= ##00".$dados['imovel']->id_imovel . ", Data: " . $dataEscolhida . ", Hora: " . $horaEscolhida . ", Endereço: " . $dados['imovel']->ds_rua_imovel . ", " . $dados['imovel']->ds_bairro . ". Este horário está disponível?";
+$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", Possuo o E-mail: " . $dados['txtEmailContato'] . ", Telefone: " . $dados['txtTelefoneContato'] . ". Acabo de solicitar um agendamento para o Imóvel: " . " Id= ##00" . $id_imovel . ", Data: " . $dataEscolhida . ", Hora: " . $horaEscolhida . ", Endereço: " . $ds_rua_imovel . ", " . $bairro . ". Este horário está disponível?";
 
 $textoEncoded = urlencode($texto);
 
@@ -24,8 +27,11 @@ $textoEncoded = urlencode($texto);
                     <a href="https://www.wppredirect.tk/go/?p=<?= $celular . '&m=' . $textoEncoded ?>" target="_blank" class="btn text-start"><img src="<?= URL . '/img/whatsapp.png' ?>" alt="" class="whats"></a>
                 </div>
 
+                <p class="mt-5">Caso o link acima nao funcione, <a href="https://www.wppredirect.tk/go/?p=<?= $celular . '&m=' . $textoEncoded ?>">clique aqui</a> ou adicione o número para contato com o corretor: (21) 96014-6947</p>
 
                 <p class="mt-5 transparente"> Obs: A reserva só estará garantida, após a confirmação via WhatsApp.</p>
+
+
 
             </div>
         </div>
