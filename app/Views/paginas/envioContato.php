@@ -5,17 +5,12 @@ $celular = "5521960146947";
 $dataEscolhida = Checa::dataBr($dados['txtDataHidden']);
 $horaEscolhida = Checa::horaFormat($dados['txtHoraHidden']);
 
-$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", %0APossuo o E-mail: " . $dados['txtEmailContato'] . ", %0ATelefone: " . $dados['txtTelefoneContato'] . " %0A
-Acabo de solicitar um agendamento para o Imóvel: %0A
-Id= ##00" . $dados['imovel']->id_imovel . " %0AData = " . $dataEscolhida . " %0AHora = " . $horaEscolhida . "h %0AEndereço: " . $dados['imovel']->ds_rua_imovel . ", " . $dados['imovel']->ds_bairro . "%0A
-%0AEste horário está disponível?
-%0A%0AObrigado!";
+
+$texto = "Olá, meu nome é " . $dados['txtNomeContato'] . ", Possuo o E-mail: " . $dados['txtEmailContato'] . ", Telefone: " . $dados['txtTelefoneContato'] . ". Acabo de solicitar um agendamento para o Imóvel: " . " Id= ##00".$dados['imovel']->id_imovel . ", Data: " . $dataEscolhida . ", Hora: " . $horaEscolhida . ", Endereço: " . $dados['imovel']->ds_rua_imovel . ", " . $dados['imovel']->ds_bairro . ". Este horário está disponível?";
 
 $textoEncoded = urlencode($texto);
 
 ?>
-
-
 
 <div class="container py-4">
 
