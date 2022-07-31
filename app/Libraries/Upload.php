@@ -19,7 +19,7 @@ class Upload
         return $this->resultado;
     }
 
-    public function getErro(): string
+    public function getErro()
     {
         return $this->erro;
     }
@@ -68,7 +68,8 @@ class Upload
 
         $extensoesValidas = [
             'png',
-            'jpg'
+            'jpg',
+            'jpeg'
         ];
 
         $tiposValidos = [
